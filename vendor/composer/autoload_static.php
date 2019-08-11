@@ -48,6 +48,10 @@ class ComposerStaticInit0c596a9ad0569c20ea8959390edb3037
             'OpenApi\\' => 8,
             'OSS\\' => 4,
         ),
+        'F' => 
+        array (
+            'Firebase\\JWT\\' => 13,
+        ),
         'E' => 
         array (
             'Endroid\\QrCode\\' => 15,
@@ -122,6 +126,10 @@ class ComposerStaticInit0c596a9ad0569c20ea8959390edb3037
         'OSS\\' => 
         array (
             0 => __DIR__ . '/..' . '/aliyuncs/oss-sdk-php/src/OSS',
+        ),
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
         'Endroid\\QrCode\\' => 
         array (

@@ -2774,3 +2774,21 @@
 [ info ] [ PARAM ] array (
 )
 [ info ] [ DB ] INIT mysql
+---------------------------------------------------------------
+[2019-08-11T20:31:05+08:00] 127.0.0.1 GET 127.0.0.1:8891/index/index/api
+[运行时间：0.264000s] [吞吐率：3.79req/s] [内存消耗：3,772.24kb] [文件加载：121]
+[ info ] [ LANG ] G:\konger\mytp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1:8891',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'Hm_lvt_fe3b7a223fc08c795f0f4b6350703e6f=1553603675; csrftoken=pDOnUToI2pizM4zWtBViegPrAZ8jIthtdc2Beh39RWzGJSwYFlNBvzgT8nQUysfO; sessionid=9htlgj2lkafkg5dldoo18y3nbohjq8d9; sced5b0f9=89fdo0vj3ep87l31ksg3rom148',
+)
+[ info ] [ PARAM ] array (
+)

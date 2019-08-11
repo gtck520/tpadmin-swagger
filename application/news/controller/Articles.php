@@ -22,8 +22,8 @@ use think\Controller;
 class Articles extends Controller
 {
     /**
-     * @OA\Post(
-     *     path="/news/articles",
+     * @OA\Get(
+     *     path="/news/articles/index",
      *     tags={"articles"},
      *     summary="文章页面",
      *     description="This can only be done by the logged in user.",
@@ -39,6 +39,29 @@ class Articles extends Controller
      * )
      */
     public function index(){
+        $article =  Article::get(1);
+        print($article);
+        echo '测试测试';
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/news/articles/create",
+     *     tags={"articles"},
+     *     summary="文章页面",
+     *     description="This can only be done by the logged in user.",
+     *     operationId="createUser",
+     *     @OA\Response(
+     *         response="default",
+     *         description="successful operation"
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Create user object",
+     *         required=true
+     *     )
+     * )
+     */
+    public function create(){
         $article =  Article::get(1);
         print($article);
         echo '测试测试';
