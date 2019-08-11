@@ -1,877 +1,1267 @@
 /*
- Navicat Premium Data Transfer
+Navicat MySQL Data Transfer
 
- Source Server         : local.server.cuci.cc
- Source Server Type    : MySQL
- Source Server Version : 50562
- Source Host           : server.cuci.cc:3306
- Source Schema         : admin_v5
+Source Server         : 本地库
+Source Server Version : 50617
+Source Host           : localhost:3306
+Source Database       : mytp5
 
- Target Server Type    : MySQL
- Target Server Version : 50562
- File Encoding         : 65001
+Target Server Type    : MYSQL
+Target Server Version : 50617
+File Encoding         : 65001
 
- Date: 09/08/2019 16:14:13
+Date: 2019-08-11 21:10:46
 */
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
 -- Table structure for company_user
 -- ----------------------------
 DROP TABLE IF EXISTS `company_user`;
-CREATE TABLE `company_user`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '员工姓名',
-  `svn_username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '员工账号',
-  `svn_password` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '员工密码',
-  `svn_authorize` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '权限授权',
-  `user_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '员工身份',
-  `entry_date` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '入职日期',
-  `leave_date` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '离职日期',
-  `become_date` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '转正日期',
-  `contact_qq` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系QQ',
-  `contact_mail` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系邮箱',
-  `contact_phone` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系手机',
-  `mobile_macs` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '打卡手机',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0禁用,1正常,2离职)',
-  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除(1删除,0未删)',
+CREATE TABLE `company_user` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nickname` varchar(50) DEFAULT '' COMMENT '员工姓名',
+  `svn_username` varchar(50) DEFAULT '' COMMENT '员工账号',
+  `svn_password` varchar(32) DEFAULT '' COMMENT '员工密码',
+  `svn_authorize` varchar(255) DEFAULT '' COMMENT '权限授权',
+  `user_type` varchar(20) DEFAULT '' COMMENT '员工身份',
+  `entry_date` varchar(30) DEFAULT '' COMMENT '入职日期',
+  `leave_date` varchar(30) DEFAULT '' COMMENT '离职日期',
+  `become_date` varchar(30) DEFAULT '' COMMENT '转正日期',
+  `contact_qq` varchar(16) DEFAULT '' COMMENT '联系QQ',
+  `contact_mail` varchar(32) DEFAULT '' COMMENT '联系邮箱',
+  `contact_phone` varchar(16) DEFAULT '' COMMENT '联系手机',
+  `mobile_macs` text COMMENT '打卡手机',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '状态(0禁用,1正常,2离职)',
+  `sort` bigint(20) unsigned DEFAULT '0' COMMENT '排序权重',
+  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT '删除(1删除,0未删)',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_company_user_nickname`(`nickname`) USING BTREE,
-  INDEX `index_company_user_svn_username`(`svn_username`) USING BTREE,
-  INDEX `index_company_user_deleted`(`is_deleted`) USING BTREE,
-  INDEX `index_company_user_status`(`status`) USING BTREE,
-  INDEX `index_company_user_type`(`user_type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业-员工信息';
+  KEY `index_company_user_nickname` (`nickname`) USING BTREE,
+  KEY `index_company_user_svn_username` (`svn_username`) USING BTREE,
+  KEY `index_company_user_deleted` (`is_deleted`) USING BTREE,
+  KEY `index_company_user_status` (`status`) USING BTREE,
+  KEY `index_company_user_type` (`user_type`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='企业-员工信息';
+
+-- ----------------------------
+-- Records of company_user
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for company_user_auth
 -- ----------------------------
 DROP TABLE IF EXISTS `company_user_auth`;
-CREATE TABLE `company_user_auth`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '权限名称',
-  `path` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '权限路径',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0禁用,1正常)',
-  `desc` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '权限描述',
-  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除(1删除,0未删)',
+CREATE TABLE `company_user_auth` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) DEFAULT '' COMMENT '权限名称',
+  `path` varchar(500) DEFAULT '' COMMENT '权限路径',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '状态(0禁用,1正常)',
+  `desc` varchar(500) DEFAULT '' COMMENT '权限描述',
+  `sort` bigint(20) unsigned DEFAULT '0' COMMENT '排序权重',
+  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT '删除(1删除,0未删)',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_company_user_auth_status`(`status`) USING BTREE,
-  INDEX `index_company_user_auth_deleted`(`is_deleted`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业-仓库权限';
+  KEY `index_company_user_auth_status` (`status`) USING BTREE,
+  KEY `index_company_user_auth_deleted` (`is_deleted`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='企业-仓库权限';
+
+-- ----------------------------
+-- Records of company_user_auth
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for company_user_clock
 -- ----------------------------
 DROP TABLE IF EXISTS `company_user_clock`;
-CREATE TABLE `company_user_clock`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `uid` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '用户ID',
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户姓名',
-  `ip` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限名称',
-  `mac` char(17) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '状态(1:禁用,2:启用)',
-  `desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注说明',
-  `date` date NULL DEFAULT NULL,
+CREATE TABLE `company_user_clock` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` bigint(20) unsigned DEFAULT NULL COMMENT '用户ID',
+  `name` varchar(20) DEFAULT NULL COMMENT '用户姓名',
+  `ip` varchar(15) NOT NULL COMMENT '权限名称',
+  `mac` char(17) DEFAULT '1' COMMENT '状态(1:禁用,2:启用)',
+  `desc` varchar(255) DEFAULT NULL COMMENT '备注说明',
+  `date` date DEFAULT NULL,
   `start_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `end_at` datetime NULL DEFAULT NULL COMMENT '结束时间',
+  `end_at` datetime DEFAULT NULL COMMENT '结束时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_company_user_clock_date`(`date`) USING BTREE,
-  INDEX `index_company_user_clock_uid`(`uid`) USING BTREE,
-  INDEX `index_company_user_clock_name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '企业-打卡记录';
+  KEY `index_company_user_clock_date` (`date`) USING BTREE,
+  KEY `index_company_user_clock_uid` (`uid`) USING BTREE,
+  KEY `index_company_user_clock_name` (`name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='企业-打卡记录';
+
+-- ----------------------------
+-- Records of company_user_clock
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for news_articleclass
+-- ----------------------------
+DROP TABLE IF EXISTS `news_articleclass`;
+CREATE TABLE `news_articleclass` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `is_hiden` tinyint(1) NOT NULL,
+  `keyword` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sort` int(11) NOT NULL,
+  `add_time` datetime(6) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `news_articleclass_parent_id_f38b5cb6_fk_news_articleclass_id` (`parent_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of news_articleclass
+-- ----------------------------
+INSERT INTO `news_articleclass` VALUES ('1', '热点', '0', '热点', '0', '2019-07-03 09:43:00.000000', null);
+INSERT INTO `news_articleclass` VALUES ('2', '国际', '0', null, '0', '2019-07-03 09:44:00.000000', null);
+INSERT INTO `news_articleclass` VALUES ('3', '娱乐', '0', null, '0', '2019-07-03 09:46:00.000000', null);
+INSERT INTO `news_articleclass` VALUES ('4', '健康', '0', null, '0', '2019-07-03 09:46:00.000000', null);
+INSERT INTO `news_articleclass` VALUES ('5', '体育', '0', null, '0', '2019-07-03 09:46:00.000000', null);
+INSERT INTO `news_articleclass` VALUES ('6', 'NBA', '0', null, '0', '2019-07-03 09:46:00.000000', '5');
+INSERT INTO `news_articleclass` VALUES ('7', '田径', '0', null, '0', '2019-07-03 09:47:00.000000', '5');
+INSERT INTO `news_articleclass` VALUES ('8', '科技', '0', '科技', '0', '2019-07-20 13:36:00.000000', null);
+
+-- ----------------------------
+-- Table structure for news_articles
+-- ----------------------------
+DROP TABLE IF EXISTS `news_articles`;
+CREATE TABLE `news_articles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `keyword` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `introduction` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `click_nums` int(11) NOT NULL,
+  `fav_nums` int(11) NOT NULL,
+  `detail` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `sort` int(11) NOT NULL,
+  `is_head` tinyint(1) NOT NULL,
+  `add_time` datetime(6) NOT NULL,
+  `articleclass_id` int(11) NOT NULL,
+  `author_id` int(11) DEFAULT NULL,
+  `snap_nums` int(11) NOT NULL,
+  `news_type` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `news_articles_articleclass_id_f48bec1c_fk_news_articleclass_id` (`articleclass_id`),
+  KEY `news_articles_author_id_507c0387_fk_users_userprofile_id` (`author_id`),
+  CONSTRAINT `news_articles_ibfk_1` FOREIGN KEY (`articleclass_id`) REFERENCES `news_articleclass` (`id`),
+  CONSTRAINT `news_articles_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `users_userprofile` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of news_articles
+-- ----------------------------
+INSERT INTO `news_articles` VALUES ('1', '宣战了？特朗普下达重要命令，震惊全球，联合国出面都没用', '特朗普', '相信很多军迷朋友们应该都知道，自从特朗普上任美国总统以来，所谓的美国“优先”政策显然已经变成了美国“独行”，而就最近和伊朗局势的发展来说，更是让美国野心凸显的趋势备受民众深信不疑，也就最近，针对美伊关系，特朗普的一项重要指令使得战争局面就此展开。', 'articles/2019/07/b436508be4361649c423de3a76d8fb1a_R53PG6U.jpg', '61', '0', '<p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">宣战了？特朗普下达重要命令，震惊全球，联合国出面都没用</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">根据了解，美国最近媒体披露称，特朗普已经发出声明，绕开国会，进而向中东多国出手价值81亿美元的武器，而值得一说的是，其中多为防空导弹，而且出手给沙特的主要是萨德系统，对于这样的局面，有分析人士表示，现今美国已经建立了“中东北约”，进而对伊朗展开了包围的攻势，与此同时，最近特朗普公开向伊朗强硬态度表示，倘若伊朗依旧不签署新的核协议的话，那么“直接开战”。</p><p><img data-src=\"http://p1.qhimgs4.com/t019738b9553b2ccb67.jpg\" class=\"loaded\" src=\"http://p1.qhimgs4.com/t019738b9553b2ccb67.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 450px; height: 294.3px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">面对这样的举动，在无视美国国会的权利下，特朗普此举显然是比较强硬的，而值得一提的是，就在特朗普撕毁伊核协议之际，联合国就曾多次出面警告美国，但是美国显然是没有理会联合国，该决定一出，使得局势瞬间失控，让我们拭目以待吧。</p><p><img data-src=\"http://p2.qhimgs4.com/t019ed58ac1c72c9061.jpg\" class=\"loaded\" src=\"http://p2.qhimgs4.com/t019ed58ac1c72c9061.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 450px; height: 320.4px;\"/> </p><p><br/> </p>', '0', '0', '2019-07-03 10:43:00.000000', '2', '1', '2', '2');
+INSERT INTO `news_articles` VALUES ('2', '赵丽颖清晨更博，网友：手指头好美！看把孩子逼成什么样了', '赵丽颖', '赵丽颖', 'articles/2019/07/Naruto106.jpg', '53', '0', '<p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">赵丽颖作为一名演员为我们带来了不少的影视作品，她用自己的诠释为我们带来了一个有一个有血有点肉的人物，只能说明赵丽颖的可塑性是非常强的。但是她本人就是非常的直爽，大大咧咧不做作，而且她的经历也是非常的励志。</p><p><img data-src=\"http://p2.qhimgs4.com/t01479aafe0e9c3e7b7.jpg\" class=\"loaded\" src=\"http://p2.qhimgs4.com/t01479aafe0e9c3e7b7.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 450px; height: 716.43px;\"/> </p><p><img data-src=\"http://p1.qhimgs4.com/t017ec054eba65170c4.jpg\" class=\"loaded\" src=\"http://p1.qhimgs4.com/t017ec054eba65170c4.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 450px; height: 462.012px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">自从赵丽颖结婚后，给我们带来的作品就少了，粉丝们只能通过蛛丝马迹来寻找偶像的踪迹来缓解相思之苦。前两天baby的粉丝就是因为太思念baby而间接送她上了热搜，反而招了不少恶意的评论，而颖宝今早更新了一则微博。</p><p><img data-src=\"http://p0.qhimgs4.com/t011eb9488f42ded738.jpg\" class=\"loaded\" src=\"http://p0.qhimgs4.com/t011eb9488f42ded738.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 450px; height: 378.947px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">虽然是为自己代言的产品打广告，但看到配图，粉丝们还是很欣慰的。能看到颖宝的生活的环境也是很不错的，粉丝们也纷纷评论，手机前置摄像头功能了解一下。这种要自拍的方式也是很清新脱俗了。更有粉丝吹起彩虹屁是丝毫不嘴软：颖宝的手指头好美啊！哈哈哈！</p><p><img data-src=\"http://p2.qhimgs4.com/t0122d4062cf83b264b.jpg\" class=\"loaded\" src=\"http://p2.qhimgs4.com/t0122d4062cf83b264b.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 710px; height: 1261.36px;\"/> </p><p><img data-src=\"http://p0.qhimgs4.com/t01d6a693b71883d93c.jpg\" class=\"loaded\" src=\"http://p0.qhimgs4.com/t01d6a693b71883d93c.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 450px; height: 734.159px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">自上次赵丽颖在北京现身后，赵丽颖已经开始有付出的动作了，想先要不了多久就能够重新跟大家见面了，网友们也纷纷喊话冯绍峰：冯叔，好好照顾颖宝！就让我们一起期待吧！</p><p><br/> </p>', '0', '0', '2019-07-20 13:21:00.000000', '3', null, '1', '2');
+INSERT INTO `news_articles` VALUES ('3', '彻底反目成仇？范冰冰反黑站发文嘲讽李晨是渣男，靠女友成名', null, null, 'articles/2019/07/maoxingren04.jpg', '36', '0', '<p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">众所周知，娱乐圈是一个混乱的圈子，里面的条条框框普通人根本接触不到。明星们为了人气也算是用尽一切办吧，但是很多明星表面光鲜亮丽，说话谈吐都面露微笑，其实在底下压力是非常大的。范冰冰曾经算是最巅峰的女演员，毫不夸张的说，是当时当之无愧的第一女演员，几乎所有的明星榜单都高居榜首，然而却因为自身的问题，导致事业受到了前所未有的波折，想要恢复曾经的巅峰怕也是痴人说梦。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p6.qhimg.com/t01ad21d352016ee5ab.jpg\" class=\"loaded\" alt=\"t01ad21d352016ee5ab.jpg?size=327x383\" src=\"http://p6.qhimg.com/t01ad21d352016ee5ab.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 450px; height: 527.064px;\"/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><br/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><br/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">这还不算啥，别人职场失意，情场得意，而范冰冰则是全都失意。想当初李晨和范冰冰的感情虽然遭到很多人的质疑，但是他们一直都在秀恩爱，也就勉强认为李晨和范冰冰是有感情的。然而当范冰冰出事之后，李晨的做法却让人心寒，李晨甚至还用工作忙来当理由。如果这真的是理由，那么是不是认为自己的女友比不上自己的工作。凡此种种，网友均认为李晨和范冰冰会分手，甚至当时就已经分手了。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p1.qhimg.com/t01209cd73961c8d63f.jpg\" class=\"loaded\" alt=\"t01209cd73961c8d63f.jpg?size=521x501\" src=\"http://p1.qhimg.com/t01209cd73961c8d63f.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 710px; height: 682.744px;\"/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><br/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><br/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">这不，范冰冰和李晨果然分手了，而从两人互相发的微博来看是和平分手的。然而范冰冰和李晨想和平分手，但是他们的粉丝却不这么想。前些日子范冰冰发布自己的品牌被主持人问到感情问题，却被李晨的粉丝指责范冰冰买水军捆绑李晨。面对这样的质疑，范冰冰的粉丝怎么可能无动于衷，于是范冰冰反黑站发文嘲讽李晨是渣男，并且还列举了李晨这些年的黑历史。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p8.qhimg.com/t01938adccb33dd9ad7.jpg\" class=\"loaded\" alt=\"t01938adccb33dd9ad7.jpg?size=433x320\" src=\"http://p8.qhimg.com/t01938adccb33dd9ad7.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 450px; height: 332.563px;\"/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><br/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><br/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">总结起来大概就四件事情，第一点就是李晨是蹭着范冰冰的热度火的，也就是说李晨靠女友范冰冰成名。这个有一说一确实如此，如果李晨不是范冰冰的男友，还真不一定有多少人知道李晨，要知道当年最巅峰的范冰冰，可以说是当之无愧的第一女星。第二个就是关于印小天的事情，第三点是范冰冰无偿帮助李晨很多次，比如《空天猎》等。第四年就是诸如爱心石头这些烂事，而这件事也确实是事实。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p4.qhimg.com/t0191df7d1e97ee89e8.jpg\" class=\"loaded\" alt=\"t0191df7d1e97ee89e8.jpg?size=435x273\" src=\"http://p4.qhimg.com/t0191df7d1e97ee89e8.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 450px; height: 282.413px;\"/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><br/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><br/></p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">其实这已经不是李晨的粉丝和范冰冰的粉丝第一次撕逼了，不过每次都碍着李晨和范冰冰的面子结束了对线。不过现在李晨和范冰冰已经分手，所以双方的粉丝几乎用尽了全力来攻击对方。最重要的是，李晨和范冰冰还没站出来说过话，这不禁让人想难道李晨和范冰冰真的反目成仇了吗？不过想想应该不可能，毕竟两人营造的就是和平分手的态度，而且说到底，两人已经分开，既然已经分开，那就各自安好吧。</p><p><br/></p>', '0', '0', '2019-07-20 13:24:00.000000', '3', null, '0', '1');
+INSERT INTO `news_articles` VALUES ('4', '国足敲定40强赛首个主场地点！赢球毫无悬念，曾踢对手19-0', null, null, 'articles/2019/07/ChMkJ1Zf6UeIM1KrAAhCLHB3N-sAAFpOgAOyCEACEJE580.jpg', '49', '0', '<p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">北京时间7月19日消息，北京青年报记者肖赧透露，国足40强赛第一个主场将设在广州，对手是关岛，因此，国足取胜毫无悬念，毕竟，国足19年前曾踢对手19-0！</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p3.qhimg.com/t01bcbb857a588535c4.jpg\" class=\"loaded\" alt=\"t01bcbb857a588535c4.jpg?size=417x89\" src=\"http://p3.qhimg.com/t01bcbb857a588535c4.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 450px; height: 96.043px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">40强赛抽签，国足和叙利亚、菲律宾、马尔代夫、关岛同组，外界普遍认为这是上上签，国足杀入12强赛没有悬念。根据赛程，中国队首轮轮空，首场比赛即第2轮客场挑战马尔代夫，比赛时间为9月10日。中国队40强赛首个主场，是第3轮10月10日对阵关岛。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p2.qhimg.com/t01b54f4a738089c946.jpg\" class=\"loaded\" alt=\"t01b54f4a738089c946.jpg?size=640x312\" src=\"http://p2.qhimg.com/t01b54f4a738089c946.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 710px; height: 346.125px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">现在，国足首个主场地点也敲定，那就是广州！届时，国足将在广州对阵关岛，“国足40强赛第一个主场，广州面儿大！ ”肖赧说道。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p1.qhimg.com/t01264afac93a404eaf.jpg\" class=\"loaded\" alt=\"t01264afac93a404eaf.jpg?size=594x372\" src=\"http://p1.qhimg.com/t01264afac93a404eaf.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 710px; height: 444.646px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">此前，粤媒曾报道，综合考虑了里皮的推荐以及其它因素，接下来如无意外，国足40强赛的主场很可能将继续放在广州。6月份国足两场热身赛，本来中国足协曾经准备放在咸阳举行，但最终改成广州。如今，40强赛即将到来，果不其然，国足40强赛第一个主场就在广州。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p2.qhimg.com/t01638a496bd5c8ff63.jpg\" class=\"loaded\" alt=\"t01638a496bd5c8ff63.jpg?size=576x354\" src=\"http://p2.qhimg.com/t01638a496bd5c8ff63.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 710px; height: 436.354px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">并且有可能，接下来40强赛的国足其余主场，比赛还是有可能依旧在广州踢。毕竟，恒大国脚人数众多，里皮也在广州居住生活习惯了。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p9.qhimg.com/t01f63e565e09392b97.jpg\" class=\"loaded\" alt=\"t01f63e565e09392b97.jpg?size=543x388\" src=\"http://p9.qhimg.com/t01f63e565e09392b97.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 710px; height: 507.329px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">当然，国足无论将40强赛首个主场放在哪里，取胜都没有悬念。中国队历史上只和关岛踢过一场比赛，那还是19年前的亚洲杯预选赛，当时的中国队以19-0战胜对手，进球队员分别是曲圣卿5球、郝海东4球、宿茂臻3球、姚夏2球、李铁、马明宇、李玮锋、申思、祁宏各一球。如今，关岛是本组最弱球队，也是第五档次球队，因此，国足赢球没有悬念，就看能进多少球。</p><p><br/> </p>', '0', '0', '2019-07-20 13:25:00.000000', '5', null, '1', '1');
+INSERT INTO `news_articles` VALUES ('5', '章莹颖案宣判！凶手笑了！免死！', null, null, 'articles/2019/07/Weiwenhuaming17.jpg', '18', '0', '<p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">从2017年6月9日，美国伊利诺伊大学香槟分校(UIUC)的中国学者章莹颖失踪至今，时隔2年多，几经波折，终于有了结果：谋杀章莹颖的凶手克里斯滕森被判处终身监禁且永不得保释！</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">据央视新闻报道，美国中部时间7月18日下午4点，北京时间7月19日早晨5点，美国伊利诺伊州中区联邦法院正式宣布：</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">2017年6月谋杀中国访问学者章莹颖的凶手克里斯滕森被判处终身监禁且永不得保释。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p2.qhimgs4.com/t0157707b86ed54ef65.jpg\" class=\"loaded\" src=\"http://p2.qhimgs4.com/t0157707b86ed54ef65.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 710px; height: 304.18px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">由12人组成的陪审团经过一天的闭门审议后，无法就判处死刑达成一致，克里斯滕森免于一死。具体几名陪审员反对死刑，目前尚不得而知。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">当听到陪审团告知法官无法就死刑达成一致时，克里斯滕森当场低头露出了笑容。同时在场的章莹颖父母面无表情，他们和律师稍后将举行记者会。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p2.qhimgs4.com/t01db026f840778f484.jpg\" class=\"loaded\" src=\"http://p2.qhimgs4.com/t01db026f840778f484.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 450px; height: 442.005px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">据央视记者在庭审现场观察，12名陪审员中7男5女，有11名白人，年龄在35岁到50岁之间。陪审团是根据“随机加面试”的遴选原则选出，大都为案发所在的伊利诺伊州当地居民。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">在为期两周的量刑听证中，检方出示了大量证据指出，凶手蓄意绑架、强暴并谋杀章莹颖且作案手段极其残忍，而且至今不肯交代章莹颖遗体藏匿地点。而辩方则指出，凶手作案前精神失常且此前没有犯罪记录。今年6月份，陪审团一致判定克里斯滕森犯有绑架谋杀罪以及向联邦执法人员作伪证罪。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">在美国判处死刑并非易事。根据皮尤公司数据，包括伊利诺伊州在内的21个州已经废除死刑，过去5年只有13个州曾执行过死刑。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">此前回顾</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">6月24日裁定：绑架和谋杀罪名成立！</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">据新华社报道，美国伊利诺伊州中部地区联邦法院陪审团6月24日裁定，布伦特·克里斯滕森2017年绑架和谋杀中国访问学者章莹颖的罪名成立。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">　　</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p2.qhimgs4.com/t012764e121689aee0a.jpg\" class=\"loaded\" src=\"http://p2.qhimgs4.com/t012764e121689aee0a.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 710px; height: 473.333px;\"/>6月24日，在美国伊利诺伊州皮奥里亚，中国访问学者章莹颖的家人抵达联邦法院。新华社记者 汪平 摄</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">这项裁定是12名陪审员组成的陪审团一致做出的。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">另据海外网报道，在上述裁定结果出来后，章莹颖的父亲在法庭外面向媒体，用中文朗读了一份声明，章莹颖的母亲现场失声痛哭。</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\"><img data-src=\"http://p1.qhimgs4.com/t017957aef3a9a14407.jpg\" class=\"loaded\" src=\"http://p1.qhimgs4.com/t017957aef3a9a14407.jpg\" data-was-processed=\"true\" style=\"border: none; display: block; vertical-align: middle; margin: 30px auto; max-width: 100%; width: 710px; height: 519.676px;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">嫌犯罪名成立后，章莹颖父亲朗读声明。（推特@ByMattMasterson）海外网发</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">当时，章莹颖父亲首先感谢了所有为案件提供帮助的人，他表示，“两年来，我们每天都想念着莹颖。直到今天，我们也无法想象如何在没有她的情况下度过余生。言语无法描述我们的痛苦和煎熬。”</p><p style=\"margin-top: 0px; margin-bottom: 16px; color: rgb(68, 68, 68); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; letter-spacing: 0.5px; white-space: normal; background-color: rgb(255, 255, 255);\">章父最后说，希望并且相信审判最终会为莹颖和我们带来正义。“我们的愿望永远都是找到莹颖，带她回家。我们不会放弃。”</p><p><br/> </p>', '0', '0', '2019-07-20 13:26:00.000000', '1', null, '1', '1');
+INSERT INTO `news_articles` VALUES ('6', '普京再“白送”土地鼓励远东开发，欢迎外国人参与', null, null, 'articles/2019/07/xingkong02.jpg', '16', '0', '<p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">国土面积位居全球第一的俄罗斯，却有超过一半的土地人烟稀少。为了推动远东地区的发展，俄罗斯在三年前就出台了《远东地区土地免费配发法案》（简称“远东1公顷土地法”），所有俄公民均可获得远东地区1公顷土地的无偿使用权。日前，总统普京又拓宽了该法案的适用范围，推广至后贝加尔边疆区和布里亚特共和国。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">据俄罗斯卫星通讯社报道，后贝加尔边疆区和布里亚特共和国将通过3个阶段落实这一新法案。第一阶段从2019年8月1日至2020年2月1日，拥有布里亚特共和国和后贝加尔边疆区户籍的俄罗斯公民可无偿获得1公顷土地。第二阶段从2020年2月1日到2020年8月1日，远东联邦区内其它联邦主体的居民也可以申请在上述两个地区获得土地。第三阶段从2020年8月1日开始，俄罗斯所有公民均可申请在上述两个地区无偿获取土地，参与俄罗斯海外同胞自愿返回定居计划的外国公民也可以享受这一待遇。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">俄远东联邦区位于广袤的西伯利亚中部与东北，贝加尔湖东部与太平洋之间，由11个行政区组成。面积617万平方公里，占俄领土总面积的36%，现有人口600多万，约占俄人口总数的5%，这里也是世界上人口密度最低的地区。在苏联时代，中央政府曾在远东地区设立劳教营、推动在偏远地区工业区的投资，并建立起了第二条横跨西伯利亚和远东地区的铁路，促进人口东移。赫鲁晓夫执政期间，曾动员数十万志愿者到东部地区落户，开垦了4000万公顷的土地。</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/RWgTiky7tX2W8w\" img_width=\"2880\" img_height=\"1553\" alt=\"普京再“白送”土地鼓励远东开发，欢迎外国人参与\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">但随着1991年苏联解体，当年被半强制性移民的家庭后代纷纷向西部的欧洲部分回流，远东地区的800万人口迅速缩减至200万。由于地处俄最东部，以山地为主，天气严寒，且基础设施较为落后，在此后的时间里人口增长依然缓慢，2016年该地区人口仅有610万人，占俄罗斯总人口的4%。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/RWgNyO3HwBC6MY\" img_width=\"5000\" img_height=\"2710\" alt=\"普京再“白送”土地鼓励远东开发，欢迎外国人参与\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">2016年5月，普京签署“远东1公顷土地法”，俄罗斯公民可在远东联邦区下辖的萨哈（雅库特）共和国、堪察加边疆区、滨海边疆区、哈巴罗夫斯克边疆区、阿穆尔州、马加丹州、萨哈林州、犹太自治州和楚科奇民族自治区范围内，一次性无偿获得不超过1公顷的土地使用权。使用权为期5年，到期后获赠土地如果得到开发，可以由公民承租或者转为私有财产；如土地仍未使用则将被国家收回。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">据《今日俄罗斯》报道，起初该法案更多的是为解决乌克兰难民问题。2014年，俄罗斯介入乌克兰东部的武装冲突并吸收克里米亚地区后，大量乌克兰难民逃往俄罗斯。联合国难民事务高级专员署提供的数据显示，2014至2017年迁往俄罗斯的乌克兰公民超过40万人。俄罗斯联邦移民局则在2015年时称，从乌克兰前往俄罗斯人数超过百万人，其中有60万人不准备再回到乌克兰。有观察家表示，乌克兰与白俄罗斯难民迁居到西伯利亚的意愿比俄罗斯本国人更为强烈。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">政策出台后获得了不少俄罗斯人的支持。俄罗斯远东发展部2016年的一项调查显示，如果能获得免费土地，20%的俄罗斯人愿意搬往远东，其中有半数年轻人对前往东部发展表现出浓厚的兴趣。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">对于俄罗斯来说，远东具有重要的地缘战略意义。这里与中国东北地区以及朝鲜接壤，与美国阿拉斯加、日本、韩国隔海相望，同时还拥有丰富的煤炭、森林和金属矿石等丰富的自然资源。随着亚太地区在全球经济中的地位不断提升，远东地区的地位也显得愈发重要。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">由于金融危机以及西方国家的制裁，俄罗斯经济近年来复苏缓慢，开发远东的潜力成为了普京的主要备选之一。2012年，俄罗斯政府专门设立远东地区发展部。2015年起，在普京的亲自主持下，每年9月在符拉迪沃斯托克举行东方经济论坛，以促进远东地区经济发展和国际合作。远东发展部的官员还满怀信心地预计，地区内人口规模有望上升到3600万。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">今年早些时候，俄罗斯《生意人报》就报道称，在农业方面俄罗斯承诺为中国投资者参与的项目提供土地和优惠融资。卫星通讯社补充称，俄远东投资优势包括：距离亚太销售市场近、一些关键农产品（肉类、牛奶等）的自给自足率低，以及农产品质量高。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">《纽约时报》将俄罗斯的“远东1公顷土地法”称为美国《1862宅地法》的现代版。美国南北战争第二年，联邦政府为促进西部农业发展，规定凡是一家之家长或年满21岁、从未参加叛乱之美国民众均可登记领取总数不超过65公顷的宅地，登记人在宅地上居住并耕种满5年，就可获得土地执照而成为该宅地的所有者。该法案推动美国西部大开发，于1976年终止。</p><p><br/> </p>', '0', '0', '2019-07-20 13:28:00.000000', '2', null, '0', '1');
+INSERT INTO `news_articles` VALUES ('7', '官宣！火箭湖人成大赢家，伦纳德遭遇坏消息，杜兰特迎利好', null, null, 'articles/2019/07/d540de7e66bc44f7b0101bca487243d6.jpg', '5', '0', '<p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">休斯顿火箭队今天正式签下钱德勒，防守悍将，昔日的冠军中锋+DPOY，上赛季钱德勒在湖人，场均3.1分+6.5篮板，投篮命中率高达60.9%，虽然已经是一名老将，但是钱德勒的防守和护框能力还在，做个替补中锋，应该是很稳的。今天火箭队还有其他的喜事，哈登正式注资两支休斯顿球队，男女足球队（休斯顿迪纳摩队+休斯顿迪达斯队），同时哈登发布视频表示，自己注资球队是因为热爱休斯顿这座城市，未来会一直留在休斯顿火箭，并且要为火箭队带来NBA总冠军。哈登这一个承诺，也算是给休斯顿球迷一颗定心丸，哈登想要为火箭带来总冠军，并且终老火箭队，这或许是最美好的结局。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/d540de7e66bc44f7b0101bca487243d6\" img_width=\"635\" img_height=\"413\" alt=\"官宣！火箭湖人成大赢家，伦纳德遭遇坏消息，杜兰特迎利好\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">今天快船队球员贝弗利接受采访，也谈到了老东家火箭队的新阵容，贝弗利认为威少和哈登两大MVP能兼容，他们两人互相都很熟悉，打球也很默契，同时贝弗利也认为火箭和湖人是今夏的最大赢家之一，新赛季火箭队会是最强的队伍之一。看来，“狗哥”对火箭队也是心存爱意，非常关注。火箭队新赛季阵容：哈登+威少+卡佩拉+塔克+戈登+小里弗斯+豪斯+钱德勒+杰拉德格林。这9位悍将肯定是核心轮换球员。</p><p><img src=\"http://p9.pstatp.com/large/pgc-image/3205eebad0b045e7bc24604e7e7b53c6\" img_width=\"651\" img_height=\"363\" alt=\"官宣！火箭湖人成大赢家，伦纳德遭遇坏消息，杜兰特迎利好\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">而火箭刚刚续约的小里弗斯接受采访表示，自己留在火箭是因为热爱这里，哈登和保罗之间没有矛盾。小里弗斯也谈到，自己和保罗聊过，大家都认为保罗在雷霆等上一个赛季，合同就更好处理，新赛季保罗在雷霆拥有所有球权，他的数据有望回暖，而小里弗斯认为保罗未来会加盟一支争冠的球队，很可能是湖人队。</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/c2f3190d9cdf4a8d81ef986b8a0e442e\" img_width=\"666\" img_height=\"371\" alt=\"官宣！火箭湖人成大赢家，伦纳德遭遇坏消息，杜兰特迎利好\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">此前伦纳德将耐克公司告上法庭，因为耐克公司未经伦纳德同意，将伦纳德设计的标志印在耐克的服装上面，并且耐克公司还注册了商标。今天，TMZ体育报道，耐克公司做出回应，2014年他们与伦纳德合作推出了这一原创设计，并给后者提供了多种设计概念和设计方案。最终耐克公司选定了一个与伦纳德草图不同的“原始”版本，而且伦纳德当时与耐克公司签署了最终版LOGO的使用协议。同时他们也注册了商标，所以耐克拥有该LOGO的所有权。现在，耐克公司正在以侵犯版权、欺诈以及违反合同为由进行反诉，他们要求法官禁止小卡使用该设计，同时还要求伦纳德方面赔偿损失。伦纳德遭遇上坏消息，被耐克公司反告欺诈 。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/1302829e57854560969e0636e50ba080\" img_width=\"685\" img_height=\"287\" alt=\"官宣！火箭湖人成大赢家，伦纳德遭遇坏消息，杜兰特迎利好\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">杜兰特此前遭遇了跟腱断裂大伤，手术之后一直都在小心翼翼地恢复，今天杜兰特传来好消息，他在社交媒体上面晒出自己近照，杜兰特通过在水中进行投篮训练，心情大好。当年，姚明脚伤的时候，也曾经通过在水中训练投篮来进行恢复，减轻脚上的负担。新赛季，杜兰特基本无法出战比赛，篮网队要依靠欧文+小乔丹为核心追逐季后赛。希望杜兰特早日康复，重返赛场。</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/70dc8499b4434ec3aac4434f2e831a9b\" img_width=\"662\" img_height=\"285\" alt=\"官宣！火箭湖人成大赢家，伦纳德遭遇坏消息，杜兰特迎利好\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p><br/> </p>', '0', '0', '2019-07-20 13:29:00.000000', '6', null, '0', '2');
+INSERT INTO `news_articles` VALUES ('8', '德云社已经人满为患，郭德纲还会不会收“龙腾四海”科徒弟？', null, null, 'articles/2019/07/1e0720005cc9af76967ed.jpg', '13', '0', '<p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 20px; padding: 0px; line-height: 28px; word-wrap: break-word; color: rgb(101, 113, 128); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">郭德纲经常说德云社有四百多相声艺人，看起来阵容很庞大，实际上这四百多人的情况各不相同，需要具体问题具体分析。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 20px; padding: 0px; line-height: 28px; word-wrap: break-word; color: rgb(101, 113, 128); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><img src=\"http://p9.pstatp.com/large/1e0700005c5ee3cb54e54\" web_uri=\"1e0700005c5ee3cb54e54\" img_width=\"1500\" img_height=\"776\" fold=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; display: block; max-width: 100%; margin-bottom: 10px; margin-top: 10px;\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 20px; padding: 0px; line-height: 28px; word-wrap: break-word; color: rgb(101, 113, 128); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">首先，德云社目前有八个正式的演出队，每个队的演员数量在14-18之间，最多也就20人，所以实际能上台演出的总人数仅160人，再加上郭德纲、于谦、岳云鹏、孙越、侯震这些不在演出队演出的大角儿；还有青年队十多个在锻炼的小孩，满打满算加起来200人最多了。郭德纲说的400人应该是德云社这个公司的员工数量之和，除了演员以外，还包括幕后人员以及正在学艺的培训班学员等等。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 20px; padding: 0px; line-height: 28px; word-wrap: break-word; color: rgb(101, 113, 128); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 20px; padding: 0px; line-height: 28px; word-wrap: break-word; color: rgb(101, 113, 128); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">德云社目前有八个小剧场，小剧场一场节目需要安排5-6个作品，也就是需要10-12个演员，八个剧场就需要差不多一百个演员，这是每天固定的人员需求。除了小剧场以外，每到周末，德云社还有大量的商演需要安排，一场也需要至少八个演员；再加上大量的商业邀约，比如企业堂会、影视剧拍摄、综艺录制、商业代言、杂志拍摄等等，都需要大量的人手，所以德云社的人员数量看起来庞大，但实际上已经有点捉襟见肘了。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 20px; padding: 0px; line-height: 28px; word-wrap: break-word; color: rgb(101, 113, 128); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><img src=\"http://p1.pstatp.com/large/1e06a0005844e5f9f0aad\" web_uri=\"1e06a0005844e5f9f0aad\" img_width=\"1200\" img_height=\"800\" fold=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; display: block; max-width: 100%; margin-bottom: 10px; margin-top: 10px;\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 20px; padding: 0px; line-height: 28px; word-wrap: break-word; color: rgb(101, 113, 128); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">接下来，德云社济南分社和天津分社都在紧锣密鼓的筹备中，一旦开业，又需要大约四十个固定的演员才能够安排得过来；而德云社培训班的学员们又不能够在短期内迅速出师，所以德云社现在不仅没有人满为患，反倒是面临着比较明显的人才缺口。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 20px; padding: 0px; line-height: 28px; word-wrap: break-word; color: rgb(101, 113, 128); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 20px; padding: 0px; line-height: 28px; word-wrap: break-word; color: rgb(101, 113, 128); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">为了弥补这个人才缺口，郭德纲开始招揽同行加入德云社。最近一段时间，已经先后有张番、刘铨淼、章绍伟、孔挚杰、高玉凯、王善勇、杨进明、刘春山等同行加盟，接下来还有赵伟洲、郭威、周培岩、马军、盛伟等绯闻人选在接触，看起来天津德云社完全由天津本地演员常驻也不是难事。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 20px; padding: 0px; line-height: 28px; word-wrap: break-word; color: rgb(101, 113, 128); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><img src=\"http://p1.pstatp.com/large/1e0720005cc9af76967ed\" web_uri=\"1e0720005cc9af76967ed\" img_width=\"640\" img_height=\"331\" fold=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; display: block; max-width: 100%; margin-bottom: 10px; margin-top: 10px;\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 20px; padding: 0px; line-height: 28px; word-wrap: break-word; color: rgb(101, 113, 128); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">德云社现在已经找到了非常稳定成熟的盈利模式，而招生是这个盈利模式的第一步；通过招生，可以最低成本的吸纳人才，总比在外面招揽成熟艺人要划算的多；所以郭德纲肯定会继续招生，继续收徒，多多益善。</p><p><br/> </p>', '0', '0', '2019-07-20 13:32:00.000000', '3', null, '2', '1');
+INSERT INTO `news_articles` VALUES ('9', '日本京都动画纵火案再添1死 遇难人数升至34人', null, null, 'articles/2019/07/1563545938833718w_480.jpg', '12', '0', '<p class=\"imgs_c\" style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\"><img title=\"1563508629785483.jpg\" alt=\"QQ截图20190719115636.jpg\" alt_src=\"http://mpic.haiwainet.cn/thumb/d/uploadfile/20190719/1563545938833718,w_480.jpg\" src=\"http://mpic.haiwainet.cn/thumb/d/uploadfile/20190719/1563545938833718,w_480.jpg\" style=\"border: 0px; display: block; max-width: 100%; background: rgb(239, 239, 239); border-radius: 0px; margin: 8px auto;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">火灾现场（图源：NHK）</p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">海外网7月19日电<span class=\"Apple-converted-space\">&nbsp;</span>日本京都市动画制作公司“京都动画（京阿尼）”工作室18日上午发生火灾。据日本放送协会（NHK）报道，京都警方19日晚宣布，一名在医院接受治疗的男子死亡，至此，共有34人因火灾丧生。</p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">这起火灾发生在18日上午10点半左右。当时，有许多附近居民听到了很大的爆炸声，随后发现“京都动画”工作室的楼两侧冒出滚滚黑烟。</p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">41岁的男性纵火嫌疑人被警方当场逮捕。该男子在建筑物一层泼洒汽油，之后使用点火器放火并大喊“去死”，警方随后将其控制。京都警方19日下午召开新闻发布会，称已确定嫌疑人是青叶真司，他因为严重烧伤目前仍在昏迷中，目前作案动机不明。</p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">青叶真司住在日本琦玉市的一所公寓，邻居谈及此人时称他“从不跟人交往，不知底细”。7年前（2012年），他曾经在茨城县坂东市的便利店因抢劫被捕，被判刑3年6个月。出狱后，他在专门接收服过刑人员的机构住过一段时间，之后搬到了现在这所公寓。</p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">住在纵火犯对面房间的另一名男性表示：“几天前，总是听到他敲墙。我去提醒他注意，他揪住我胸口说‘与你无关，我快没时间了’。这是我第一次和他说话。以前经常听到他放出很大的动漫游戏声音，特别吵，我报过好几次警了。”纵火犯揪住邻居胸口有10分多钟，嘴里重复着“我杀了你”、“我都没时间了”、“吵死了”一类的恶语。</p><p class=\"imgs_c\" style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\"><img title=\"1563546026569956.jpg\" alt=\"3.jpg\" alt_src=\"http://mpic.haiwainet.cn/thumb/d/uploadfile/20190719/1563546026569956,w_480.jpg\" src=\"http://mpic.haiwainet.cn/thumb/d/uploadfile/20190719/1563546026569956,w_480.jpg\" style=\"border: 0px; display: block; max-width: 100%; background: rgb(239, 239, 239); border-radius: 0px; margin: 8px auto;\"/> </p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">“京都动画”工作室建筑（图源：NHK）</p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">NHK称，相关人士透露，这名纵火犯患有精神方面的疾病，有人定期上门进行访问看护。去年和今年，他因噪音问题数次和邻居起冲突，曾惊动警方。</p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">火灾发生后，日本首相安倍晋三事发后在推特上发文称：“今日（18日）京都发生了杀人放火事件，造成多人死伤，过于沉痛，几乎难以言喻。为牺牲者祈祷，并祝福伤者早日康复。”</p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">“京都动画”社长八田英明19日谈及损失时表示“这是断肠之痛，难以忍受”。八田说，公司过去的所有画作和资料等“全部被烧毁了”。</p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">“京都动画”工作室建筑共3层，面积约700平方米，从1层到3层均被完全烧毁。日媒称，出事的动画制作公司“京都动画”1981年成立，有近160名员工，曾制作《凉宫春日的忧郁》《轻音少女》等多部知名动画。（海外网 姚凯红）</p><p style=\"margin-top: 0px; margin-bottom: 20px; padding: 0px; word-wrap: break-word; text-align: justify; color: rgb(80, 80, 80); line-height: 1.5; font-family: helvetica; font-size: 18px; white-space: normal; background-color: rgb(255, 255, 255);\">本文系版权作品，未经授权严禁转载。海外视野，中国立场，登陆人民日报海外版官网——海外网www.haiwainet.cn或“海客”客户端，领先一步获取权威资讯。</p><p><br/> </p>', '0', '0', '2019-07-20 13:33:00.000000', '1', null, '0', '1');
+INSERT INTO `news_articles` VALUES ('10', '深度 | 魅族黄章，是怎样一步步沦为孤家寡人的？', null, null, 'articles/2019/07/1842031e17b249529ca2e5608e718757.jpg', '10', '0', '<p><img src=\"http://p1.pstatp.com/large/pgc-image/1842031e17b249529ca2e5608e718757\" img_width=\"460\" img_height=\"305\" alt=\"深度 | 魅族黄章，是怎样一步步沦为孤家寡人的？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">又是在一片喧腾之后，魅族科技首席营销官、高级副总裁李楠离职的消息尘埃落定。7月18日下午，李楠在社交网络上发文确认已离开魅族。至此，魅族“三剑客”白永祥、杨颜、李楠悉数卸任。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">这几个月来，几乎没有魅族的消息，李楠的离职，反而让魅族再次登上舆论的风口浪尖，然而却很难分清是魅族的影响还在，还是李楠的营销人身份自带流量。不过总的来说，魅族这两年的市场表现不温不火，距离华为、小米以及OV的距离越来越远，掉队的趋势似乎不可避免。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">朝秦暮楚、定位混乱、架构不稳、高管离职，魅族就在不断的徘徊中错失一个又一个机会。随着魅族“三剑客”的离开，不知道黄章的独角戏如何演绎下去，重回“小而美”？市场变了，用户变了，环境也变了，这样的机会是否还存在？</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">最引发争议、让人错愕的是，对于李楠的离职，黄章的账号J.Wong回复称，“对公司来说能挣钱的就是人才，不断亏钱的就是费财”。原来魅族就是这样对待一位打拼多年，成绩斐然的肱骨老臣，让人顿觉黄章冷酷无情，对于“三剑客”的离开，反而觉得是情理之中的事情了。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">铁打的黄章，流水的经理人高管，“寡人”黄章，魅族的梦想如何实现呢？</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">最后的战士</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">李楠的离职很早就在发酵，随之而来的传言千奇百怪，有人说去taki做电子烟的，还有媒体称他将创业的。对此李楠不得不出来证实：“鉴于现在混乱的消息，只好比较正经地宣布：我已经离开了公司。实际上魅族16发布会后，就慢慢淡出了工作。后面看到成功发布了数款产品，很欣慰。”</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">李楠离开，言语中有疲惫，也没有给出离开的理由，不过对于魅族表达了自己的祝福，“祝魅族干得越来越好。困难是有，但是只要向前的脚步不停止，道路就会延伸”。（紫金财经觉得，与黄章的恶言相向相比，李楠的做法很职业。）</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">李楠早年就职于日企NEC，担任在线ERP系统构架师和Monstar-Lab日本移动社交网络应用和游戏产品经理，不过其最为显著的标签，是作为科技媒体爱范儿的主编，李楠在2009年撰写的一篇题为《iPhone可有设计哲学？》让从MP3转型做手机的黄章颇以为然，也就是这样的机缘，李楠入职魅族。而李楠的加入，让魅族在市场和营销上的能力迅速提升。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">时间如白驹过隙，弹指一挥间，李楠自2012年入职魅族，已有7个年头了。在这7年中，李楠的成绩可圈可点，其中最为重要的，是其提出“侘寂之美”的概念，带领魅族品牌主打差异化，成为当年手机厂商的最大亮点之一；第二个亮点是，犹如现在的红米之于小米，李楠推出“魅蓝”系列，主打性价比，抢占销量占比最大的市场，为魅族的整体战略建立起支撑。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">李楠打造的“魅蓝”系列，使魅族在千元机市场占据一席之地，并给魅族带来了客观的营收，扩大了魅族辗转腾挪的空间。此外，李楠的强项在营销，其加入魅族“无所不用其极”、“连呼吸都在营销”的方式，建立起魅式营销风格。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">每一次突发、每一个热点，魅族都会通过微博、微信、知乎、各超级资讯APP等快速发生应对，李楠团队发挥专长，将在互联网、科技、媒体领域积累的经验用于魅族。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">李楠的个人标签非常明显，其针对网友的提问，回答的非常专业、有价值，让人产生思考。李楠充分利用了这一点，让其在各大问答类平台拥有不少拥簇，李楠通过对行业、品牌、包装、手机性能等问题的解答，又对魅族品牌的建立，起到推动作用。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">此前几乎所有人都认为，黄章一门心思在技术，“佛系”，是最为理想的老板。如果真的这么想，那就错了。2014年初到2018年，黄章几乎每年都会宣布一次“复出”，但其在魅族的存在感一直让外界困惑。身在五行之外，影响又在无形之中。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">2017年5月，黄章宣布直接参与公司运营，魅族组织架构也进行了调整，成立了魅族和魅蓝两个事业部。李楠升任集团高级副总裁，兼任魅蓝事业部总裁。前华为终端CMO、TCL通讯中国区总裁杨柘加入，负责魅族事业部的市场营销与团队管理，与李楠各管一摊。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">仅仅一年不到，2018年，魅族就进行了四次人事调整。李楠没能坐稳他的位子，重回市场一线，主掌由黄章亲自“打磨”的重要产品魅族16，但其众筹魅族概念手机魅族zero的失败行动，被黄章公开批评为“瞎搞”。此后，李楠一直较为沉寂，直到最近爆出离职传闻。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">三剑客隐退</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">李楠离职的消息，在其正式回复之前就已经传的沸沸扬扬，魅族论坛上更是传的火热。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">不过就在当天深夜，在魅族论坛一篇“关于李楠离职消息”的帖子下，魅族创始人黄章的账号J.Wong回复网友评论称，“对公司来说能挣钱的就是人才，不断亏钱的就是费财”。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">此前十几分钟，黄章还在帖子下发评论称：“前几年魅族粗犷发展用亏损换规模，当资本潮退去魅族包括我在内的经营委员会不得不改变公司的策略。在改变过程中免不了失速和损失，当然也包括起用一些更年轻更具有stay hungry stay foolish （虚心若渴，求知若愚——编者注）的骨干。”</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">这基本上就由黄章亲自证实了李楠的离开是事实。并让李楠对魅族前几年“粗犷发展用亏损换规模”的策略负责。“对公司来说能挣钱的就是人才，不断亏钱的就是费财”让人看到在高管离开之后，黄章立马恶语相向，这样的格局和人品就只待后人评说了。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">李楠的离开，标志着魅族“三剑客”尽数出局。“三剑客”当年大名鼎鼎，撑起了魅族绝大部分的核心业务，魅族的运行主要靠执掌全局的白永祥，负责营销的李楠，以及Flyme系统当家人杨颜，三人各负其责，让魅族在激烈的市场竞争中保有一席之地，对魅族的发展居功至伟。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">在此期间的魅族新品发布会，一般都是由白永祥和李楠轮流主持。随着黄章直接接手运营，“三剑客”就只剩江湖的传说了。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">同黄章一样，白永祥也是魅族的创始人之一，2011-2014年曾担任魅族CEO一职，处理黄章退出后的公司日常管理工作。黄章2014年初的回归，让外界猜测黄白之间是否早就心生嫌隙。外界猜想的主要依据是，黄章宣布回归的视频中，白永祥没有出现。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">后来，黄章收回了CEO职务，白永祥经历了从CEO到高级副总裁再到总裁的职务起伏变动。2018年5月，魅族的人事调整中，白永祥的名字已经消失了。至此“哥已不在江湖，江湖却仍有我的传说”，或许成为白永祥的最高评价。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">2014年，原本负责Flyme的副总裁马麟加入乐视，杨颜得以补位。杨颜在2011年加入魅族之前，是设计公司Eico Design的创意总监，因为主导设计了魅族M8的UI设计而获得黄章赏识。杨颜对魅族最大的贡献，在于其搭建起了魅族独树一帜的Flyme系统。可以这样说，杨颜就是Flyme系统的缔造者，在外界看来，杨颜就是Flyme系统，Flyme系统就是杨颜。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">2017年5月，杨颜成为Flyme事业部总裁，但在一年半之后，也就是2018年最后一天，杨颜宣布卸任事业部总裁。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">Flyme是杨颜的，营销是李楠的，江湖传说是白永祥的，但是魅族是黄章的。2018年7月，黄章在魅族论坛上发言称：“这么多年我没管公司就是个错误。我回归也是对前几年公司策略和人事的否定。预计到明年我才能彻底把公司运行到我想要的轨道上来。”这基本就预示了现在的结局。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">孤家寡人</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">黄章学历并不高， 在正式进入电子行业前，他曾做过码头搬运工等工作，但自小对电子电器的热爱促使他下定决心转型。2002年，黄章出任新加坡合资企业爱琴公司总经理，领导这家日薄西山的VCD企业转战音响、功放、MP3。之后由于和股东理念不合，黄章离开公司做起了自己的品牌。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">魅族是黄章的，但魅族不是只有黄章，因为魅族是几位核心老臣一同打拼之下的结果，而随着这些大将的悉数离开，黄章成了孤家寡人，茕茕孑立，形影相吊！随着华为、小米和OV等主流品牌逐步抢占更多的市场份额，留给魅族的机会会越来越少。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">数据显示，2015年魅族整体的手机出货量为2000万部，2016年增长到2200万部，2017年魅族整体的手机出货量下滑到2000万部。2018年，黄章回归亲自打磨出了魅族15以及魅族16系列，但据市场调研机构赛诺发布的数据，魅族的出货量只有948万台，同比大跌46%。因此，紫金财经一直认为，不是老臣们不行，是市场变了，也不是黄章你真的太行，看看市场表现，你亲自打磨的一样这个样子。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">就魅族自身而言，资深通信专家刘启诚坦言，魅族在好几款产品上都没有抓住机会，一直采用联发科的芯片，产品定位不清楚，为了走量而走量，导致消费者越来越不认可。“‘华米Ov’都有高中低三个层次的产品，定位清晰，覆盖全面，且有很大技术投入，要知道，技术的竞争力能起到关键作用，不管是拍照、快充还是屏幕，有了投入就有产出，但这些在魅族身上很少看到。”</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">当白永祥、李楠等魅族老臣离开魅族公司的那一刻，网上冷血言论是一方面，不知道魅族创始人黄章的真实想法如何？产经观察家丁少将认为，魅族频繁人事调整的原因，除了手机业务没有起色，部分高管要为业绩不好担责外，还因为高管内斗严重，需要重新构建管理体系以更顺畅地发展业务。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">企业做的不行，不管哪个方面，因为你是NO.1，所以黄章至少承担50%的责任，这样才公平。送走了一个又一个高官，证明团队已经失败了，团队都失败了，老板能够独善其身吗？</p><p><br/> </p>', '0', '0', '2019-07-20 13:34:00.000000', '8', null, '1', '1');
+INSERT INTO `news_articles` VALUES ('11', '便利店：一场席卷全国的“小卖部”改造计划已经拉开帷幕', null, null, 'articles/2019/07/addbce5ab35d4a48bb239963a4d177d7.jpg', '0', '0', '<p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">7月9日，商务部办公厅发布了“关于促进便利店品牌链发展的通知”和“关于收集品牌连锁便利店典型案例的通知”。该文件要求所有地方努力制定促进品牌，连接和情报的工作计划。市，有独立计划的城市和省会城市应在7月底前向商务部报告工作计划，其他城市应在9月底前提交。一项席卷全国的“小型销售部门”转型计划已经开始。</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/addbce5ab35d4a48bb239963a4d177d7\" img_width=\"648\" img_height=\"800\" alt=\"便利店：一场席卷全国的“小卖部”改造计划已经拉开帷幕\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">我们为什么要改造？</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">根据中国连锁经营协会公布的数据，2018年中国便利店产业增长率达到19％，市场规模突破2000亿元。然而，百强便利店公司的业务规模很大，以中小型便利店公司为主。数据显示，只有20家前100家公司拥有超过1,000家门店。 100至200家企业商店的数量占30％。总体而言，便利店公司仍处于起步阶段，规模普遍较小。此外，百强便利店市场的主战场仍然是省会城市以上的省会城市。只有约30％的企业来自地级市场。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/cd19dd78ac7b49eaa1cd1783bd67c0f6\" img_width=\"648\" img_height=\"800\" alt=\"便利店：一场席卷全国的“小卖部”改造计划已经拉开帷幕\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">如何改造？</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">商务部提出了中国目前便利店市场阶段性特征的发展要求，如联动程度低，布局不均等。 “品牌连锁便利店工作包开发要点”表明，各地应根据不同地区商业设施的状况和消费水平，制定便利店等便利商业设施的标准。推动新社区商业和综合服务设施的实施，占社区总建筑面积的10％以上，增强了储藏室安全的便利性。要结合城市旧城区社区整治工作，利用空间资源撤退，鼓励品牌连锁便利店落户。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">同时，还需要鼓励医院，大学，体育场馆，公园，景区等场所的公共服务场所向品牌连锁便利店开放店铺资源。鼓励品牌连锁便利店企业改造和升级旧小商店，杂货店和食堂等便利店。鼓励引进跨地区发展的知名品牌连锁便利店公司。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/4e80a4f94dbb4cbfae881b263ff43e68\" img_width=\"1024\" img_height=\"682\" alt=\"便利店：一场席卷全国的“小卖部”改造计划已经拉开帷幕\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">北京已经起了带头作用</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">事实上，到2018年底，北京市商务局已加入该市六个部门，并出台了“进一步促进便利店发展的若干措施”。支持19项措施，进一步改善便利店市场的营商环境，减缓店铺租金。高劳动力成本的压力。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">专家说：便利店密度衡量一个城市的商业现代化程度。每3000人拥有一个便利店，以实现整体便利。每2000人就有一家便利店，这是商业上的便利。近年来，北京市政府出台了一系列促进便利店发展的政策。但是，在劳动力，租赁成本和规模经济方面仍然存在重大挑战。对于便利店公司，仍然需要坚持单店盈利模式并应用新技术。对于政府来说，还有必要放宽行政审批，给予更多的优惠政策。</p><p><br/> </p>', '0', '0', '2019-07-20 13:36:00.000000', '8', null, '0', '2');
+INSERT INTO `news_articles` VALUES ('12', '昌赣高铁成功接入国家高铁网 再次展现“中国速度”', null, null, 'articles/2019/07/RWfAlvb3Xi8kZe.jpg', '0', '0', '<p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">中新网武汉7月19日电 (刘连强 彭特 徐金波)此间中铁十一局19日发布消息称，当天清晨随着(南)昌福(州)铁路运营线的每日轨检车、试验车顺利通过昌福铁路东村线路所下行线，这标志着经过该局及相关单位1000余人挑灯夜战的的(南)昌赣(州)高铁朴树联络线引入昌福铁路道岔“嫁接”成功，并与昌福铁路、泸昆高铁实现互连互通。</p><p><img src=\"http://p9.pstatp.com/large/pgc-image/RWfAlvb3Xi8kZe\" img_width=\"540\" img_height=\"312\" alt=\"昌赣高铁成功接入国家高铁网 再次展现“中国速度”\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">图为，建设者移走原有钢轨 彭特 摄</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">正在新建的昌赣高铁全长415.734公里，北起江西南昌，南至赣州，全线设13个车站，设计时速350公里，是国家《中长期铁路网规划》中南北大通道京港高铁的重要组成部分。该线路北接昌九城际铁路、昌福铁路，南与赣瑞龙、赣韶等铁路相连接，在南昌与沪昆高铁相交，共同构成了江西省“十”字形高速铁路主骨架。</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/RWfAlvo66M5Tcb\" img_width=\"540\" img_height=\"346\" alt=\"昌赣高铁成功接入国家高铁网 再次展现“中国速度”\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">图为，道岔插铺施工现场 彭特 摄</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">据中铁十一局昌赣项目铺架分部总工程师张晓峰介绍，昌赣高铁与昌福铁路在江西南昌县三江镇十字交叉，经朴树联络线，在既有昌福铁路K36+386里程处东村线路所，通过2组42号道岔与昌福铁路、沪昆高铁实现互连互通，此次插铺采用正位平行拼装、整体一次性插入的作业方式。</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/RWfAlw2FVK7U3u\" img_width=\"540\" img_height=\"360\" alt=\"昌赣高铁成功接入国家高铁网 再次展现“中国速度”\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">图为，建设者切割钢轨 彭特 摄</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">张晓峰，本次“换骨嫁接”施工需要在繁忙运输的既有昌福铁路36公里处，截断175.36米范围的即有轨道，然后插入已经组装完成且各项尺寸、技术指标符合高铁运营标准的一组42号道岔。道岔加构件总重达251吨，须一次性推入到道岔设计位置。道岔正向设计时速为250公里，侧向通过时速为160公里。该项施工具有中国完全自主知识产权，能大大缩短列车转线时间，提高通行效率。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/RWfAlwLHBAizq7\" img_width=\"540\" img_height=\"359\" alt=\"昌赣高铁成功接入国家高铁网 再次展现“中国速度”\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">图为，施工人员进行数据测量核对 彭特 摄</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">为减少施工影响既有铁路动车正常运行，中国铁路南昌局集团有限公司、昌九城际铁路公司和中铁十一局集团公司共组织了1000余人的作业队伍，安排在18日23时至次日7时“天窗”点内进行昌福铁路东村线路所下行线施工，19日晚至20日凌晨进行上行线施工左右。</p><p><img src=\"http://p9.pstatp.com/large/pgc-image/RWfAm885srtkyQ\" img_width=\"540\" img_height=\"359\" alt=\"昌赣高铁成功接入国家高铁网 再次展现“中国速度”\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">图为，施工人员对新铺设道岔进行人工捣固养护 彭特 摄</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">“场地狭小和时间紧迫是本次施工面临的最大难题。”张晓峰说，此段插铺线路为昌福铁路是最为繁忙的客运专线，日开行列车达53对，为保证第二天铁路正常运行，有效的施工天窗点时间非常短。插铺施工集工务、电务施工为一体，穿插作业多、道岔型号大长度长，施工现场作业面非常狭窄、人工需求量大。</p><p><img src=\"http://p9.pstatp.com/large/pgc-image/RWfAm8W25aWjYP\" img_width=\"540\" img_height=\"359\" alt=\"昌赣高铁成功接入国家高铁网 再次展现“中国速度”\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">图为，大型捣固车对新铺设的道岔进行大机养护 彭特 摄</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">张晓峰表示，本次施工相当于在8个小时内为运行的高铁做一次“移花接木”大手术，并且保证线路第二天具备通车条件。为此，项目部自2018年就成立了领导协调小组，集结诸多精兵强将，反复进行方案优化，多次进行现场演练，从而再一次展现了“中国速度”。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/RWfAm8p4Sws61F\" img_width=\"540\" img_height=\"360\" alt=\"昌赣高铁成功接入国家高铁网 再次展现“中国速度”\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">图为，施工人员对轨道进行精调 彭特 摄</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">据悉，随着昌赣高铁全线轨道铺通，该线路下一步将展开上轨检车、高铁综合检测列车等动态检测，进而为今年年底开通运营创造有利的条件。(完)</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/RWfAm977SqAg1b\" img_width=\"540\" img_height=\"303\" alt=\"昌赣高铁成功接入国家高铁网 再次展现“中国速度”\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">图为，道岔插铺完成后19日第一列动车通过施工地点 彭特 摄</p><p><br/> </p>', '0', '0', '2019-07-20 13:38:00.000000', '1', null, '0', '2');
+INSERT INTO `news_articles` VALUES ('13', '亚马逊正式退出中国！贝索斯会杀个回马枪吗？', null, null, 'articles/2019/07/ef11402d62cc4da6ae20d5f6026af89a.jpg', '0', '0', '<p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">了解更多热门资讯、玩机技巧、数码评测、科普深扒，点击右上角关注我们</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">----------------------------------</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">2004年，亚马逊从雷军、陈年手中收购卓越网，成立亚马逊中国，进军中国，开始布局中国业务。此后一路扩张，成为中国电子商务领域的领头羊。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">此时，马云的淘宝刚刚上线，刘强东的京东还是“京东多媒体网”。当时，谁也不会想到，亚马逊最终会“大撤退”。</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/63f15360e73346858d9d575a5d033599\" img_width=\"1186\" img_height=\"384\" alt=\"亚马逊正式退出中国！贝索斯会杀个回马枪吗？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">2019年，4月份有消息称，亚马逊将退出中国，仅保留Kindle和海外购业务。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">7月份，亚马逊中国上不少热卖的单品均纷纷无货或者下架状态，并且打折力度很大。另外，自营的图书也全部下架，仅能搜索出第三方卖家的商品。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">7月18日，亚马逊中国正式停止为第三方卖家提供卖家服务。如今从亚马逊中国官网上，已经没有自营或者第三方店铺的商品。仅剩Kindle、Kindle电子书以及海外购的业务。亚马逊几乎已经正式退出中国市场。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">7月18日，被誉为“亚马逊中国大撤退”一点也不不为过。</span></p><p><img src=\"http://p3.pstatp.com/large/pgc-image/4620da2fa5ba44128ff6e5579078aca3\" img_width=\"3356\" img_height=\"1868\" alt=\"亚马逊正式退出中国！贝索斯会杀个回马枪吗？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\">（如今光秃秃的亚马逊中国首页）</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><h1 style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-size: 24px; margin: 36px 0px 22px; padding: 0px; line-height: 32px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\">敦刻尔克大撤退</span></h1><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">说到大撤退，脑海中首先出现的就是二战中著名的敦刻尔克大撤退。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">1940年5月，英法联军节节败退，最终被德国机械化部队逼至敦刻尔克。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">5月26日开始至6月4日结束，英法联军在这里完成了历史上最大规模的军事撤退行动，9天时间，共有338226人从敦刻尔克撤回英国。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">在此事件之后，英国势力完全撤出西欧，同时西欧主要地区也被德国占领，似乎是一场失败的军事行动。但，从敦刻尔克撤退的34万大军，为日后盟军反击提供了人员基础。从某种意义上说，敦刻尔克的大撤退对战局有着积极的影响。</p><p><img src=\"http://p9.pstatp.com/large/pgc-image/ffc8b01019ce461c997b54ae31f21f03\" img_width=\"1818\" img_height=\"1078\" alt=\"亚马逊正式退出中国！贝索斯会杀个回马枪吗？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\">（敦刻尔克电影海报）</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><h1 style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-size: 24px; margin: 36px 0px 22px; padding: 0px; line-height: 32px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\">反应迟缓的亚马逊</span></h1><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">德国没有赢下二战，“诺曼底登陆”和“敦刻尔克大撤退”都成为战事的转折点。亚马逊几近退出中国，作为经历者，没有能力将时间线向后调，看一下未来的亚马逊能否再杀回中国市场。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">不过，我们可以回味一下，亚马逊中国在中国电子商务最辉煌的十年，是如何走上下坡路，以及如果要回归，贝索斯到底该如何改变。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/ef11402d62cc4da6ae20d5f6026af89a\" img_width=\"1544\" img_height=\"864\" alt=\"亚马逊正式退出中国！贝索斯会杀个回马枪吗？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\">（亚马逊创始人兼CEO 杰弗里・普雷斯顿・“杰夫”・贝索斯 ）</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">在美国，亚马逊是最早开始经营电子商务的公司，1994年诞生，是老牌的互联网巨头企业，轮历史，谷歌都要往后站。经过二十几年的发展，亚马逊创始人兼CEO贝索斯已经成为世界首富。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">所以，当时亚马逊开辟中国业务之时，所有人都看好这个有着雄厚实力的公司。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">要知道，要打开中国市场，势必要做本土化，曾经的雅虎、谷歌纷纷在本土化上落榜，没一个留下来。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">在本土化上，细数一下，亚马逊中国做的并不多，无论是在中国B2C电商崛起之前还是之后。在刚进入中国 ，收购卓越，改名为亚马逊中国，启用短域名，仅仅是商业行为，并非本土化。</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/eeb82dd65b804c3f9cd3848890aa98b3\" img_width=\"1422\" img_height=\"750\" alt=\"亚马逊正式退出中国！贝索斯会杀个回马枪吗？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">而亚马逊中国落足中国之后，也开始仿效总部，开始在中国设立自己的仓储物流，页面设计以及支付系统照搬美国。依旧是按部就班，如进入欧洲、日本市场相同。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">对于电商来说，拥有先进的物流、仓储的供应链管理能力是长期竞争力，这也是亚马逊在全球称霸的原因之一。早在2015年，亚马逊就已经开启了机器人分拣和智能仓储，有着及其先进的理念。由此，刚进入中国市场，亚马逊中国很是沉稳，兢兢业业的建立仓储物流以及供应链。反而忽视了中国本土电商的发展。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">在2008年，亚马逊中国还占据了中国电商市场的15.4%。不过没有持续多久，2009年，淘宝就开始了双11网络促销节，此后，京东也跟风，开发了618年中购物节。此后，无论是老牌的淘宝、京东，还是新生的拼多多等电商，无不做着“造节”、“大促”、“返利”的促销活动。现如今几乎月月都有促销，季末都有节日，每家电商都在用降价撩拨着我们的神经。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/ef06d20868ad4aaeaf286008a4d27f4e\" img_width=\"1688\" img_height=\"1080\" alt=\"亚马逊正式退出中国！贝索斯会杀个回马枪吗？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\">（2018年天猫双11）</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">反观，亚马逊中国一直不温不火，即使是刚开始也几乎没有任何优惠。同时，即使是在早期的双11、618等节点，也是淡然处之，颇为高冷。诚然，论当时的物流速度和配送体验上来说，无人能出其右，可是，我们更需要的是切实的优惠。2014年，亚马逊中国市场份额下降至2.1%，而2016年更是只剩1.3%。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">此后，2015年，亚马逊中国开始悄悄地反击，以PrimeDay和海外购组合拳回击。PrimeDay是亚马逊Prime会员专属的打折日，与国内电商不同的是，PrimeDay面向的是全球的商品，还可以免除国际运费，仅交税费即可。综合来看，参与PrimeDay的商品往往会有更具优势的价格。</p><p><img src=\"http://p9.pstatp.com/large/pgc-image/282fec459bd548cbae04ee37e4091acd\" img_width=\"2442\" img_height=\"1668\" alt=\"亚马逊正式退出中国！贝索斯会杀个回马枪吗？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\">（2015年开启的亚马逊海外购业务）</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">不过，亚马逊中国的PrimeDay或者海外购的商品是有范围的，一些热门商品为了避免与自营国行竞争，自然不会有PrimeDay的优惠。这也是PrimeDay、海外购并没有成为现在第三大购物节的一部分原因。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">至于海外购，在没有PrimeDay的加持下，海外运费+税费是一个相当可观的费用，再加上商品，几乎没有便宜多少，甚至是要比国内还贵。并且在平时也没有相应的促销活动，自然叫好但不卖座。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/f820ec82307c45a5bcaf7ce2172760ff\" img_width=\"1458\" img_height=\"900\" alt=\"亚马逊正式退出中国！贝索斯会杀个回马枪吗？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\">（亚马逊、京东、淘宝 App对比）</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">随着中国移动互联网的发展，智能手机爆发，自然用户群也从Web端转移到App上来。淘宝、京东等国内电商除了在App上发力，同时也在会员体系，移动支付和系统营销上下功夫。马云的阿里，有着淘宝、天猫、支付宝等一系列淘系App，而京东则依靠腾讯，获得了微信、QQ等大流量入口。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">反观亚马逊中国，没有把握住移动互联网大潮，购物App设计过于简单。没有建立合理的会员体系，仅有Prime/非Prime之分。同时，在早期移动支付风风火火的时候，亚马逊中国还是仅支持信用卡、储蓄卡，一直到后期才被迫加入了支付宝、微信等支付方式。</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/9c7412846f604a69a81a8ca3c091d568\" img_width=\"3358\" img_height=\"1576\" alt=\"亚马逊正式退出中国！贝索斯会杀个回马枪吗？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">另外，亚马逊中国从诞生开始再到现在二十几年的时间，商品介绍页一直比较粗糙，提供的信息很少。海外购的一些商品标题没有完全汉化，甚至有图片与标题不符的情况出现。除此之外，亚马逊中国的客服入口隐藏的也比较深，如果是新手可能很难准确找到客服来解决订单的疑问。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">从购物、搜索商品、支付、再到售后，几乎在每个环节，亚马逊中国的购物体验已经全面落后于中国电商。而且也没有任何的会员激励政策，自然很难说服大量用户充值，并留存之。根据eMarketer的数据，截止2018年6月份，亚马逊中国仅剩0.7%的市场份额。</p><h1 class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-size: 24px; margin: 36px 0px 22px; padding: 0px; line-height: 32px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">优势何在？</h1><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">虽说亚马逊中国步伐总慢一步 ，且在购物体验上没有多少长进。但它在售后处理上却十分大方。一是客服有着不小的权限，可以直接更改你的订单数量，即使你在用了优惠折扣的前提下。二是，对顾客有着很高的容错率，对于出错的订单，都会优先赔付。另外，对于海外购的税款，也会定期清算，多退少补。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/12bd99ed2c8a47899547995e4c6c2aa9\" img_width=\"1460\" img_height=\"904\" alt=\"亚马逊正式退出中国！贝索斯会杀个回马枪吗？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\">（什么值得买值友对亚马逊客服的褒奖）</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">对于亚马逊中国来说，你可以嫌弃它的网页、它的App，但它依旧有着中国电商最好的售后，并且权限最大的客服。这是亚马逊仅剩的优势了。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">在亚马逊退出中国市场的消息后，不少消费者都表示，希望留下整套的客服系统。并且表示有了客服，残存的海外购业务体验才不会被打折。</p><h1 style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-size: 24px; margin: 36px 0px 22px; padding: 0px; line-height: 32px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\">王者归来？</span></h1><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">“敦刻尔克大撤退”有着天时地利人和的优势，天空作美，让德军无法大规模空袭与轰炸，希特勒的错误命令，让地面坦克部队没有形成包夹之势。而英法联军则动员渔民、业余水手和私人船主前去救援，经过9日，齐心协力将33万英法联军撤回。此后，就有了“诺曼底登陆”，也有了1945年的大胜利。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">而对于亚马逊，对于贝索斯而言，亚马逊此次缩减中国业务，无疑是失败之举。但保留的Kindle和海外购业务，也许只是暂时休整，易边再战，毕竟物流、仓储以及供应链还尚在。</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/b11f098d29a64d808be419a63eb64181\" img_width=\"1526\" img_height=\"1072\" alt=\"亚马逊正式退出中国！贝索斯会杀个回马枪吗？\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br/> </p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">从亚马逊进入中国以来，亚马逊中国依旧是亚马逊庞大体系中的一个棋子，没有完成转身，没有与中国市场保持同步，自然会掉队。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">如果贝索斯的亚马逊要重新回归，除了放低姿态之外，最重要的还是研究“本土化”以及如何运用之。在运营策略上，要与中国市场保持一致，并且运营团队要有足够的决策权，以应对瞬息万变的电商市场。另外，App也需要单独优化，新的会员激励体系，更友好的支付系统等等都要作出改变。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">敦刻尔克大撤退遇到诺曼底登陆，才算是成功。而亚马逊在中国的“诺曼底登陆”到底要等多久，我们还未知。就在此刻，彼时的丘吉尔暂赢如今的贝索斯。</p><p class=\"ql-align-justify\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">倘若后续亚马逊没有诺曼底登陆，那我们只能将那段在卓越亚马逊买书的经历讲给子子孙孙听了。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">----------------------------------</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">私信“交流”，即可获得玩机技能合集，还可与众多机友一起讨论数码科技互联网第一线热点。</p><p><br/> </p>', '0', '0', '2019-07-20 13:40:00.000000', '1', null, '0', '1');
+INSERT INTO `news_articles` VALUES ('14', '“史上最安全”东单路口，俩95后护士再立功！', null, null, 'articles/2019/07/b436508be4361649c423de3a76d8fb1a.jpg', '0', '0', '<p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><strong>协和的医务人员又出手救人了？</strong></p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><strong>是的！</strong></p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><strong>这次出手相救的是两个95后护士，</strong></p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><strong>地点依然是“史上最安全东单路口”。</strong></p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><strong>路遇老人停止心跳</strong></p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><strong>协和护士出手相救</strong></p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">今天上午，两名患者家属来到北京协和医院宣传处，专门来表达他们的谢意，感谢协和医院的护士鲁莎莎和刘慧影在院外救了他们的家人。</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">原来，7月13日下午2：05，这两位95后的小护士路过东单路口的交通银行时，联手救治了一位心脏骤停的老人。</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><img src=\"https://t1.huanqiucdn.cn/b436508be4361649c423de3a76d8fb1a.jpg\" style=\"border: none; max-width: 100%; display: block; height: auto; margin: 10px auto 20px;\"/> </p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">鲁莎莎和刘慧影都是北京协和医院去年入职的护士，两个人住在一间宿舍，“我们是室友。”莎莎告诉记者，7月13日那天她和室友刚好都休息。</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><img src=\"https://t1.huanqiucdn.cn/174a269bcc14e2b7c5102430c3814e43.jpg\" style=\"border: none; max-width: 100%; display: block; height: auto; margin: 10px auto 20px;\"/> </p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">救人护士鲁莎莎（左）和刘慧影（右）</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">7月12日，慧影刚刚做了近视眼激光手术，第二天她觉得眼睛有点不舒服。于是，莎莎就陪着慧影一起去医院的急诊科检查一下。到了急诊科医生说没有大碍，点了些眼药水之后，两个人就一块儿往回走，这位患者是她们路过银行时发现的。</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><img src=\"https://t1.huanqiucdn.cn/98eddaf3652b5e2c36f3cf0e7a81a2d9.jpg\" style=\"border: none; max-width: 100%; display: block; height: auto; margin: 10px auto 20px;\"/> </p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">“当时我听到银行里面有人哭，特别绝望的那种哭泣。”莎莎望了一眼，发现是一位阿姨在哭，“我的第一反应是她可能转账转错了。”</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">再一看，发现地上躺着一位叔叔。银行的门口有个看起来像经理一样的人正在打电话叫救护车。“我们判断应该是这位叔叔有麻烦了，就准备冲进去急救。”</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">银行工作人员拦住了她们。两位护士向银行的工作人员表明了身份：我们是协和医院的护士。这时，银行的工作人员立刻让行，给她俩开启了“绿色通道”。</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><img src=\"https://t1.huanqiucdn.cn/34ba47193af166bf9820e9d7512f004a.jpg\" style=\"border: none; max-width: 100%; display: block; height: auto; margin: 10px auto 20px;\"/> </p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><strong>当时患者已经没有了心跳和呼吸。</strong>俩人问了家属，“他有心脏病病史吗？”老伴儿也说不清。<strong>丝毫没有耽搁，两个人立刻开始进行心肺复苏。</strong></p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">莎莎第一个上场，按压了几分钟之后，眼睛里点了麻药的慧影接棒继续。这时，救护车还没有赶到，莎莎想起来她俩从急诊科走过来时，刚好门口有一辆送完患者的救护车。她决定自己去叫救护车。</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">为了争取时间，莎莎出了银行的门，骑上一辆共享单车就朝医院的方向飞奔而去。很快，救护车跟随她一起来到银行门口，此时，银行工作人员呼叫的救护车也赶到了。急救人员立刻为老人进行除颤等急救治疗，很快老人被送到了协和医院。</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">莎莎和慧影也跟着患者的老伴儿一起赶到了医院，帮助她办理相关的住院手续。“她在医院里都不熟悉，肯定哪儿找不到。”家属不知从何感谢，她对莎莎和慧影说，“给我当干闺女吧！”</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><img src=\"https://t1.huanqiucdn.cn/a2252cea6f84af530864d75353a772a7.jpg\" style=\"border: none; max-width: 100%; display: block; height: auto; margin: 10px auto 20px;\"/> </p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">视频监控重现抢救现场</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">让两名小护士感到高兴的是，老人恢复得特别好，已经从重症监护室转到了心内科的普通病房进行进一步治疗。因此，老人的家属今天特地来表达谢意。</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">转运的急救医生也说，幸亏老人倒地后，有医务人员在旁边及时救治，才挽救了患者的生命，也让两名小护士觉得特别有成就感。</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><strong>网友<span data-scene=\"strong\">致敬医者仁心</span></strong></p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><strong>点赞宇宙最安全路口</strong></p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">很多人还有印象，今年3月，六名医生下班后在东单体育馆，联手将心脏骤停的一名球友救了回来，送到附近的同仁医院后，患者转危为安。</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">后来，患者给医务人员伸了一个大拇指点赞！（此前报道：命真大！男子东单体育馆猝死，巧遇6位协和医生联手救活！）</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><img src=\"https://t1.huanqiucdn.cn/80ad25dcb3854d5413da4798f3c6f8fe.jpg\" style=\"border: none; max-width: 100%; display: block; height: auto; margin: 10px auto 20px;\"/> </p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">这次，网友再次惊叹：<strong>以后遛弯就围着协和了。</strong><strong>致敬医者仁心！</strong></p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">记者了解到，两名护士很低调，以至于后来工作人员在银行的监控视频中才看到了她们“飒爽”的跪地救人英姿。</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><img src=\"https://t1.huanqiucdn.cn/e978985b5f078c7ce2013243fd6ef2d2.jpg\" style=\"border: none; max-width: 100%; display: block; height: auto; margin: 10px auto 20px;\"/> </p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">两名护士今天在协和医院的微博亮相后，网友夸她们是“最美白衣天使”，“确实人美心也美”，“两个小姐姐真美”“人美心善”……</p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><img src=\"https://t1.huanqiucdn.cn/6aafc6e2836efcc2476188732e35b9c8.jpg\" style=\"border: none; max-width: 100%; display: block; height: auto; margin: 10px auto 20px;\"/> </p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><img src=\"https://t1.huanqiucdn.cn/fb430a5262b8fc650c7a9eeed62c8fdf.jpg\" style=\"border: none; max-width: 100%; display: block; height: auto; margin: 10px auto 20px;\"/> </p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\">对于东单路口，“史上最安全路口”也已经不足以表达人们对这个路口安全的赞叹了，<strong>最新的称呼是“宇宙最安全路口”。</strong></p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><img src=\"https://t1.huanqiucdn.cn/1b415d281c80ec0a852b2cae332b967d.jpg\" style=\"border: none; max-width: 100%; display: block; height: auto; margin: 10px auto 20px;\"/> </p><p style=\"margin-top: 10px; margin-bottom: 20px; padding: 0px; list-style: none; line-height: 30px; word-break: break-all; color: rgb(25, 25, 25); font-family: &quot;\\&quot;PingFang SC\\&quot;,Arial,\\&quot;Microsoft yahei\\&quot;,simsun,\\&quot;sans-serif\\&quot;&quot;; white-space: normal; background-color: rgb(249, 249, 249);\"><img src=\"https://t1.huanqiucdn.cn/d434b5da822b3f0ca98bd0ed4c75e330.jpg\" style=\"border: none; max-width: 100%; display: block; height: auto; margin: 10px auto 20px;\"/> </p><p><br/> </p>', '0', '0', '2019-07-20 13:42:00.000000', '1', null, '0', '1');
+INSERT INTO `news_articles` VALUES ('15', '突发事件！64岁任达华出席活动被捅刀，腹部流血不止仍安慰粉丝', null, null, 'articles/2019/07/RWjXe3a6rPvgFg.jpg', '0', '0', '<p><img src=\"http://p3.pstatp.com/large/pgc-image/RWjXe3a6rPvgFg\" img_width=\"419\" img_height=\"759\" alt=\"突发事件！64岁任达华出席活动被捅刀，腹部流血不止仍安慰粉丝\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">近日，任达华在中山参加某活动的时候，疑似被一名冲上舞台的男子带刀刺伤，现场的情况陷入一片混乱当中。从现场拍摄到的视频来看，大家可以看到任达华身边的保安一路搀扶着离开舞台现场，当天任达华西装革履，打扮得非常正式，在退出现场的过程当中，任达华还不停地安慰旁边的粉丝。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/RWjXe43AxJWnvq\" img_width=\"427\" img_height=\"772\" alt=\"突发事件！64岁任达华出席活动被捅刀，腹部流血不止仍安慰粉丝\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">虽然任达华嘴上说着没事，脸上也是云淡风轻的样子，但是从他的手上大家依稀可以看到红色的血迹。这让大家十分揪心，究竟在现场发生了什么事情呢？从网友上传的一段视频来看，大家也许可以了解事情的经过。当时任达华出现在中山，是去参加某一个品牌店的开业活动，在活动开展的过程当中，大家都没有发现任何的异样。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/RWjZmuFI7Wxt8E\" img_width=\"347\" img_height=\"564\" alt=\"突发事件！64岁任达华出席活动被捅刀，腹部流血不止仍安慰粉丝\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">直到主持人说：“有请某某某上台”，大家站在舞台上静心等候的时候，突然一位穿着灰色背心的男士径直走向任达华的方向。还没有等任达华和现场的观众反应过来，这名男子马上掏出自己随身携带的刀具捅向了任达华的方向，被捅中的任达华连连后退，但是这名男子却依然没有停止他的侵害行为，一路追赶着想要伤害任达华。</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/RWjZmuZ4yVI0sg\" img_width=\"348\" img_height=\"587\" alt=\"突发事件！64岁任达华出席活动被捅刀，腹部流血不止仍安慰粉丝\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">现场的活动人员先是惊呼了一声，之后马上反应过来，帮助保安一起控制了这名男子。在大家的一起努力之下，终于将这名行凶的男子控制住了。但是从之后大家看到的任达华退场视频来看，任达华似乎已经被这名男子刺伤了，出现了流血的迹象。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/RWjZmuq6UBGAuo\" img_width=\"340\" img_height=\"586\" alt=\"突发事件！64岁任达华出席活动被捅刀，腹部流血不止仍安慰粉丝\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">事情发生之后，有工作人员立马联系到任达华的助理，但是这名工作人员回复，事发当时自己并不在任达华的身边，而关于这个事情的进一步进展，他们会晚些时候联系媒体。目前嫌疑人已被制服。</p><p><br/> </p>', '0', '0', '2019-07-20 13:43:00.000000', '1', null, '0', '2');
+INSERT INTO `news_articles` VALUES ('16', '周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘', null, null, 'articles/2019/07/cb843994ca3144c1ac1bc12cd558279a.jpg', '0', '0', '<p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">光谷某四星级酒店一客房内，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">13名中高层正在开会部署“工作”，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">突然，一群警察冲了进来，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">还严厉呵斥：</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">“不许动！不许动！”</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">众人顿时惊呆……</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/8892d4d21099485fa54af3b926cf418d\" img_width=\"255\" img_height=\"255\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">原来，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">聚集在这个两人标准间内的，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">是一群传销头目！！！</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">打蛇打七寸，擒贼先擒王。</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">武汉洪山警方历经1个多月的追踪，</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">终于摸清这个活跃在</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">南湖及光谷地区的传销团伙，</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">每周四召开中高层会议，</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">于是趁他们开周例会之际一举出击。</span></p><p><img src=\"http://p9.pstatp.com/large/pgc-image/a47251ec3ddc4e89a8b551aa308e699d\" img_width=\"270\" img_height=\"270\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">记者随警出击，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">见证此次抓捕过程，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">并随后对一名</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">传销“大总管”面对面采访。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">雷霆行动</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">传销头目的周例会上出击</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">7月11日上午，以洪山公安分局经侦民警为骨干的专案组讨论案情，另有60余名警力布控待命。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">据介绍，今年6月初在接受警方反洗脑的教育时，一名基层传销者提供了团伙中“中层领导”相关线索。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">洪山区委常委、区公安分局局长张光敏高度重视，指令组织精干警力深入调查。经过 1个多月的侦查，摸清该团伙的组织结构和活动规律。<span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">“大约有 14个经理室，活跃着很多老总级的高层，争取将这些传销头目一举抓获。”</span>专案组负责人表示。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">该团伙每周四召开中高层会部署“工作”，这是最佳的出击时机。</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">上午10时，记者跟随狮子山派出所民警来到光谷一家四星级酒店，便衣民警在酒店方配合下，顺利打开房门，屋内聚集的传销头目顿时惊呆。“不许动！”民警严厉呵斥，将他们全部控制。<span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">房间是一个两人标准间，罗某等13名传销头目聚集在此。</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p><img src=\"http://p1.pstatp.com/large/pgc-image/cb843994ca3144c1ac1bc12cd558279a\" img_width=\"800\" img_height=\"533\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">抓捕现场</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">房内有他们手写的相关资料，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">如<span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">“检讨书”</span>，上面写道：</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">“我深刻反省，乱放行业资料是不自律的行为，我们每周的行业会上都强调自律是行业的命根子……”，</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">“我要认真学习《生活经营管理二十一条》，并落实到位”。</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p><img src=\"http://p1.pstatp.com/large/pgc-image/90b36786f4374b8bb78859a8a86c724c\" img_width=\"640\" img_height=\"480\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">传销头目记录的“高层指示”</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">还有记录的所谓<span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">“高层指示”，</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">“不做消极言论的散播者，不利团队健康的话和事不说不做”等等。</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p><img src=\"http://p1.pstatp.com/large/pgc-image/766bb9c29ff84e6db12aab79e867a578\" img_width=\"640\" img_height=\"427\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">抓捕现场</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">当天下午，关山、青菱等多个派出所赶赴光谷附近小区，又抓获叶某等15个传销头目。警方趁热打铁，联合洪山、狮子山街办及区政府部门对相关小区开展地毯式清查，查获到100余名基层传销人员。</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">目前，警方已对行动中抓获的28名传销头目刑事拘留。</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p><img src=\"http://p3.pstatp.com/large/pgc-image/53e3692d536f4231bef6f51f85e0efe4\" img_width=\"1000\" img_height=\"667\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">揭开画皮</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">人模人样的老总常坐公交</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">经审查，28名传销头目中，11人是传销中层即“总管”，17人是传销老总。</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p><img src=\"http://p3.pstatp.com/large/pgc-image/053fd28da1ff4c65bdbc04db9e201307\" img_width=\"800\" img_height=\"533\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">传销头目被押上警车</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">洪山警方向记者介绍，<span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">这些“老总”主要来自广东、广西、江西、湖南等地，没有正经职业，早上起床就是组织传销人员“学习”“拜访”，有时亲自以“成功人士”身份授课，讲解个人奋斗史。</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">这些老总们真的很成功吗？</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">记者了解到，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">团伙的基层传销人员都住南湖一带，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">而所谓总管领导们</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">都住光谷附近的高档小区，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">个别老总有贷款买车，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">目的就是把自己包装为“成功人士”，</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">向基层传销者展示成功形象。</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">事实上，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">这些所谓的老总过得很惨。</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">办案民警介绍，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">传销“老总”虽住在高档小区，但</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">房子是租的，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">轿车是贷款买的，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">每月房租少则3000多元，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">为节省开支一般都是</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">两三个老总合租一套。</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">而在平时，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">他们能走路就尽量不坐公交，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">能坐公交车就尽量不坐地铁，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">能坐地铁就尽量不打的。</p><p><img src=\"http://p1.pstatp.com/large/pgc-image/57ce4922b2d940f29629f9586e87b0d0\" img_width=\"274\" img_height=\"182\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">平日里，老总跟基层传销者洗脑，夸赞他们都是挑选的精英，从事的是<span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">“国家秘密工程”，“本地人没有资格参与”。</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">一旦遭警方打击或针对媒体揭露传销骗局的报道，老总就说这是“宏观调控”。实际上，他们之所以不吸纳本地人，主要是怕本地人关系复杂容易露馅，外地人则更容易控制。</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">解构传销</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">“1040工程”是个啥玩意儿</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">该团伙从事违法传销的幌子是</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">“1040秘密工程”，</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">也叫“1040阳光工程”。</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">入伙时只有购买21笔份额交足 69800元，</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">才能发展下线。</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">交足钱之后，</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">团伙会退19000元作为“提成奖励”。</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">任务是发展2或3个下线，</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">每个下线再分别发展 2或 3个下线，</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">当发展到29人，</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">份额达到600份以上时，</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">即晋升为老总。</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">传销人员分5个层级：</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">实习业务员</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">组长</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">主任</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">(初加入者份额达10份即晋升主任)</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">经理</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">（份额达65份晋升为经理）</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">老总</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">（份额达 600份晋升为老总）</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">团伙中吹嘘老总拿满1040万元就可出局，称作完成了资本运作。这就是所谓的“五级三晋制”和“1040工程”。</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">管理层有老总、大总管、申购总管、能力总管、自律总管、家长等。传销完全是靠新人入会来作为收入，如新人交69800元，当月返还新人19000元，剩下的50800元则都被上线抽走，按照等级高低阶梯式抽成。</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">如何发展下线？</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">警方梳理介绍：</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">首先他们会以做工程、做生意等名义打电话给亲友，哄骗亲友过来；</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">第二步，带亲友到武汉游玩称某某建设就是他们投资的项目；</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">第三步洗脑，带他们到其他房间拜访、听课，看传销资料；</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">第四步，老总出马，讲解个人励志故事；</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">最后要求新入者交钱，由申购总管考核晋级。</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">警方表示，传销形式不管如何升级，</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">但有3个特征不会改变：</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">收取入门费；</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">拉人头发展下线；</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">以发展下线数量为依据多层复式计酬。</span></p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">其根本的目的就是骗钱。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">落网大总管向记者自叹</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">知道这是骗局但已骑虎难下</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">17日，记者跟随洪山警方来到看守所，见到落网的传销中层领导者小刚（化名）。小刚今年26岁，就在本月晋升为“大总管”的他，向记者表示其实早就意识到这个是传销骗局，但已骑虎难下。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">记者：你怎么加入传销的？</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">小刚：去年9月，我在广西老家闲着没事来到武汉，<span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">同学</span>让我找事做。对方带我在武汉到处看建设，看长江大桥、黄鹤楼。第二天开始讲课，向我介绍经济政策，说我们搞的是资本运作，可以带动城市消费。最后一天带我去参观市民之家，整个过程大约1周时间。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">记者：你相信了么？</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">小刚：刚开始我信，分多次交足了69800元。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">记者：你们怎么发展下线，你拉了人吗？</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">小刚：<span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">主要是发展亲友。</span>为确保成功概率，我们会对亲朋好友列出表格，分析他们的收入、性格和最近遇到的困难，<span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">以介绍工作或女朋友名义把他们骗过来。我发展了两个下线，一个是同学，另一个是曾经的同事，</span>他们都有工作上的不顺才来的武汉，跟我之前经历的一样。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">记者：你们的管理很严格？</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">小刚：是的，我们有严格的管理制度。<span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">比如去别的经理室串门要预约，出去要请假、回来后要销假，在外面绝不谈行业内的事，不能保留行业资料，理由就是“这是秘密工程，不能明目张胆地做”，一旦违反就要被罚款。</span>实际上，这都是为了避免露马脚，逃避打击。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">记者：你觉得现在跟最初设想的一致吗？</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">小刚：完全不一样。我们什么产品都不生产也没产品卖。我最开始交了69800元，退给我19000元，加上我拿提成的几千元，我待了一年多发现根本没钱赚，只有不断地骗人来，才能从新人交的钱里抽提成。说到底就是一个骗局。</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">记者：你何时发现这是骗局，为什么不离开？</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">小刚：今年过完年大概3月份，我就感觉到传销是骗人的。<span style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; font-weight: 700;\">我和妹妹贷款交钱，现在欠款都成了黑户了。我投了那么多钱要不回来，心有不甘。还有就是，我已发展了下线，下线又发展了他的亲朋好友，如果我走了，这些人都会找我扯皮，我没有办法跟他们交待，真是骑虎难下……</span></p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">记者：以后还有什么打算？</p><p style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">小刚：我很懂水电管理。等我坐完牢出来，应该能找个正经工作。</p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">网友评论</p><p><img src=\"http://p3.pstatp.com/large/pgc-image/407b9b222bd841f0bcdd04c414379b8a\" img_width=\"1080\" img_height=\"217\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p><img src=\"http://p1.pstatp.com/large/pgc-image/4772eee68f514d429465320d543e3223\" img_width=\"1080\" img_height=\"242\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p><img src=\"http://p1.pstatp.com/large/pgc-image/1d1ebe7744e849a9a4ee0e316ecaaf6b\" img_width=\"1080\" img_height=\"262\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p><img src=\"http://p3.pstatp.com/large/pgc-image/f60db7862142489eaad69f8332265f6a\" img_width=\"1080\" img_height=\"270\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p><img src=\"http://p1.pstatp.com/large/pgc-image/b75e34a87e5c42878d3465d7870dc7e6\" img_width=\"1080\" img_height=\"256\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p><img src=\"http://p3.pstatp.com/large/pgc-image/e13fbb621ce349b6a436144e198f2040\" img_width=\"1080\" img_height=\"266\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p class=\"pgc-img-caption\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: center; font-size: 12px; color: rgb(119, 119, 119); line-height: 16px;\"><br/> </p><p class=\"ql-align-center\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; margin-top: 16px; margin-bottom: 16px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\"><br style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box;\"/> </p><p><img src=\"http://p3.pstatp.com/large/pgc-image/e79ab35ce0704de384e4f39426044c86\" img_width=\"1080\" img_height=\"217\" alt=\"周例会上，警察冲了进来！最终17名“老总”11名“中层”被刑拘\" inline=\"0\" style=\"-webkit-tap-highlight-color: transparent; box-sizing: border-box; border-style: none; max-width: 100%; display: block; margin: 10px auto;\"/> </p><p><br/> </p>', '0', '0', '2019-07-20 13:45:00.000000', '1', null, '0', '2');
+
+-- ----------------------------
+-- Table structure for news_articlesmedia
+-- ----------------------------
+DROP TABLE IF EXISTS `news_articlesmedia`;
+CREATE TABLE `news_articlesmedia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `belong` int(11) NOT NULL,
+  `belongtype` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `filename` varchar(200) NOT NULL,
+  `sort` int(11) NOT NULL,
+  `add_time` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of news_articlesmedia
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for store_express_company
 -- ----------------------------
 DROP TABLE IF EXISTS `store_express_company`;
-CREATE TABLE `store_express_company`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `express_title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '快递公司名称',
-  `express_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '快递公司代码',
-  `express_desc` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '快递公司描述',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0.无效,1.有效)',
-  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态(1删除,0未删除)',
+CREATE TABLE `store_express_company` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `express_title` varchar(50) DEFAULT '' COMMENT '快递公司名称',
+  `express_code` varchar(50) DEFAULT '' COMMENT '快递公司代码',
+  `express_desc` varchar(512) DEFAULT '' COMMENT '快递公司描述',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '状态(0.无效,1.有效)',
+  `sort` bigint(20) unsigned DEFAULT '0' COMMENT '排序权重',
+  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT '删除状态(1删除,0未删除)',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 95 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城-快递-公司';
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COMMENT='商城-快递-公司';
 
 -- ----------------------------
 -- Records of store_express_company
 -- ----------------------------
-INSERT INTO `store_express_company` VALUES (5, 'AAE全球专递', 'aae', NULL, 0, 0, 0, '2017-09-12 11:53:40');
-INSERT INTO `store_express_company` VALUES (6, '安捷快递', 'anjie', '', 0, 0, 0, '2017-09-13 15:27:26');
-INSERT INTO `store_express_company` VALUES (7, '安信达快递', 'anxindakuaixi', NULL, 0, 0, 0, '2017-09-13 16:05:19');
-INSERT INTO `store_express_company` VALUES (8, '彪记快递', 'biaojikuaidi', NULL, 0, 0, 0, '2017-09-13 16:05:26');
-INSERT INTO `store_express_company` VALUES (9, 'BHT', 'bht', '', 0, 0, 0, '2017-09-13 16:05:37');
-INSERT INTO `store_express_company` VALUES (10, '百福东方国际物流', 'baifudongfang', NULL, 0, 0, 0, '2017-09-13 16:05:41');
-INSERT INTO `store_express_company` VALUES (11, '中国东方（COE）', 'coe', NULL, 0, 0, 0, '2017-09-13 16:05:48');
-INSERT INTO `store_express_company` VALUES (12, '长宇物流', 'changyuwuliu', NULL, 0, 0, 0, '2017-09-13 16:05:58');
-INSERT INTO `store_express_company` VALUES (13, '大田物流', 'datianwuliu', NULL, 0, 0, 0, '2017-09-13 16:06:06');
-INSERT INTO `store_express_company` VALUES (14, '德邦物流', 'debangwuliu', '', 0, 1, 0, '2017-09-13 16:06:14');
-INSERT INTO `store_express_company` VALUES (15, 'DHL', 'dhl', NULL, 0, 0, 0, '2017-09-13 16:06:24');
-INSERT INTO `store_express_company` VALUES (16, 'DPEX', 'dpex', NULL, 0, 0, 0, '2017-09-13 16:06:29');
-INSERT INTO `store_express_company` VALUES (17, 'd速快递', 'dsukuaidi', NULL, 0, 0, 0, '2017-09-13 16:06:34');
-INSERT INTO `store_express_company` VALUES (18, '递四方', 'disifang', NULL, 0, 0, 0, '2017-09-13 16:06:40');
-INSERT INTO `store_express_company` VALUES (19, 'EMS快递', 'ems', '', 1, 0, 0, '2017-09-13 16:06:47');
-INSERT INTO `store_express_company` VALUES (20, 'FEDEX（国外）', 'fedex', NULL, 0, 0, 0, '2017-09-13 16:06:56');
-INSERT INTO `store_express_company` VALUES (21, '飞康达物流', 'feikangda', NULL, 0, 0, 0, '2017-09-13 16:07:03');
-INSERT INTO `store_express_company` VALUES (22, '凤凰快递', 'fenghuangkuaidi', NULL, 0, 0, 0, '2017-09-13 16:07:10');
-INSERT INTO `store_express_company` VALUES (23, '飞快达', 'feikuaida', NULL, 0, 0, 0, '2017-09-13 16:07:16');
-INSERT INTO `store_express_company` VALUES (24, '国通快递', 'guotongkuaidi', NULL, 0, 0, 0, '2017-09-13 16:07:27');
-INSERT INTO `store_express_company` VALUES (25, '港中能达物流', 'ganzhongnengda', NULL, 0, 0, 0, '2017-09-13 16:07:33');
-INSERT INTO `store_express_company` VALUES (26, '广东邮政物流', 'guangdongyouzhengwuliu', NULL, 0, 0, 0, '2017-09-13 16:08:22');
-INSERT INTO `store_express_company` VALUES (27, '共速达', 'gongsuda', NULL, 0, 0, 0, '2017-09-13 16:08:48');
-INSERT INTO `store_express_company` VALUES (28, '汇通快运', 'huitongkuaidi', NULL, 0, 0, 0, '2017-09-13 16:08:56');
-INSERT INTO `store_express_company` VALUES (29, '恒路物流', 'hengluwuliu', NULL, 0, 0, 0, '2017-09-13 16:09:02');
-INSERT INTO `store_express_company` VALUES (30, '华夏龙物流', 'huaxialongwuliu', NULL, 0, 0, 0, '2017-09-13 16:09:12');
-INSERT INTO `store_express_company` VALUES (31, '海红', 'haihongwangsong', NULL, 0, 0, 0, '2017-09-13 16:09:20');
-INSERT INTO `store_express_company` VALUES (32, '海外环球', 'haiwaihuanqiu', NULL, 0, 0, 0, '2017-09-13 16:09:27');
-INSERT INTO `store_express_company` VALUES (33, '佳怡物流', 'jiayiwuliu', NULL, 0, 0, 0, '2017-09-13 16:09:35');
-INSERT INTO `store_express_company` VALUES (34, '京广速递', 'jinguangsudikuaijian', NULL, 0, 0, 0, '2017-09-13 16:09:42');
-INSERT INTO `store_express_company` VALUES (35, '急先达', 'jixianda', NULL, 0, 0, 0, '2017-09-13 16:09:49');
-INSERT INTO `store_express_company` VALUES (36, '佳吉物流', 'jjwl', NULL, 0, 0, 0, '2017-09-13 16:10:01');
-INSERT INTO `store_express_company` VALUES (37, '加运美物流', 'jymwl', NULL, 0, 0, 0, '2017-09-13 16:10:13');
-INSERT INTO `store_express_company` VALUES (38, '金大物流', 'jindawuliu', NULL, 0, 0, 0, '2017-09-13 16:10:22');
-INSERT INTO `store_express_company` VALUES (39, '嘉里大通', 'jialidatong', NULL, 0, 0, 0, '2017-09-13 16:10:33');
-INSERT INTO `store_express_company` VALUES (40, '晋越快递', 'jykd', NULL, 0, 0, 0, '2017-09-13 16:10:40');
-INSERT INTO `store_express_company` VALUES (41, '快捷速递', 'kuaijiesudi', NULL, 0, 0, 0, '2017-09-13 16:10:49');
-INSERT INTO `store_express_company` VALUES (42, '联邦快递（国内）', 'lianb', NULL, 0, 0, 0, '2017-09-13 16:10:58');
-INSERT INTO `store_express_company` VALUES (43, '联昊通物流', 'lianhaowuliu', NULL, 0, 0, 0, '2017-09-13 16:11:07');
-INSERT INTO `store_express_company` VALUES (44, '龙邦物流', 'longbanwuliu', NULL, 0, 0, 0, '2017-09-13 16:11:15');
-INSERT INTO `store_express_company` VALUES (45, '立即送', 'lijisong', NULL, 0, 0, 0, '2017-09-13 16:11:25');
-INSERT INTO `store_express_company` VALUES (46, '乐捷递', 'lejiedi', NULL, 0, 0, 0, '2017-09-13 16:11:36');
-INSERT INTO `store_express_company` VALUES (47, '民航快递', 'minghangkuaidi', NULL, 0, 0, 0, '2017-09-13 16:11:45');
-INSERT INTO `store_express_company` VALUES (48, '美国快递', 'meiguokuaidi', NULL, 0, 0, 0, '2017-09-13 16:11:53');
-INSERT INTO `store_express_company` VALUES (49, '门对门', 'menduimen', NULL, 0, 0, 0, '2017-09-13 16:12:01');
-INSERT INTO `store_express_company` VALUES (50, 'OCS', 'ocs', NULL, 0, 0, 0, '2017-09-13 16:12:10');
-INSERT INTO `store_express_company` VALUES (51, '配思货运', 'peisihuoyunkuaidi', NULL, 0, 0, 0, '2017-09-13 16:12:18');
-INSERT INTO `store_express_company` VALUES (52, '全晨快递', 'quanchenkuaidi', NULL, 0, 0, 0, '2017-09-13 16:12:26');
-INSERT INTO `store_express_company` VALUES (53, '全峰快递', 'quanfengkuaidi', NULL, 0, 0, 0, '2017-09-13 16:12:34');
-INSERT INTO `store_express_company` VALUES (54, '全际通物流', 'quanjitong', NULL, 0, 0, 0, '2017-09-13 16:12:41');
-INSERT INTO `store_express_company` VALUES (55, '全日通快递', 'quanritongkuaidi', NULL, 0, 0, 0, '2017-09-13 16:12:49');
-INSERT INTO `store_express_company` VALUES (56, '全一快递', 'quanyikuaidi', NULL, 0, 0, 0, '2017-09-13 16:12:56');
-INSERT INTO `store_express_company` VALUES (57, '如风达', 'rufengda', NULL, 0, 0, 0, '2017-09-13 16:13:03');
-INSERT INTO `store_express_company` VALUES (58, '三态速递', 'santaisudi', NULL, 0, 0, 0, '2017-09-13 16:13:15');
-INSERT INTO `store_express_company` VALUES (59, '盛辉物流', 'shenghuiwuliu', NULL, 0, 0, 0, '2017-09-13 16:13:22');
-INSERT INTO `store_express_company` VALUES (60, '申通', 'shentong', NULL, 0, 0, 0, '2017-09-13 16:13:34');
-INSERT INTO `store_express_company` VALUES (61, '顺丰', 'shunfeng', '', 0, 0, 0, '2017-09-13 16:13:41');
-INSERT INTO `store_express_company` VALUES (62, '速尔物流', 'sue', NULL, 0, 0, 0, '2017-09-13 16:13:48');
-INSERT INTO `store_express_company` VALUES (63, '盛丰物流', 'shengfeng', NULL, 0, 0, 0, '2017-09-13 16:13:55');
-INSERT INTO `store_express_company` VALUES (64, '赛澳递', 'saiaodi', NULL, 0, 0, 0, '2017-09-13 16:14:02');
-INSERT INTO `store_express_company` VALUES (65, '天地华宇', 'tiandihuayu', NULL, 0, 0, 0, '2017-09-13 16:14:11');
-INSERT INTO `store_express_company` VALUES (66, '天天快递', 'tiantian', NULL, 0, 0, 0, '2017-09-13 16:14:19');
-INSERT INTO `store_express_company` VALUES (67, 'TNT', 'tnt', NULL, 0, 0, 0, '2017-09-13 16:14:26');
-INSERT INTO `store_express_company` VALUES (68, 'UPS', 'ups', NULL, 0, 0, 0, '2017-09-13 16:14:29');
-INSERT INTO `store_express_company` VALUES (69, '万家物流', 'wanjiawuliu', NULL, 0, 0, 0, '2017-09-13 16:14:37');
-INSERT INTO `store_express_company` VALUES (70, '文捷航空速递', 'wenjiesudi', NULL, 0, 0, 0, '2017-09-13 16:14:46');
-INSERT INTO `store_express_company` VALUES (71, '伍圆', 'wuyuan', NULL, 0, 0, 0, '2017-09-13 16:14:52');
-INSERT INTO `store_express_company` VALUES (72, '万象物流', 'wxwl', NULL, 0, 0, 0, '2017-09-13 16:15:00');
-INSERT INTO `store_express_company` VALUES (73, '新邦物流', 'xinbangwuliu', NULL, 0, 0, 0, '2017-09-13 16:15:06');
-INSERT INTO `store_express_company` VALUES (74, '信丰物流', 'xinfengwuliu', NULL, 0, 0, 0, '2017-09-13 16:15:15');
-INSERT INTO `store_express_company` VALUES (75, '亚风速递', 'yafengsudi', NULL, 0, 0, 0, '2017-09-13 16:15:23');
-INSERT INTO `store_express_company` VALUES (76, '一邦速递', 'yibangwuliu', NULL, 0, 0, 0, '2017-09-13 16:15:30');
-INSERT INTO `store_express_company` VALUES (77, '优速物流', 'youshuwuliu', NULL, 0, 0, 0, '2017-09-13 16:15:36');
-INSERT INTO `store_express_company` VALUES (78, '邮政包裹挂号信', 'youzhengguonei', NULL, 0, 3, 0, '2017-09-13 16:15:44');
-INSERT INTO `store_express_company` VALUES (79, '邮政国际包裹挂号信', 'youzhengguoji', NULL, 0, 2, 0, '2017-09-13 16:15:51');
-INSERT INTO `store_express_company` VALUES (80, '远成物流', 'yuanchengwuliu', NULL, 0, 0, 0, '2017-09-13 16:15:57');
-INSERT INTO `store_express_company` VALUES (81, '圆通速递', 'yuantong', '', 1, 1, 0, '2017-09-13 16:16:03');
-INSERT INTO `store_express_company` VALUES (82, '源伟丰快递', 'yuanweifeng', NULL, 0, 0, 0, '2017-09-13 16:16:10');
-INSERT INTO `store_express_company` VALUES (83, '元智捷诚快递', 'yuanzhijiecheng', NULL, 0, 0, 0, '2017-09-13 16:16:17');
-INSERT INTO `store_express_company` VALUES (84, '韵达快运', 'yunda', NULL, 0, 0, 0, '2017-09-13 16:16:24');
-INSERT INTO `store_express_company` VALUES (85, '运通快递', 'yuntongkuaidi', NULL, 0, 0, 0, '2017-09-13 16:16:33');
-INSERT INTO `store_express_company` VALUES (86, '越丰物流', 'yuefengwuliu', NULL, 0, 0, 0, '2017-09-13 16:16:40');
-INSERT INTO `store_express_company` VALUES (87, '源安达', 'yad', NULL, 0, 0, 0, '2017-09-13 16:16:47');
-INSERT INTO `store_express_company` VALUES (88, '银捷速递', 'yinjiesudi', NULL, 0, 0, 0, '2017-09-13 16:16:56');
-INSERT INTO `store_express_company` VALUES (89, '宅急送', 'zhaijisong', NULL, 0, 0, 0, '2017-09-13 16:17:03');
-INSERT INTO `store_express_company` VALUES (90, '中铁快运', 'zhongtiekuaiyun', NULL, 0, 0, 0, '2017-09-13 16:17:10');
-INSERT INTO `store_express_company` VALUES (91, '中通速递', 'zhongtong', '', 0, 0, 0, '2017-09-13 16:17:16');
-INSERT INTO `store_express_company` VALUES (92, '中邮物流', 'zhongyouwuliu', NULL, 0, 0, 0, '2017-09-13 16:17:27');
-INSERT INTO `store_express_company` VALUES (93, '忠信达', 'zhongxinda', NULL, 0, 0, 0, '2017-09-13 16:17:34');
-INSERT INTO `store_express_company` VALUES (94, '芝麻开门', 'zhimakaimen', '', 1, 0, 0, '2017-09-13 16:17:41');
+INSERT INTO `store_express_company` VALUES ('5', 'AAE全球专递', 'aae', null, '0', '0', '0', '2017-09-12 11:53:40');
+INSERT INTO `store_express_company` VALUES ('6', '安捷快递', 'anjie', '', '0', '0', '0', '2017-09-13 15:27:26');
+INSERT INTO `store_express_company` VALUES ('7', '安信达快递', 'anxindakuaixi', null, '0', '0', '0', '2017-09-13 16:05:19');
+INSERT INTO `store_express_company` VALUES ('8', '彪记快递', 'biaojikuaidi', null, '0', '0', '0', '2017-09-13 16:05:26');
+INSERT INTO `store_express_company` VALUES ('9', 'BHT', 'bht', '', '0', '0', '0', '2017-09-13 16:05:37');
+INSERT INTO `store_express_company` VALUES ('10', '百福东方国际物流', 'baifudongfang', null, '0', '0', '0', '2017-09-13 16:05:41');
+INSERT INTO `store_express_company` VALUES ('11', '中国东方（COE）', 'coe', null, '0', '0', '0', '2017-09-13 16:05:48');
+INSERT INTO `store_express_company` VALUES ('12', '长宇物流', 'changyuwuliu', null, '0', '0', '0', '2017-09-13 16:05:58');
+INSERT INTO `store_express_company` VALUES ('13', '大田物流', 'datianwuliu', null, '0', '0', '0', '2017-09-13 16:06:06');
+INSERT INTO `store_express_company` VALUES ('14', '德邦物流', 'debangwuliu', '', '0', '1', '0', '2017-09-13 16:06:14');
+INSERT INTO `store_express_company` VALUES ('15', 'DHL', 'dhl', null, '0', '0', '0', '2017-09-13 16:06:24');
+INSERT INTO `store_express_company` VALUES ('16', 'DPEX', 'dpex', null, '0', '0', '0', '2017-09-13 16:06:29');
+INSERT INTO `store_express_company` VALUES ('17', 'd速快递', 'dsukuaidi', null, '0', '0', '0', '2017-09-13 16:06:34');
+INSERT INTO `store_express_company` VALUES ('18', '递四方', 'disifang', null, '0', '0', '0', '2017-09-13 16:06:40');
+INSERT INTO `store_express_company` VALUES ('19', 'EMS快递', 'ems', '', '1', '0', '0', '2017-09-13 16:06:47');
+INSERT INTO `store_express_company` VALUES ('20', 'FEDEX（国外）', 'fedex', null, '0', '0', '0', '2017-09-13 16:06:56');
+INSERT INTO `store_express_company` VALUES ('21', '飞康达物流', 'feikangda', null, '0', '0', '0', '2017-09-13 16:07:03');
+INSERT INTO `store_express_company` VALUES ('22', '凤凰快递', 'fenghuangkuaidi', null, '0', '0', '0', '2017-09-13 16:07:10');
+INSERT INTO `store_express_company` VALUES ('23', '飞快达', 'feikuaida', null, '0', '0', '0', '2017-09-13 16:07:16');
+INSERT INTO `store_express_company` VALUES ('24', '国通快递', 'guotongkuaidi', null, '0', '0', '0', '2017-09-13 16:07:27');
+INSERT INTO `store_express_company` VALUES ('25', '港中能达物流', 'ganzhongnengda', null, '0', '0', '0', '2017-09-13 16:07:33');
+INSERT INTO `store_express_company` VALUES ('26', '广东邮政物流', 'guangdongyouzhengwuliu', null, '0', '0', '0', '2017-09-13 16:08:22');
+INSERT INTO `store_express_company` VALUES ('27', '共速达', 'gongsuda', null, '0', '0', '0', '2017-09-13 16:08:48');
+INSERT INTO `store_express_company` VALUES ('28', '汇通快运', 'huitongkuaidi', null, '0', '0', '0', '2017-09-13 16:08:56');
+INSERT INTO `store_express_company` VALUES ('29', '恒路物流', 'hengluwuliu', null, '0', '0', '0', '2017-09-13 16:09:02');
+INSERT INTO `store_express_company` VALUES ('30', '华夏龙物流', 'huaxialongwuliu', null, '0', '0', '0', '2017-09-13 16:09:12');
+INSERT INTO `store_express_company` VALUES ('31', '海红', 'haihongwangsong', null, '0', '0', '0', '2017-09-13 16:09:20');
+INSERT INTO `store_express_company` VALUES ('32', '海外环球', 'haiwaihuanqiu', null, '0', '0', '0', '2017-09-13 16:09:27');
+INSERT INTO `store_express_company` VALUES ('33', '佳怡物流', 'jiayiwuliu', null, '0', '0', '0', '2017-09-13 16:09:35');
+INSERT INTO `store_express_company` VALUES ('34', '京广速递', 'jinguangsudikuaijian', null, '0', '0', '0', '2017-09-13 16:09:42');
+INSERT INTO `store_express_company` VALUES ('35', '急先达', 'jixianda', null, '0', '0', '0', '2017-09-13 16:09:49');
+INSERT INTO `store_express_company` VALUES ('36', '佳吉物流', 'jjwl', null, '0', '0', '0', '2017-09-13 16:10:01');
+INSERT INTO `store_express_company` VALUES ('37', '加运美物流', 'jymwl', null, '0', '0', '0', '2017-09-13 16:10:13');
+INSERT INTO `store_express_company` VALUES ('38', '金大物流', 'jindawuliu', null, '0', '0', '0', '2017-09-13 16:10:22');
+INSERT INTO `store_express_company` VALUES ('39', '嘉里大通', 'jialidatong', null, '0', '0', '0', '2017-09-13 16:10:33');
+INSERT INTO `store_express_company` VALUES ('40', '晋越快递', 'jykd', null, '0', '0', '0', '2017-09-13 16:10:40');
+INSERT INTO `store_express_company` VALUES ('41', '快捷速递', 'kuaijiesudi', null, '0', '0', '0', '2017-09-13 16:10:49');
+INSERT INTO `store_express_company` VALUES ('42', '联邦快递（国内）', 'lianb', null, '0', '0', '0', '2017-09-13 16:10:58');
+INSERT INTO `store_express_company` VALUES ('43', '联昊通物流', 'lianhaowuliu', null, '0', '0', '0', '2017-09-13 16:11:07');
+INSERT INTO `store_express_company` VALUES ('44', '龙邦物流', 'longbanwuliu', null, '0', '0', '0', '2017-09-13 16:11:15');
+INSERT INTO `store_express_company` VALUES ('45', '立即送', 'lijisong', null, '0', '0', '0', '2017-09-13 16:11:25');
+INSERT INTO `store_express_company` VALUES ('46', '乐捷递', 'lejiedi', null, '0', '0', '0', '2017-09-13 16:11:36');
+INSERT INTO `store_express_company` VALUES ('47', '民航快递', 'minghangkuaidi', null, '0', '0', '0', '2017-09-13 16:11:45');
+INSERT INTO `store_express_company` VALUES ('48', '美国快递', 'meiguokuaidi', null, '0', '0', '0', '2017-09-13 16:11:53');
+INSERT INTO `store_express_company` VALUES ('49', '门对门', 'menduimen', null, '0', '0', '0', '2017-09-13 16:12:01');
+INSERT INTO `store_express_company` VALUES ('50', 'OCS', 'ocs', null, '0', '0', '0', '2017-09-13 16:12:10');
+INSERT INTO `store_express_company` VALUES ('51', '配思货运', 'peisihuoyunkuaidi', null, '0', '0', '0', '2017-09-13 16:12:18');
+INSERT INTO `store_express_company` VALUES ('52', '全晨快递', 'quanchenkuaidi', null, '0', '0', '0', '2017-09-13 16:12:26');
+INSERT INTO `store_express_company` VALUES ('53', '全峰快递', 'quanfengkuaidi', null, '0', '0', '0', '2017-09-13 16:12:34');
+INSERT INTO `store_express_company` VALUES ('54', '全际通物流', 'quanjitong', null, '0', '0', '0', '2017-09-13 16:12:41');
+INSERT INTO `store_express_company` VALUES ('55', '全日通快递', 'quanritongkuaidi', null, '0', '0', '0', '2017-09-13 16:12:49');
+INSERT INTO `store_express_company` VALUES ('56', '全一快递', 'quanyikuaidi', null, '0', '0', '0', '2017-09-13 16:12:56');
+INSERT INTO `store_express_company` VALUES ('57', '如风达', 'rufengda', null, '0', '0', '0', '2017-09-13 16:13:03');
+INSERT INTO `store_express_company` VALUES ('58', '三态速递', 'santaisudi', null, '0', '0', '0', '2017-09-13 16:13:15');
+INSERT INTO `store_express_company` VALUES ('59', '盛辉物流', 'shenghuiwuliu', null, '0', '0', '0', '2017-09-13 16:13:22');
+INSERT INTO `store_express_company` VALUES ('60', '申通', 'shentong', null, '0', '0', '0', '2017-09-13 16:13:34');
+INSERT INTO `store_express_company` VALUES ('61', '顺丰', 'shunfeng', '', '0', '0', '0', '2017-09-13 16:13:41');
+INSERT INTO `store_express_company` VALUES ('62', '速尔物流', 'sue', null, '0', '0', '0', '2017-09-13 16:13:48');
+INSERT INTO `store_express_company` VALUES ('63', '盛丰物流', 'shengfeng', null, '0', '0', '0', '2017-09-13 16:13:55');
+INSERT INTO `store_express_company` VALUES ('64', '赛澳递', 'saiaodi', null, '0', '0', '0', '2017-09-13 16:14:02');
+INSERT INTO `store_express_company` VALUES ('65', '天地华宇', 'tiandihuayu', null, '0', '0', '0', '2017-09-13 16:14:11');
+INSERT INTO `store_express_company` VALUES ('66', '天天快递', 'tiantian', null, '0', '0', '0', '2017-09-13 16:14:19');
+INSERT INTO `store_express_company` VALUES ('67', 'TNT', 'tnt', null, '0', '0', '0', '2017-09-13 16:14:26');
+INSERT INTO `store_express_company` VALUES ('68', 'UPS', 'ups', null, '0', '0', '0', '2017-09-13 16:14:29');
+INSERT INTO `store_express_company` VALUES ('69', '万家物流', 'wanjiawuliu', null, '0', '0', '0', '2017-09-13 16:14:37');
+INSERT INTO `store_express_company` VALUES ('70', '文捷航空速递', 'wenjiesudi', null, '0', '0', '0', '2017-09-13 16:14:46');
+INSERT INTO `store_express_company` VALUES ('71', '伍圆', 'wuyuan', null, '0', '0', '0', '2017-09-13 16:14:52');
+INSERT INTO `store_express_company` VALUES ('72', '万象物流', 'wxwl', null, '0', '0', '0', '2017-09-13 16:15:00');
+INSERT INTO `store_express_company` VALUES ('73', '新邦物流', 'xinbangwuliu', null, '0', '0', '0', '2017-09-13 16:15:06');
+INSERT INTO `store_express_company` VALUES ('74', '信丰物流', 'xinfengwuliu', null, '0', '0', '0', '2017-09-13 16:15:15');
+INSERT INTO `store_express_company` VALUES ('75', '亚风速递', 'yafengsudi', null, '0', '0', '0', '2017-09-13 16:15:23');
+INSERT INTO `store_express_company` VALUES ('76', '一邦速递', 'yibangwuliu', null, '0', '0', '0', '2017-09-13 16:15:30');
+INSERT INTO `store_express_company` VALUES ('77', '优速物流', 'youshuwuliu', null, '0', '0', '0', '2017-09-13 16:15:36');
+INSERT INTO `store_express_company` VALUES ('78', '邮政包裹挂号信', 'youzhengguonei', null, '0', '3', '0', '2017-09-13 16:15:44');
+INSERT INTO `store_express_company` VALUES ('79', '邮政国际包裹挂号信', 'youzhengguoji', null, '0', '2', '0', '2017-09-13 16:15:51');
+INSERT INTO `store_express_company` VALUES ('80', '远成物流', 'yuanchengwuliu', null, '0', '0', '0', '2017-09-13 16:15:57');
+INSERT INTO `store_express_company` VALUES ('81', '圆通速递', 'yuantong', '', '1', '1', '0', '2017-09-13 16:16:03');
+INSERT INTO `store_express_company` VALUES ('82', '源伟丰快递', 'yuanweifeng', null, '0', '0', '0', '2017-09-13 16:16:10');
+INSERT INTO `store_express_company` VALUES ('83', '元智捷诚快递', 'yuanzhijiecheng', null, '0', '0', '0', '2017-09-13 16:16:17');
+INSERT INTO `store_express_company` VALUES ('84', '韵达快运', 'yunda', null, '0', '0', '0', '2017-09-13 16:16:24');
+INSERT INTO `store_express_company` VALUES ('85', '运通快递', 'yuntongkuaidi', null, '0', '0', '0', '2017-09-13 16:16:33');
+INSERT INTO `store_express_company` VALUES ('86', '越丰物流', 'yuefengwuliu', null, '0', '0', '0', '2017-09-13 16:16:40');
+INSERT INTO `store_express_company` VALUES ('87', '源安达', 'yad', null, '0', '0', '0', '2017-09-13 16:16:47');
+INSERT INTO `store_express_company` VALUES ('88', '银捷速递', 'yinjiesudi', null, '0', '0', '0', '2017-09-13 16:16:56');
+INSERT INTO `store_express_company` VALUES ('89', '宅急送', 'zhaijisong', null, '0', '0', '0', '2017-09-13 16:17:03');
+INSERT INTO `store_express_company` VALUES ('90', '中铁快运', 'zhongtiekuaiyun', null, '0', '0', '0', '2017-09-13 16:17:10');
+INSERT INTO `store_express_company` VALUES ('91', '中通速递', 'zhongtong', '', '0', '0', '0', '2017-09-13 16:17:16');
+INSERT INTO `store_express_company` VALUES ('92', '中邮物流', 'zhongyouwuliu', null, '0', '0', '0', '2017-09-13 16:17:27');
+INSERT INTO `store_express_company` VALUES ('93', '忠信达', 'zhongxinda', null, '0', '0', '0', '2017-09-13 16:17:34');
+INSERT INTO `store_express_company` VALUES ('94', '芝麻开门', 'zhimakaimen', '', '1', '0', '0', '2017-09-13 16:17:41');
 
 -- ----------------------------
 -- Table structure for store_express_template
 -- ----------------------------
 DROP TABLE IF EXISTS `store_express_template`;
-CREATE TABLE `store_express_template`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `rule` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '省份规则内容',
-  `order_reduction_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '订单满减状态',
-  `order_reduction_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '订单满减金额',
-  `first_number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '首件数量',
-  `first_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '首件邮费',
-  `next_number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '续件数量',
-  `next_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '续件邮费',
-  `is_default` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '默认规则',
+CREATE TABLE `store_express_template` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `rule` longtext COMMENT '省份规则内容',
+  `order_reduction_state` tinyint(1) unsigned DEFAULT '0' COMMENT '订单满减状态',
+  `order_reduction_price` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '订单满减金额',
+  `first_number` bigint(20) unsigned DEFAULT '0' COMMENT '首件数量',
+  `first_price` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '首件邮费',
+  `next_number` bigint(20) unsigned DEFAULT '0' COMMENT '续件数量',
+  `next_price` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '续件邮费',
+  `is_default` tinyint(1) unsigned DEFAULT '0' COMMENT '默认规则',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_express_template_is_default`(`is_default`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-模板';
+  KEY `index_store_express_template_is_default` (`is_default`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商城-快递-模板';
+
+-- ----------------------------
+-- Records of store_express_template
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for store_goods
 -- ----------------------------
 DROP TABLE IF EXISTS `store_goods`;
-CREATE TABLE `store_goods`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `cate_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品分类',
-  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品标题',
-  `logo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品图标',
-  `specs` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品规格JSON',
-  `lists` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品列表JSON',
-  `image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品图片',
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品内容',
-  `number_sales` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '销售数量',
-  `number_stock` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '库库数量',
-  `price_rate` decimal(20, 4) UNSIGNED NULL DEFAULT 0.0000 COMMENT '返利比例',
-  `price_express` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '统一运费',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '销售状态',
-  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态',
+CREATE TABLE `store_goods` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `cate_id` bigint(20) unsigned DEFAULT '0' COMMENT '商品分类',
+  `title` text COMMENT '商品标题',
+  `logo` text COMMENT '商品图标',
+  `specs` text COMMENT '商品规格JSON',
+  `lists` text COMMENT '商品列表JSON',
+  `image` text COMMENT '商品图片',
+  `content` longtext COMMENT '商品内容',
+  `number_sales` bigint(20) unsigned DEFAULT '0' COMMENT '销售数量',
+  `number_stock` bigint(20) unsigned DEFAULT '0' COMMENT '库库数量',
+  `price_rate` decimal(20,4) unsigned DEFAULT '0.0000' COMMENT '返利比例',
+  `price_express` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '统一运费',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '销售状态',
+  `sort` bigint(20) unsigned DEFAULT '0' COMMENT '排序权重',
+  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT '删除状态',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_goods_status`(`status`) USING BTREE,
-  INDEX `index_store_goods_cate_id`(`cate_id`) USING BTREE,
-  INDEX `index_store_goods_is_deleted`(`is_deleted`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-记录';
+  KEY `index_store_goods_status` (`status`) USING BTREE,
+  KEY `index_store_goods_cate_id` (`cate_id`) USING BTREE,
+  KEY `index_store_goods_is_deleted` (`is_deleted`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品-记录';
+
+-- ----------------------------
+-- Records of store_goods
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for store_goods_cate
 -- ----------------------------
 DROP TABLE IF EXISTS `store_goods_cate`;
-CREATE TABLE `store_goods_cate`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `logo` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '分类图标',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '分类名称',
-  `desc` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '分类描述',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '销售状态',
-  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态',
+CREATE TABLE `store_goods_cate` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `logo` varchar(500) DEFAULT '' COMMENT '分类图标',
+  `title` varchar(255) DEFAULT '' COMMENT '分类名称',
+  `desc` varchar(1024) DEFAULT '' COMMENT '分类描述',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '销售状态',
+  `sort` bigint(20) unsigned DEFAULT '0' COMMENT '排序权重',
+  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT '删除状态',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_goods_cate_is_deleted`(`is_deleted`) USING BTREE,
-  INDEX `index_store_goods_cate_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-分类';
+  KEY `index_store_goods_cate_is_deleted` (`is_deleted`) USING BTREE,
+  KEY `index_store_goods_cate_status` (`status`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品-分类';
+
+-- ----------------------------
+-- Records of store_goods_cate
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for store_goods_list
 -- ----------------------------
 DROP TABLE IF EXISTS `store_goods_list`;
-CREATE TABLE `store_goods_list`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `sku` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT 'sku',
-  `goods_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品ID',
-  `goods_spec` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品规格',
-  `price_market` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '商品标价',
-  `price_selling` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '商品售价',
-  `number_sales` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '销售数量',
-  `number_stock` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品库存',
-  `number_virtual` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '虚拟销量',
-  `number_express` bigint(20) UNSIGNED NULL DEFAULT 1 COMMENT '快递数量',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '商品状态',
+CREATE TABLE `store_goods_list` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `sku` varchar(20) DEFAULT '' COMMENT 'sku',
+  `goods_id` bigint(20) unsigned DEFAULT '0' COMMENT '商品ID',
+  `goods_spec` varchar(100) DEFAULT '' COMMENT '商品规格',
+  `price_market` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '商品标价',
+  `price_selling` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '商品售价',
+  `number_sales` bigint(20) unsigned DEFAULT '0' COMMENT '销售数量',
+  `number_stock` bigint(20) unsigned DEFAULT '0' COMMENT '商品库存',
+  `number_virtual` bigint(20) unsigned DEFAULT '0' COMMENT '虚拟销量',
+  `number_express` bigint(20) unsigned DEFAULT '1' COMMENT '快递数量',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '商品状态',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_goods_list_id`(`goods_id`) USING BTREE,
-  INDEX `index_store_goods_list_spec`(`goods_spec`) USING BTREE,
-  INDEX `index_store_goods_list_status`(`status`) USING BTREE,
-  INDEX `index_store_goods_list_sku`(`sku`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-详情';
+  KEY `index_store_goods_list_id` (`goods_id`) USING BTREE,
+  KEY `index_store_goods_list_spec` (`goods_spec`) USING BTREE,
+  KEY `index_store_goods_list_status` (`status`) USING BTREE,
+  KEY `index_store_goods_list_sku` (`sku`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品-详情';
+
+-- ----------------------------
+-- Records of store_goods_list
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for store_goods_stock
 -- ----------------------------
 DROP TABLE IF EXISTS `store_goods_stock`;
-CREATE TABLE `store_goods_stock`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `goods_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品ID',
-  `goods_spec` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品规格',
-  `number_stock` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品库存',
+CREATE TABLE `store_goods_stock` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `goods_id` bigint(20) unsigned DEFAULT '0' COMMENT '商品ID',
+  `goods_spec` varchar(200) DEFAULT '' COMMENT '商品规格',
+  `number_stock` bigint(20) unsigned DEFAULT '0' COMMENT '商品库存',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_goods_stock_gid`(`goods_id`) USING BTREE,
-  INDEX `index_store_goods_stock_spec`(`goods_spec`(191)) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-入库';
+  KEY `index_store_goods_stock_gid` (`goods_id`) USING BTREE,
+  KEY `index_store_goods_stock_spec` (`goods_spec`(191)) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品-入库';
+
+-- ----------------------------
+-- Records of store_goods_stock
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for store_member
 -- ----------------------------
 DROP TABLE IF EXISTS `store_member`;
-CREATE TABLE `store_member`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `openid` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '微信OPENID',
-  `headimg` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '头像地址',
-  `nickname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '微信昵称',
-  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系手机',
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '真实姓名',
-  `vip_level` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '会员级别(0游客,1为临时,2为VIP1,3为VIP2)',
-  `vip_date` date NULL DEFAULT NULL COMMENT '保级日期',
+CREATE TABLE `store_member` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `openid` varchar(100) DEFAULT '' COMMENT '微信OPENID',
+  `headimg` varchar(512) DEFAULT '' COMMENT '头像地址',
+  `nickname` varchar(100) DEFAULT '' COMMENT '微信昵称',
+  `phone` varchar(20) DEFAULT '' COMMENT '联系手机',
+  `username` varchar(50) DEFAULT '' COMMENT '真实姓名',
+  `vip_level` tinyint(1) unsigned DEFAULT '0' COMMENT '会员级别(0游客,1为临时,2为VIP1,3为VIP2)',
+  `vip_date` date DEFAULT NULL COMMENT '保级日期',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_member_openid`(`openid`) USING BTREE,
-  INDEX `index_store_member_phone`(`phone`) USING BTREE,
-  INDEX `index_store_member_vip_level`(`vip_level`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-记录';
+  KEY `index_store_member_openid` (`openid`) USING BTREE,
+  KEY `index_store_member_phone` (`phone`) USING BTREE,
+  KEY `index_store_member_vip_level` (`vip_level`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='会员-记录';
+
+-- ----------------------------
+-- Records of store_member
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for store_member_address
 -- ----------------------------
 DROP TABLE IF EXISTS `store_member_address`;
-CREATE TABLE `store_member_address`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员ID',
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '收货姓名',
-  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '收货手机',
-  `province` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '地址-省份',
-  `city` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '地址-城市',
-  `area` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '地址-区域',
-  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '地址-详情',
-  `is_default` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '默认地址',
+CREATE TABLE `store_member_address` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `mid` bigint(20) unsigned DEFAULT '0' COMMENT '会员ID',
+  `name` varchar(100) DEFAULT '' COMMENT '收货姓名',
+  `phone` varchar(20) DEFAULT '' COMMENT '收货手机',
+  `province` varchar(100) DEFAULT '' COMMENT '地址-省份',
+  `city` varchar(100) DEFAULT '' COMMENT '地址-城市',
+  `area` varchar(100) DEFAULT '' COMMENT '地址-区域',
+  `address` varchar(255) DEFAULT '' COMMENT '地址-详情',
+  `is_default` tinyint(1) unsigned DEFAULT '0' COMMENT '默认地址',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_member_address_mid`(`mid`) USING BTREE,
-  INDEX `index_store_member_address_is_default`(`is_default`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-地址';
+  KEY `index_store_member_address_mid` (`mid`) USING BTREE,
+  KEY `index_store_member_address_is_default` (`is_default`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='会员-地址';
+
+-- ----------------------------
+-- Records of store_member_address
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for store_member_sms_history
 -- ----------------------------
 DROP TABLE IF EXISTS `store_member_sms_history`;
-CREATE TABLE `store_member_sms_history`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员ID',
-  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '目标手机',
-  `content` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '短信内容',
-  `result` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '返回结果',
+CREATE TABLE `store_member_sms_history` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `mid` bigint(20) unsigned DEFAULT '0' COMMENT '会员ID',
+  `phone` varchar(20) DEFAULT '' COMMENT '目标手机',
+  `content` varchar(512) DEFAULT '' COMMENT '短信内容',
+  `result` varchar(100) DEFAULT '' COMMENT '返回结果',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_member_sms_history_phone`(`phone`) USING BTREE,
-  INDEX `index_store_member_sms_history_mid`(`mid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-短信';
+  KEY `index_store_member_sms_history_phone` (`phone`) USING BTREE,
+  KEY `index_store_member_sms_history_mid` (`mid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='会员-短信';
+
+-- ----------------------------
+-- Records of store_member_sms_history
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for store_order
 -- ----------------------------
 DROP TABLE IF EXISTS `store_order`;
-CREATE TABLE `store_order`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员ID',
-  `order_no` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '订单单号',
-  `from_mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '推荐会员ID',
-  `price_total` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '待付金额统计',
-  `price_goods` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '商品费用统计',
-  `price_express` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '快递费用统计',
-  `price_rate_amount` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '返利金额统计',
-  `pay_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '支付状态(0未支付,1已支付)',
-  `pay_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '支付方式',
-  `pay_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '支付金额',
-  `pay_no` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '支付单号',
-  `pay_at` datetime NULL DEFAULT NULL COMMENT '支付时间',
-  `cancel_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '取消状态',
-  `cancel_at` datetime NULL DEFAULT NULL COMMENT '取消时间',
-  `cancel_desc` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '取消描述',
-  `refund_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '退款状态(0未退款,1待退款,2已退款)',
-  `refund_at` datetime NULL DEFAULT NULL COMMENT '退款时间',
-  `refund_no` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '退款单号',
-  `refund_price` decimal(20, 2) NULL DEFAULT 0.00 COMMENT '退款金额',
-  `refund_desc` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '退款描述',
-  `express_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '发货状态(0未发货,1已发货,2已签收)',
-  `express_company_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '发货快递公司编码',
-  `express_company_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '发货快递公司名称',
-  `express_send_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '发货单号',
-  `express_send_at` datetime NULL DEFAULT NULL COMMENT '发货时间',
-  `express_address_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '收货地址ID',
-  `express_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '收货人姓名',
-  `express_phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '收货人手机',
-  `express_province` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '收货地址省份',
-  `express_city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '收货地址城市',
-  `express_area` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '收货地址区域',
-  `express_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '收货详细地址',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '订单状态(0已取消,1预订单待补全,2新订单待支付,3已支付待发货,4已发货待签收,5已完成)',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态',
+CREATE TABLE `store_order` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `mid` bigint(20) unsigned DEFAULT '0' COMMENT '会员ID',
+  `order_no` bigint(20) unsigned DEFAULT '0' COMMENT '订单单号',
+  `from_mid` bigint(20) unsigned DEFAULT '0' COMMENT '推荐会员ID',
+  `price_total` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '待付金额统计',
+  `price_goods` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '商品费用统计',
+  `price_express` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '快递费用统计',
+  `price_rate_amount` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '返利金额统计',
+  `pay_state` tinyint(1) unsigned DEFAULT '0' COMMENT '支付状态(0未支付,1已支付)',
+  `pay_type` varchar(10) DEFAULT '' COMMENT '支付方式',
+  `pay_price` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '支付金额',
+  `pay_no` varchar(100) DEFAULT '' COMMENT '支付单号',
+  `pay_at` datetime DEFAULT NULL COMMENT '支付时间',
+  `cancel_state` tinyint(1) unsigned DEFAULT '0' COMMENT '取消状态',
+  `cancel_at` datetime DEFAULT NULL COMMENT '取消时间',
+  `cancel_desc` varchar(500) DEFAULT '' COMMENT '取消描述',
+  `refund_state` tinyint(1) unsigned DEFAULT '0' COMMENT '退款状态(0未退款,1待退款,2已退款)',
+  `refund_at` datetime DEFAULT NULL COMMENT '退款时间',
+  `refund_no` varchar(100) DEFAULT '' COMMENT '退款单号',
+  `refund_price` decimal(20,2) DEFAULT '0.00' COMMENT '退款金额',
+  `refund_desc` varchar(500) DEFAULT '' COMMENT '退款描述',
+  `express_state` tinyint(1) unsigned DEFAULT '0' COMMENT '发货状态(0未发货,1已发货,2已签收)',
+  `express_company_code` varchar(255) DEFAULT '' COMMENT '发货快递公司编码',
+  `express_company_title` varchar(255) DEFAULT '' COMMENT '发货快递公司名称',
+  `express_send_no` varchar(50) DEFAULT '' COMMENT '发货单号',
+  `express_send_at` datetime DEFAULT NULL COMMENT '发货时间',
+  `express_address_id` bigint(20) unsigned DEFAULT '0' COMMENT '收货地址ID',
+  `express_name` varchar(255) DEFAULT '' COMMENT '收货人姓名',
+  `express_phone` varchar(11) DEFAULT '' COMMENT '收货人手机',
+  `express_province` varchar(255) DEFAULT '' COMMENT '收货地址省份',
+  `express_city` varchar(255) DEFAULT '' COMMENT '收货地址城市',
+  `express_area` varchar(255) DEFAULT '' COMMENT '收货地址区域',
+  `express_address` varchar(255) DEFAULT '' COMMENT '收货详细地址',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '订单状态(0已取消,1预订单待补全,2新订单待支付,3已支付待发货,4已发货待签收,5已完成)',
+  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT '删除状态',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_groups_order_mid`(`mid`) USING BTREE,
-  INDEX `index_store_groups_order_order_no`(`order_no`) USING BTREE,
-  INDEX `index_store_groups_order_pay_state`(`pay_state`) USING BTREE,
-  INDEX `index_store_groups_order_cancel_state`(`cancel_state`) USING BTREE,
-  INDEX `index_store_groups_order_refund_state`(`refund_state`) USING BTREE,
-  INDEX `index_store_groups_order_status`(`status`) USING BTREE,
-  INDEX `index_store_groups_order_pay_no`(`pay_no`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单-记录';
+  KEY `index_store_groups_order_mid` (`mid`) USING BTREE,
+  KEY `index_store_groups_order_order_no` (`order_no`) USING BTREE,
+  KEY `index_store_groups_order_pay_state` (`pay_state`) USING BTREE,
+  KEY `index_store_groups_order_cancel_state` (`cancel_state`) USING BTREE,
+  KEY `index_store_groups_order_refund_state` (`refund_state`) USING BTREE,
+  KEY `index_store_groups_order_status` (`status`) USING BTREE,
+  KEY `index_store_groups_order_pay_no` (`pay_no`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单-记录';
+
+-- ----------------------------
+-- Records of store_order
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for store_order_list
 -- ----------------------------
 DROP TABLE IF EXISTS `store_order_list`;
-CREATE TABLE `store_order_list`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员ID',
-  `from_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '推荐会员',
-  `order_no` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '订单单号',
-  `goods_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品标识',
-  `goods_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品标题',
-  `goods_logo` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品图标',
-  `goods_spec` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品规格',
-  `price_real` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '交易金额',
-  `price_selling` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '销售价格',
-  `price_market` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '市场价格',
-  `price_express` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '快递费用',
-  `price_rate` decimal(20, 4) UNSIGNED NULL DEFAULT 0.0000 COMMENT '分成比例',
-  `price_rate_amount` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '分成金额',
-  `number_goods` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品数量',
-  `number_express` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '快递数量',
+CREATE TABLE `store_order_list` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `mid` bigint(20) unsigned DEFAULT '0' COMMENT '会员ID',
+  `from_id` bigint(20) unsigned DEFAULT '0' COMMENT '推荐会员',
+  `order_no` bigint(20) unsigned DEFAULT '0' COMMENT '订单单号',
+  `goods_id` bigint(20) unsigned DEFAULT '0' COMMENT '商品标识',
+  `goods_title` varchar(255) DEFAULT '' COMMENT '商品标题',
+  `goods_logo` varchar(500) DEFAULT '' COMMENT '商品图标',
+  `goods_spec` varchar(100) DEFAULT '' COMMENT '商品规格',
+  `price_real` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '交易金额',
+  `price_selling` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '销售价格',
+  `price_market` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '市场价格',
+  `price_express` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '快递费用',
+  `price_rate` decimal(20,4) unsigned DEFAULT '0.0000' COMMENT '分成比例',
+  `price_rate_amount` decimal(20,2) unsigned DEFAULT '0.00' COMMENT '分成金额',
+  `number_goods` bigint(20) unsigned DEFAULT '0' COMMENT '商品数量',
+  `number_express` bigint(20) unsigned DEFAULT '0' COMMENT '快递数量',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_goods_list_id`(`goods_id`) USING BTREE,
-  INDEX `index_store_goods_list_spec`(`goods_spec`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单-详情';
+  KEY `index_store_goods_list_id` (`goods_id`) USING BTREE,
+  KEY `index_store_goods_list_spec` (`goods_spec`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单-详情';
+
+-- ----------------------------
+-- Records of store_order_list
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for system_auth
 -- ----------------------------
 DROP TABLE IF EXISTS `system_auth`;
-CREATE TABLE `system_auth`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限名称',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '权限状态',
-  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
-  `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注说明',
+CREATE TABLE `system_auth` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(20) DEFAULT NULL COMMENT '权限名称',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '权限状态',
+  `sort` bigint(20) unsigned DEFAULT '0' COMMENT '排序权重',
+  `desc` varchar(255) DEFAULT '' COMMENT '备注说明',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_system_auth_status`(`status`) USING BTREE,
-  INDEX `index_system_auth_title`(`title`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限';
+  KEY `index_system_auth_status` (`status`) USING BTREE,
+  KEY `index_system_auth_title` (`title`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统-权限';
+
+-- ----------------------------
+-- Records of system_auth
+-- ----------------------------
+INSERT INTO `system_auth` VALUES ('1', '超级管理员', '1', '0', '超级管理员', '2019-08-11 10:10:16');
 
 -- ----------------------------
 -- Table structure for system_auth_node
 -- ----------------------------
 DROP TABLE IF EXISTS `system_auth_node`;
-CREATE TABLE `system_auth_node`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `auth` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '角色',
-  `node` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '节点',
+CREATE TABLE `system_auth_node` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `auth` bigint(20) unsigned DEFAULT NULL COMMENT '角色',
+  `node` varchar(200) DEFAULT NULL COMMENT '节点',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_system_auth_auth`(`auth`) USING BTREE,
-  INDEX `index_system_auth_node`(`node`(191)) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限-授权';
+  KEY `index_system_auth_auth` (`auth`) USING BTREE,
+  KEY `index_system_auth_node` (`node`(191)) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8mb4 COMMENT='系统-权限-授权';
+
+-- ----------------------------
+-- Records of system_auth_node
+-- ----------------------------
+INSERT INTO `system_auth_node` VALUES ('1', '1', 'admin');
+INSERT INTO `system_auth_node` VALUES ('2', '1', 'admin/auth');
+INSERT INTO `system_auth_node` VALUES ('3', '1', 'admin/auth/index');
+INSERT INTO `system_auth_node` VALUES ('4', '1', 'admin/auth/apply');
+INSERT INTO `system_auth_node` VALUES ('5', '1', 'admin/auth/add');
+INSERT INTO `system_auth_node` VALUES ('6', '1', 'admin/auth/edit');
+INSERT INTO `system_auth_node` VALUES ('7', '1', 'admin/auth/refresh');
+INSERT INTO `system_auth_node` VALUES ('8', '1', 'admin/auth/forbid');
+INSERT INTO `system_auth_node` VALUES ('9', '1', 'admin/auth/resume');
+INSERT INTO `system_auth_node` VALUES ('10', '1', 'admin/auth/remove');
+INSERT INTO `system_auth_node` VALUES ('11', '1', 'admin/config');
+INSERT INTO `system_auth_node` VALUES ('12', '1', 'admin/config/info');
+INSERT INTO `system_auth_node` VALUES ('13', '1', 'admin/config/save');
+INSERT INTO `system_auth_node` VALUES ('14', '1', 'admin/index');
+INSERT INTO `system_auth_node` VALUES ('15', '1', 'admin/index/clearruntime');
+INSERT INTO `system_auth_node` VALUES ('16', '1', 'admin/index/buildoptimize');
+INSERT INTO `system_auth_node` VALUES ('17', '1', 'admin/menu');
+INSERT INTO `system_auth_node` VALUES ('18', '1', 'admin/menu/index');
+INSERT INTO `system_auth_node` VALUES ('19', '1', 'admin/menu/add');
+INSERT INTO `system_auth_node` VALUES ('20', '1', 'admin/menu/edit');
+INSERT INTO `system_auth_node` VALUES ('21', '1', 'admin/menu/resume');
+INSERT INTO `system_auth_node` VALUES ('22', '1', 'admin/menu/forbid');
+INSERT INTO `system_auth_node` VALUES ('23', '1', 'admin/menu/remove');
+INSERT INTO `system_auth_node` VALUES ('24', '1', 'admin/oplog');
+INSERT INTO `system_auth_node` VALUES ('25', '1', 'admin/oplog/index');
+INSERT INTO `system_auth_node` VALUES ('26', '1', 'admin/oplog/clear');
+INSERT INTO `system_auth_node` VALUES ('27', '1', 'admin/oplog/remove');
+INSERT INTO `system_auth_node` VALUES ('28', '1', 'admin/queue');
+INSERT INTO `system_auth_node` VALUES ('29', '1', 'admin/queue/index');
+INSERT INTO `system_auth_node` VALUES ('30', '1', 'admin/queue/redo');
+INSERT INTO `system_auth_node` VALUES ('31', '1', 'admin/queue/remove');
+INSERT INTO `system_auth_node` VALUES ('32', '1', 'admin/user');
+INSERT INTO `system_auth_node` VALUES ('33', '1', 'admin/user/index');
+INSERT INTO `system_auth_node` VALUES ('34', '1', 'admin/user/add');
+INSERT INTO `system_auth_node` VALUES ('35', '1', 'admin/user/edit');
+INSERT INTO `system_auth_node` VALUES ('36', '1', 'admin/user/pass');
+INSERT INTO `system_auth_node` VALUES ('37', '1', 'admin/user/forbid');
+INSERT INTO `system_auth_node` VALUES ('38', '1', 'admin/user/resume');
+INSERT INTO `system_auth_node` VALUES ('39', '1', 'admin/user/remove');
+INSERT INTO `system_auth_node` VALUES ('40', '1', 'company');
+INSERT INTO `system_auth_node` VALUES ('41', '1', 'company/auth');
+INSERT INTO `system_auth_node` VALUES ('42', '1', 'company/auth/index');
+INSERT INTO `system_auth_node` VALUES ('43', '1', 'company/auth/add');
+INSERT INTO `system_auth_node` VALUES ('44', '1', 'company/auth/edit');
+INSERT INTO `system_auth_node` VALUES ('45', '1', 'company/auth/state');
+INSERT INTO `system_auth_node` VALUES ('46', '1', 'company/auth/remove');
+INSERT INTO `system_auth_node` VALUES ('47', '1', 'company/clock');
+INSERT INTO `system_auth_node` VALUES ('48', '1', 'company/clock/index');
+INSERT INTO `system_auth_node` VALUES ('49', '1', 'company/user');
+INSERT INTO `system_auth_node` VALUES ('50', '1', 'company/user/index');
+INSERT INTO `system_auth_node` VALUES ('51', '1', 'company/user/add');
+INSERT INTO `system_auth_node` VALUES ('52', '1', 'company/user/edit');
+INSERT INTO `system_auth_node` VALUES ('53', '1', 'company/user/state');
+INSERT INTO `system_auth_node` VALUES ('54', '1', 'company/user/remove');
+INSERT INTO `system_auth_node` VALUES ('55', '1', 'service');
+INSERT INTO `system_auth_node` VALUES ('56', '1', 'service/config');
+INSERT INTO `system_auth_node` VALUES ('57', '1', 'service/config/index');
+INSERT INTO `system_auth_node` VALUES ('58', '1', 'service/config/edit');
+INSERT INTO `system_auth_node` VALUES ('59', '1', 'service/fans');
+INSERT INTO `system_auth_node` VALUES ('60', '1', 'service/fans/index');
+INSERT INTO `system_auth_node` VALUES ('61', '1', 'service/fans/setblack');
+INSERT INTO `system_auth_node` VALUES ('62', '1', 'service/fans/delblack');
+INSERT INTO `system_auth_node` VALUES ('63', '1', 'service/fans/sync');
+INSERT INTO `system_auth_node` VALUES ('64', '1', 'service/fans/remove');
+INSERT INTO `system_auth_node` VALUES ('65', '1', 'service/index');
+INSERT INTO `system_auth_node` VALUES ('66', '1', 'service/index/index');
+INSERT INTO `system_auth_node` VALUES ('67', '1', 'service/index/clearquota');
+INSERT INTO `system_auth_node` VALUES ('68', '1', 'service/index/sync');
+INSERT INTO `system_auth_node` VALUES ('69', '1', 'service/index/syncall');
+INSERT INTO `system_auth_node` VALUES ('70', '1', 'service/index/remove');
+INSERT INTO `system_auth_node` VALUES ('71', '1', 'service/index/forbid');
+INSERT INTO `system_auth_node` VALUES ('72', '1', 'service/index/resume');
+INSERT INTO `system_auth_node` VALUES ('73', '1', 'store');
+INSERT INTO `system_auth_node` VALUES ('74', '1', 'store/config');
+INSERT INTO `system_auth_node` VALUES ('75', '1', 'store/config/index');
+INSERT INTO `system_auth_node` VALUES ('76', '1', 'store/config/save');
+INSERT INTO `system_auth_node` VALUES ('77', '1', 'store/express_company');
+INSERT INTO `system_auth_node` VALUES ('78', '1', 'store/express_company/index');
+INSERT INTO `system_auth_node` VALUES ('79', '1', 'store/express_company/add');
+INSERT INTO `system_auth_node` VALUES ('80', '1', 'store/express_company/edit');
+INSERT INTO `system_auth_node` VALUES ('81', '1', 'store/express_company/forbid');
+INSERT INTO `system_auth_node` VALUES ('82', '1', 'store/express_company/resume');
+INSERT INTO `system_auth_node` VALUES ('83', '1', 'store/express_company/remove');
+INSERT INTO `system_auth_node` VALUES ('84', '1', 'store/express_template');
+INSERT INTO `system_auth_node` VALUES ('85', '1', 'store/express_template/index');
+INSERT INTO `system_auth_node` VALUES ('86', '1', 'store/express_template/save');
+INSERT INTO `system_auth_node` VALUES ('87', '1', 'store/goods');
+INSERT INTO `system_auth_node` VALUES ('88', '1', 'store/goods/index');
+INSERT INTO `system_auth_node` VALUES ('89', '1', 'store/goods/stock');
+INSERT INTO `system_auth_node` VALUES ('90', '1', 'store/goods/add');
+INSERT INTO `system_auth_node` VALUES ('91', '1', 'store/goods/edit');
+INSERT INTO `system_auth_node` VALUES ('92', '1', 'store/goods/forbid');
+INSERT INTO `system_auth_node` VALUES ('93', '1', 'store/goods/resume');
+INSERT INTO `system_auth_node` VALUES ('94', '1', 'store/goods/remove');
+INSERT INTO `system_auth_node` VALUES ('95', '1', 'store/goods_cate');
+INSERT INTO `system_auth_node` VALUES ('96', '1', 'store/goods_cate/index');
+INSERT INTO `system_auth_node` VALUES ('97', '1', 'store/goods_cate/add');
+INSERT INTO `system_auth_node` VALUES ('98', '1', 'store/goods_cate/edit');
+INSERT INTO `system_auth_node` VALUES ('99', '1', 'store/goods_cate/forbid');
+INSERT INTO `system_auth_node` VALUES ('100', '1', 'store/goods_cate/resume');
+INSERT INTO `system_auth_node` VALUES ('101', '1', 'store/goods_cate/remove');
+INSERT INTO `system_auth_node` VALUES ('102', '1', 'store/member');
+INSERT INTO `system_auth_node` VALUES ('103', '1', 'store/member/index');
+INSERT INTO `system_auth_node` VALUES ('104', '1', 'store/message');
+INSERT INTO `system_auth_node` VALUES ('105', '1', 'store/message/index');
+INSERT INTO `system_auth_node` VALUES ('106', '1', 'store/message/remove');
+INSERT INTO `system_auth_node` VALUES ('107', '1', 'store/order');
+INSERT INTO `system_auth_node` VALUES ('108', '1', 'store/order/index');
+INSERT INTO `system_auth_node` VALUES ('109', '1', 'store/order/express');
+INSERT INTO `system_auth_node` VALUES ('110', '1', 'store/order/expressquery');
+INSERT INTO `system_auth_node` VALUES ('111', '1', 'wechat');
+INSERT INTO `system_auth_node` VALUES ('112', '1', 'wechat/config');
+INSERT INTO `system_auth_node` VALUES ('113', '1', 'wechat/config/options');
+INSERT INTO `system_auth_node` VALUES ('114', '1', 'wechat/config/payment');
+INSERT INTO `system_auth_node` VALUES ('115', '1', 'wechat/fans');
+INSERT INTO `system_auth_node` VALUES ('116', '1', 'wechat/fans/index');
+INSERT INTO `system_auth_node` VALUES ('117', '1', 'wechat/fans/setblack');
+INSERT INTO `system_auth_node` VALUES ('118', '1', 'wechat/fans/delblack');
+INSERT INTO `system_auth_node` VALUES ('119', '1', 'wechat/fans/sync');
+INSERT INTO `system_auth_node` VALUES ('120', '1', 'wechat/fans/remove');
+INSERT INTO `system_auth_node` VALUES ('121', '1', 'wechat/index');
+INSERT INTO `system_auth_node` VALUES ('122', '1', 'wechat/index/index');
+INSERT INTO `system_auth_node` VALUES ('123', '1', 'wechat/keys');
+INSERT INTO `system_auth_node` VALUES ('124', '1', 'wechat/keys/index');
+INSERT INTO `system_auth_node` VALUES ('125', '1', 'wechat/keys/add');
+INSERT INTO `system_auth_node` VALUES ('126', '1', 'wechat/keys/edit');
+INSERT INTO `system_auth_node` VALUES ('127', '1', 'wechat/keys/remove');
+INSERT INTO `system_auth_node` VALUES ('128', '1', 'wechat/keys/forbid');
+INSERT INTO `system_auth_node` VALUES ('129', '1', 'wechat/keys/resume');
+INSERT INTO `system_auth_node` VALUES ('130', '1', 'wechat/keys/subscribe');
+INSERT INTO `system_auth_node` VALUES ('131', '1', 'wechat/keys/defaults');
+INSERT INTO `system_auth_node` VALUES ('132', '1', 'wechat/menu');
+INSERT INTO `system_auth_node` VALUES ('133', '1', 'wechat/menu/index');
+INSERT INTO `system_auth_node` VALUES ('134', '1', 'wechat/menu/edit');
+INSERT INTO `system_auth_node` VALUES ('135', '1', 'wechat/menu/cancel');
+INSERT INTO `system_auth_node` VALUES ('136', '1', 'wechat/news');
+INSERT INTO `system_auth_node` VALUES ('137', '1', 'wechat/news/index');
+INSERT INTO `system_auth_node` VALUES ('138', '1', 'wechat/news/select');
+INSERT INTO `system_auth_node` VALUES ('139', '1', 'wechat/news/add');
+INSERT INTO `system_auth_node` VALUES ('140', '1', 'wechat/news/edit');
 
 -- ----------------------------
 -- Table structure for system_config
 -- ----------------------------
 DROP TABLE IF EXISTS `system_config`;
-CREATE TABLE `system_config`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '配置名',
-  `value` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '配置值',
+CREATE TABLE `system_config` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT '' COMMENT '配置名',
+  `value` varchar(500) DEFAULT '' COMMENT '配置值',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_system_config_name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 81 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-配置';
+  KEY `index_system_config_name` (`name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COMMENT='系统-配置';
 
 -- ----------------------------
 -- Records of system_config
 -- ----------------------------
-INSERT INTO `system_config` VALUES (1, 'app_name', 'ThinkAdmin');
-INSERT INTO `system_config` VALUES (2, 'site_name', 'ThinkAdmin');
-INSERT INTO `system_config` VALUES (3, 'app_version', 'dev');
-INSERT INTO `system_config` VALUES (4, 'site_copy', '©版权所有 2014-2018 楚才科技');
-INSERT INTO `system_config` VALUES (5, 'site_icon', '/upload/decb0fe26fa3f486/b3f6521bf29403c8.png');
-INSERT INTO `system_config` VALUES (7, 'miitbeian', '粤ICP备16006642号-2');
-INSERT INTO `system_config` VALUES (8, 'storage_type', 'local');
-INSERT INTO `system_config` VALUES (9, 'storage_local_exts', 'doc,gif,icon,jpg,mp3,mp4,p12,pem,png,rar');
-INSERT INTO `system_config` VALUES (10, 'storage_qiniu_bucket', 'https');
-INSERT INTO `system_config` VALUES (11, 'storage_qiniu_domain', '用你自己的吧');
-INSERT INTO `system_config` VALUES (12, 'storage_qiniu_access_key', '用你自己的吧');
-INSERT INTO `system_config` VALUES (13, 'storage_qiniu_secret_key', '用你自己的吧');
-INSERT INTO `system_config` VALUES (14, 'storage_oss_bucket', 'cuci-mytest');
-INSERT INTO `system_config` VALUES (15, 'storage_oss_endpoint', 'oss-cn-hangzhou.aliyuncs.com');
-INSERT INTO `system_config` VALUES (16, 'storage_oss_domain', '用你自己的吧');
-INSERT INTO `system_config` VALUES (17, 'storage_oss_keyid', '用你自己的吧');
-INSERT INTO `system_config` VALUES (18, 'storage_oss_secret', '用你自己的吧');
-INSERT INTO `system_config` VALUES (36, 'storage_oss_is_https', 'http');
-INSERT INTO `system_config` VALUES (43, 'storage_qiniu_region', '华东');
-INSERT INTO `system_config` VALUES (44, 'storage_qiniu_is_https', 'https');
-INSERT INTO `system_config` VALUES (45, 'wechat_mch_id', '1332187001');
-INSERT INTO `system_config` VALUES (46, 'wechat_mch_key', 'A82DC5BD1F3359081049C568D8502BC5');
-INSERT INTO `system_config` VALUES (47, 'wechat_mch_ssl_type', 'p12');
-INSERT INTO `system_config` VALUES (48, 'wechat_mch_ssl_p12', '65b8e4f56718182d/1bc857ee646aa15d.p12');
-INSERT INTO `system_config` VALUES (49, 'wechat_mch_ssl_key', 'cc2e3e1345123930/c407d033294f283d.pem');
-INSERT INTO `system_config` VALUES (50, 'wechat_mch_ssl_cer', '966eaf89299e9c95/7014872cc109b29a.pem');
-INSERT INTO `system_config` VALUES (51, 'wechat_token', 'mytoken');
-INSERT INTO `system_config` VALUES (52, 'wechat_appid', 'wx60a43dd8161666d4');
-INSERT INTO `system_config` VALUES (53, 'wechat_appsecret', '9978422e0e431643d4b42868d183d60b');
-INSERT INTO `system_config` VALUES (54, 'wechat_encodingaeskey', '');
-INSERT INTO `system_config` VALUES (55, 'wechat_push_url', '消息推送地址：http://127.0.0.1:8000/wechat/api.push');
-INSERT INTO `system_config` VALUES (56, 'wechat_type', 'thr');
-INSERT INTO `system_config` VALUES (57, 'wechat_thr_appid', 'wx60a43dd8161666d4');
-INSERT INTO `system_config` VALUES (58, 'wechat_thr_appkey', '5caf4b0727f6e46a7e6ccbe773cc955d');
-INSERT INTO `system_config` VALUES (60, 'wechat_thr_appurl', '消息推送地址：http://127.0.0.1:8000/wechat/api.push');
-INSERT INTO `system_config` VALUES (61, 'component_appid', 'wx28b58798480874f9');
-INSERT INTO `system_config` VALUES (62, 'component_appsecret', '8d0e1ec14ea0adc5027dd0ad82c64bc9');
-INSERT INTO `system_config` VALUES (63, 'component_token', 'P8QHTIxpBEq88IrxatqhgpBm2OAQROkI');
-INSERT INTO `system_config` VALUES (64, 'component_encodingaeskey', 'L5uFIa0U6KLalPyXckyqoVIJYLhsfrg8k9YzybZIHsx');
-INSERT INTO `system_config` VALUES (65, 'system_message_state', '0');
-INSERT INTO `system_config` VALUES (66, 'sms_zt_username', '可以找CUCI申请');
-INSERT INTO `system_config` VALUES (67, 'sms_zt_password', '可以找CUCI申请');
-INSERT INTO `system_config` VALUES (68, 'sms_reg_template', '您的验证码为{code}，请在十分钟内完成操作！');
-INSERT INTO `system_config` VALUES (69, 'sms_secure', '可以找CUCI申请');
-INSERT INTO `system_config` VALUES (70, 'store_title', '测试商城');
-INSERT INTO `system_config` VALUES (71, 'store_order_wait_time', '0.50');
-INSERT INTO `system_config` VALUES (72, 'store_order_clear_time', '24.00');
-INSERT INTO `system_config` VALUES (73, 'store_order_confirm_time', '60.00');
-INSERT INTO `system_config` VALUES (74, 'sms_zt_username2', '可以找CUCI申请2');
-INSERT INTO `system_config` VALUES (75, 'sms_zt_password2', '可以找CUCI申请2');
-INSERT INTO `system_config` VALUES (76, 'sms_secure2', '可以找CUCI申请2');
-INSERT INTO `system_config` VALUES (77, 'sms_reg_template2', '您的验证码为{code}，请在十分钟内完成操作！2');
-INSERT INTO `system_config` VALUES (78, 'michat_appid', '2882303761518074614');
-INSERT INTO `system_config` VALUES (79, 'michat_appkey', '5861807470614');
-INSERT INTO `system_config` VALUES (80, 'michat_appsecert', 'CP/WUTUgDuyOxgLQ5ztesg==');
+INSERT INTO `system_config` VALUES ('1', 'app_name', 'Tp5swagger');
+INSERT INTO `system_config` VALUES ('2', 'site_name', 'Tp5swagger');
+INSERT INTO `system_config` VALUES ('3', 'app_version', 'dev');
+INSERT INTO `system_config` VALUES ('4', 'site_copy', '©版权所有 ');
+INSERT INTO `system_config` VALUES ('5', 'site_icon', '/upload/decb0fe26fa3f486/b3f6521bf29403c8.png');
+INSERT INTO `system_config` VALUES ('7', 'miitbeian', '');
+INSERT INTO `system_config` VALUES ('8', 'storage_type', 'local');
+INSERT INTO `system_config` VALUES ('9', 'storage_local_exts', 'doc,gif,icon,jpg,mp3,mp4,p12,pem,png,rar');
+INSERT INTO `system_config` VALUES ('10', 'storage_qiniu_bucket', 'https');
+INSERT INTO `system_config` VALUES ('11', 'storage_qiniu_domain', '用你自己的吧');
+INSERT INTO `system_config` VALUES ('12', 'storage_qiniu_access_key', '用你自己的吧');
+INSERT INTO `system_config` VALUES ('13', 'storage_qiniu_secret_key', '用你自己的吧');
+INSERT INTO `system_config` VALUES ('14', 'storage_oss_bucket', 'cuci-mytest');
+INSERT INTO `system_config` VALUES ('15', 'storage_oss_endpoint', 'oss-cn-hangzhou.aliyuncs.com');
+INSERT INTO `system_config` VALUES ('16', 'storage_oss_domain', '用你自己的吧');
+INSERT INTO `system_config` VALUES ('17', 'storage_oss_keyid', '用你自己的吧');
+INSERT INTO `system_config` VALUES ('18', 'storage_oss_secret', '用你自己的吧');
+INSERT INTO `system_config` VALUES ('36', 'storage_oss_is_https', 'http');
+INSERT INTO `system_config` VALUES ('43', 'storage_qiniu_region', '华东');
+INSERT INTO `system_config` VALUES ('44', 'storage_qiniu_is_https', 'https');
+INSERT INTO `system_config` VALUES ('45', 'wechat_mch_id', '1332187001');
+INSERT INTO `system_config` VALUES ('46', 'wechat_mch_key', 'A82DC5BD1F3359081049C568D8502BC5');
+INSERT INTO `system_config` VALUES ('47', 'wechat_mch_ssl_type', 'p12');
+INSERT INTO `system_config` VALUES ('48', 'wechat_mch_ssl_p12', '65b8e4f56718182d/1bc857ee646aa15d.p12');
+INSERT INTO `system_config` VALUES ('49', 'wechat_mch_ssl_key', 'cc2e3e1345123930/c407d033294f283d.pem');
+INSERT INTO `system_config` VALUES ('50', 'wechat_mch_ssl_cer', '966eaf89299e9c95/7014872cc109b29a.pem');
+INSERT INTO `system_config` VALUES ('51', 'wechat_token', 'mytoken');
+INSERT INTO `system_config` VALUES ('52', 'wechat_appid', 'wx60a43dd8161666d4');
+INSERT INTO `system_config` VALUES ('53', 'wechat_appsecret', '9978422e0e431643d4b42868d183d60b');
+INSERT INTO `system_config` VALUES ('54', 'wechat_encodingaeskey', '');
+INSERT INTO `system_config` VALUES ('55', 'wechat_push_url', '消息推送地址：http://127.0.0.1:8000/wechat/api.push');
+INSERT INTO `system_config` VALUES ('56', 'wechat_type', 'thr');
+INSERT INTO `system_config` VALUES ('57', 'wechat_thr_appid', 'wx60a43dd8161666d4');
+INSERT INTO `system_config` VALUES ('58', 'wechat_thr_appkey', '5caf4b0727f6e46a7e6ccbe773cc955d');
+INSERT INTO `system_config` VALUES ('60', 'wechat_thr_appurl', '消息推送地址：http://127.0.0.1:8000/wechat/api.push');
+INSERT INTO `system_config` VALUES ('61', 'component_appid', 'wx28b58798480874f9');
+INSERT INTO `system_config` VALUES ('62', 'component_appsecret', '8d0e1ec14ea0adc5027dd0ad82c64bc9');
+INSERT INTO `system_config` VALUES ('63', 'component_token', 'P8QHTIxpBEq88IrxatqhgpBm2OAQROkI');
+INSERT INTO `system_config` VALUES ('64', 'component_encodingaeskey', 'L5uFIa0U6KLalPyXckyqoVIJYLhsfrg8k9YzybZIHsx');
+INSERT INTO `system_config` VALUES ('65', 'system_message_state', '0');
+INSERT INTO `system_config` VALUES ('66', 'sms_zt_username', '可以找CUCI申请');
+INSERT INTO `system_config` VALUES ('67', 'sms_zt_password', '可以找CUCI申请');
+INSERT INTO `system_config` VALUES ('68', 'sms_reg_template', '您的验证码为{code}，请在十分钟内完成操作！');
+INSERT INTO `system_config` VALUES ('69', 'sms_secure', '可以找CUCI申请');
+INSERT INTO `system_config` VALUES ('70', 'store_title', '测试商城');
+INSERT INTO `system_config` VALUES ('71', 'store_order_wait_time', '0.50');
+INSERT INTO `system_config` VALUES ('72', 'store_order_clear_time', '24.00');
+INSERT INTO `system_config` VALUES ('73', 'store_order_confirm_time', '60.00');
+INSERT INTO `system_config` VALUES ('74', 'sms_zt_username2', '可以找CUCI申请2');
+INSERT INTO `system_config` VALUES ('75', 'sms_zt_password2', '可以找CUCI申请2');
+INSERT INTO `system_config` VALUES ('76', 'sms_secure2', '可以找CUCI申请2');
+INSERT INTO `system_config` VALUES ('77', 'sms_reg_template2', '您的验证码为{code}，请在十分钟内完成操作！2');
+INSERT INTO `system_config` VALUES ('78', 'michat_appid', '2882303761518074614');
+INSERT INTO `system_config` VALUES ('79', 'michat_appkey', '5861807470614');
+INSERT INTO `system_config` VALUES ('80', 'michat_appsecert', 'CP/WUTUgDuyOxgLQ5ztesg==');
 
 -- ----------------------------
 -- Table structure for system_data
 -- ----------------------------
 DROP TABLE IF EXISTS `system_data`;
-CREATE TABLE `system_data`  (
-  `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '配置名',
-  `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '配置值',
+CREATE TABLE `system_data` (
+  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL COMMENT '配置名',
+  `value` longtext COMMENT '配置值',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_system_data_name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-数据';
+  KEY `index_system_data_name` (`name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统-数据';
 
 -- ----------------------------
 -- Records of system_data
 -- ----------------------------
-INSERT INTO `system_data` VALUES (1, 'menudata', '[{\"name\":\"请输入名称\",\"type\":\"scancode_push\",\"key\":\"scancode_push\"}]');
+INSERT INTO `system_data` VALUES ('1', 'menudata', '[{\"name\":\"请输入名称\",\"type\":\"scancode_push\",\"key\":\"scancode_push\"}]');
 
 -- ----------------------------
 -- Table structure for system_jobs
 -- ----------------------------
 DROP TABLE IF EXISTS `system_jobs`;
-CREATE TABLE `system_jobs`  (
+CREATE TABLE `system_jobs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `queue` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `attempts` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-  `reserved` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-  `reserved_at` int(10) UNSIGNED NULL DEFAULT NULL,
-  `available_at` int(10) UNSIGNED NOT NULL,
-  `created_at` int(10) UNSIGNED NOT NULL,
+  `queue` varchar(100) NOT NULL,
+  `payload` longtext NOT NULL,
+  `attempts` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `reserved` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `reserved_at` int(10) unsigned DEFAULT NULL,
+  `available_at` int(10) unsigned NOT NULL,
+  `created_at` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_system_jobs_reserved`(`reserved`) USING BTREE,
-  INDEX `index_system_jobs_attempts`(`attempts`) USING BTREE,
-  INDEX `index_system_jobs_reserved_at`(`reserved_at`) USING BTREE,
-  INDEX `index_system_jobs_available_at`(`available_at`) USING BTREE,
-  INDEX `index_system_jobs_create_at`(`created_at`) USING BTREE,
-  INDEX `index_system_jobs_queue`(`queue`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-任务';
+  KEY `index_system_jobs_reserved` (`reserved`) USING BTREE,
+  KEY `index_system_jobs_attempts` (`attempts`) USING BTREE,
+  KEY `index_system_jobs_reserved_at` (`reserved_at`) USING BTREE,
+  KEY `index_system_jobs_available_at` (`available_at`) USING BTREE,
+  KEY `index_system_jobs_create_at` (`created_at`) USING BTREE,
+  KEY `index_system_jobs_queue` (`queue`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统-任务';
+
+-- ----------------------------
+-- Records of system_jobs
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for system_jobs_log
 -- ----------------------------
 DROP TABLE IF EXISTS `system_jobs_log`;
-CREATE TABLE `system_jobs_log`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '任务名称',
-  `uri` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '任务对象',
-  `later` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '任务延时',
-  `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '任务数据',
-  `desc` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '任务描述',
-  `double` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '任务多开',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '任务状态(1新任务,2任务进行中,3任务成功,4任务失败)',
-  `status_at` datetime NULL DEFAULT NULL COMMENT '任务状态时间',
-  `status_desc` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '任务状态描述',
+CREATE TABLE `system_jobs_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT '' COMMENT '任务名称',
+  `uri` varchar(500) DEFAULT '' COMMENT '任务对象',
+  `later` bigint(20) unsigned DEFAULT '0' COMMENT '任务延时',
+  `data` longtext COMMENT '任务数据',
+  `desc` varchar(500) DEFAULT '' COMMENT '任务描述',
+  `double` tinyint(1) unsigned DEFAULT '1' COMMENT '任务多开',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '任务状态(1新任务,2任务进行中,3任务成功,4任务失败)',
+  `status_at` datetime DEFAULT NULL COMMENT '任务状态时间',
+  `status_desc` varchar(500) DEFAULT '' COMMENT '任务状态描述',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_system_jobs_log_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-任务-日志';
+  KEY `index_system_jobs_log_status` (`status`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统-任务-日志';
+
+-- ----------------------------
+-- Records of system_jobs_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for system_log
 -- ----------------------------
 DROP TABLE IF EXISTS `system_log`;
-CREATE TABLE `system_log`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `node` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '当前操作节点',
-  `geoip` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '操作者IP地址',
-  `action` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '操作行为名称',
-  `content` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '操作内容描述',
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '操作人用户名',
+CREATE TABLE `system_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `node` varchar(200) NOT NULL DEFAULT '' COMMENT '当前操作节点',
+  `geoip` varchar(15) NOT NULL DEFAULT '' COMMENT '操作者IP地址',
+  `action` varchar(200) NOT NULL DEFAULT '' COMMENT '操作行为名称',
+  `content` varchar(1024) NOT NULL DEFAULT '' COMMENT '操作内容描述',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '操作人用户名',
   `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-日志';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='系统-日志';
+
+-- ----------------------------
+-- Records of system_log
+-- ----------------------------
+INSERT INTO `system_log` VALUES ('1', 'admin/login/index', '127.0.0.1', '系统管理', '用户登录系统成功', 'admin', '2019-08-10 20:30:02');
+INSERT INTO `system_log` VALUES ('2', 'admin/login/index', '127.0.0.1', '系统管理', '用户登录系统成功', 'admin', '2019-08-11 09:46:38');
 
 -- ----------------------------
 -- Table structure for system_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `system_menu`;
-CREATE TABLE `system_menu`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '父ID',
-  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '名称',
-  `node` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '节点代码',
-  `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '菜单图标',
-  `url` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '链接',
-  `params` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '链接参数',
-  `target` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '_self' COMMENT '打开方式',
-  `sort` int(11) UNSIGNED NULL DEFAULT 0 COMMENT '菜单排序',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0:禁用,1:启用)',
+CREATE TABLE `system_menu` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` bigint(20) unsigned DEFAULT '0' COMMENT '父ID',
+  `title` varchar(100) DEFAULT '' COMMENT '名称',
+  `node` varchar(200) DEFAULT '' COMMENT '节点代码',
+  `icon` varchar(100) DEFAULT '' COMMENT '菜单图标',
+  `url` varchar(400) DEFAULT '' COMMENT '链接',
+  `params` varchar(500) DEFAULT '' COMMENT '链接参数',
+  `target` varchar(20) DEFAULT '_self' COMMENT '打开方式',
+  `sort` int(11) unsigned DEFAULT '0' COMMENT '菜单排序',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '状态(0:禁用,1:启用)',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_system_menu_node`(`node`(191)) USING BTREE,
-  INDEX `index_system_menu_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-菜单';
+  KEY `index_system_menu_node` (`node`(191)) USING BTREE,
+  KEY `index_system_menu_status` (`status`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COMMENT='系统-菜单';
 
 -- ----------------------------
 -- Records of system_menu
 -- ----------------------------
-INSERT INTO `system_menu` VALUES (1, 0, '后台首页', '', '', 'admin/index/main', '', '_self', 500, 1, '2018-09-05 17:59:38');
-INSERT INTO `system_menu` VALUES (2, 0, '系统管理', '', '', '#', '', '_self', 100, 1, '2018-09-05 18:04:52');
-INSERT INTO `system_menu` VALUES (3, 4, '系统菜单管理', '', 'layui-icon layui-icon-layouts', 'admin/menu/index', '', '_self', 1, 1, '2018-09-05 18:05:26');
-INSERT INTO `system_menu` VALUES (4, 2, '系统配置', '', '', '#', '', '_self', 20, 1, '2018-09-05 18:07:17');
-INSERT INTO `system_menu` VALUES (5, 12, '系统用户管理', '', 'layui-icon layui-icon-username', 'admin/user/index', '', '_self', 1, 1, '2018-09-06 11:10:42');
-INSERT INTO `system_menu` VALUES (7, 12, '访问权限管理', '', 'layui-icon layui-icon-vercode', 'admin/auth/index', '', '_self', 2, 1, '2018-09-06 15:17:14');
-INSERT INTO `system_menu` VALUES (11, 4, '系统参数配置', '', 'layui-icon layui-icon-set', 'admin/config/info', '', '_self', 4, 1, '2018-09-06 16:43:47');
-INSERT INTO `system_menu` VALUES (12, 2, '权限管理', '', '', '#', '', '_self', 10, 1, '2018-09-06 18:01:31');
-INSERT INTO `system_menu` VALUES (13, 0, '商城管理', '', '', '#', '', '_self', 400, 1, '2018-10-12 13:56:29');
-INSERT INTO `system_menu` VALUES (14, 48, '商品信息管理', '', 'layui-icon layui-icon-component', 'store/goods/index', '', '_self', 3, 1, '2018-10-12 13:56:48');
-INSERT INTO `system_menu` VALUES (16, 0, '微信管理', '', '', '#', '', '_self', 300, 1, '2018-10-31 15:15:27');
-INSERT INTO `system_menu` VALUES (17, 16, '微信管理', '', '', '#', '', '_self', 20, 1, '2018-10-31 15:16:46');
-INSERT INTO `system_menu` VALUES (18, 17, '微信授权配置', '', 'layui-icon layui-icon-set', 'wechat/config/options', '', '_self', 2, 1, '2018-10-31 15:17:11');
-INSERT INTO `system_menu` VALUES (19, 17, '微信支付配置', '', 'layui-icon layui-icon-rmb', 'wechat/config/payment', '', '_self', 1, 1, '2018-10-31 18:28:09');
-INSERT INTO `system_menu` VALUES (20, 16, '微信定制', '', '', '#', '', '_self', 10, 1, '2018-11-13 11:46:27');
-INSERT INTO `system_menu` VALUES (21, 20, '图文素材管理', '', 'layui-icon layui-icon-template', 'wechat/news/index', '', '_self', 6, 1, '2018-11-13 11:46:55');
-INSERT INTO `system_menu` VALUES (22, 20, '粉丝信息管理', '', 'layui-icon layui-icon-user', 'wechat/fans/index', '', '_self', 5, 1, '2018-11-15 09:51:13');
-INSERT INTO `system_menu` VALUES (23, 20, '回复规则管理', '', 'layui-icon layui-icon-engine', 'wechat/keys/index', '', '_self', 4, 1, '2018-11-22 11:29:08');
-INSERT INTO `system_menu` VALUES (24, 20, '关注回复配置', '', 'layui-icon layui-icon-senior', 'wechat/keys/subscribe', '', '_self', 3, 1, '2018-11-27 11:45:28');
-INSERT INTO `system_menu` VALUES (25, 20, '默认回复配置', '', 'layui-icon layui-icon-survey', 'wechat/keys/defaults', '', '_self', 2, 1, '2018-11-27 11:45:58');
-INSERT INTO `system_menu` VALUES (26, 20, '微信菜单管理', '', 'layui-icon layui-icon-cellphone', 'wechat/menu/index', '', '_self', 1, 1, '2018-11-27 17:56:56');
-INSERT INTO `system_menu` VALUES (27, 4, '系统任务管理', '', 'layui-icon layui-icon-log', 'admin/queue/index', '', '_self', 3, 1, '2018-11-29 11:13:34');
-INSERT INTO `system_menu` VALUES (37, 0, '开放平台', '', '', '#', '', '_self', 200, 1, '2018-12-28 13:29:25');
-INSERT INTO `system_menu` VALUES (38, 40, '开放平台配置', '', 'layui-icon layui-icon-set', 'service/config/index', '', '_self', 0, 1, '2018-12-28 13:29:44');
-INSERT INTO `system_menu` VALUES (39, 40, '公众授权管理', '', 'layui-icon layui-icon-template-1', 'service/index/index', '', '_self', 0, 1, '2018-12-28 13:30:07');
-INSERT INTO `system_menu` VALUES (40, 37, '平台管理', '', '', '#', '', '_self', 0, 1, '2018-12-28 16:05:46');
-INSERT INTO `system_menu` VALUES (42, 48, '会员信息管理', '', 'layui-icon layui-icon-user', 'store/member/index', '', '_self', 1, 1, '2019-01-22 14:24:23');
-INSERT INTO `system_menu` VALUES (43, 48, '订单记录管理', '', 'layui-icon layui-icon-template-1', 'store/order/index', '', '_self', 2, 1, '2019-01-22 14:46:22');
-INSERT INTO `system_menu` VALUES (44, 48, '商品分类管理', '', 'layui-icon layui-icon-app', 'store/goods_cate/index', '', '_self', 4, 1, '2019-01-23 10:41:06');
-INSERT INTO `system_menu` VALUES (45, 47, '商城参数配置', '', 'layui-icon layui-icon-set', 'store/config/index', '', '_self', 5, 1, '2019-01-24 16:47:33');
-INSERT INTO `system_menu` VALUES (46, 47, '短信发送记录', '', 'layui-icon layui-icon-console', 'store/message/index', '', '_self', 4, 1, '2019-01-24 18:09:58');
-INSERT INTO `system_menu` VALUES (47, 13, '商城配置', '', '', '#', '', '_self', 20, 1, '2019-01-25 16:47:49');
-INSERT INTO `system_menu` VALUES (48, 13, '数据管理', '', '', '#', '', '_self', 10, 1, '2019-01-25 16:48:35');
-INSERT INTO `system_menu` VALUES (49, 4, '系统日志管理', '', 'layui-icon layui-icon-form', 'admin/oplog/index', '', '_self', 2, 1, '2019-02-18 12:56:56');
-INSERT INTO `system_menu` VALUES (50, 47, '快递公司管理', '', 'layui-icon layui-icon-form', 'store/express_company/index', '', '_self', 3, 1, '2019-04-01 17:10:59');
-INSERT INTO `system_menu` VALUES (52, 47, '邮费模板管理', '', 'layui-icon layui-icon-fonts-clear', 'store/express_template/index', '', '_self', 1, 1, '2019-04-23 13:17:10');
-INSERT INTO `system_menu` VALUES (55, 17, '微信数据统计', '', 'layui-icon layui-icon-chart-screen', 'wechat/index/index', '', '_self', 3, 1, '2019-06-15 15:03:51');
-INSERT INTO `system_menu` VALUES (56, 40, '微信粉丝管理', '', 'layui-icon layui-icon-username', 'service/fans/index', '', '_self', 0, 1, '2019-07-23 09:57:24');
-INSERT INTO `system_menu` VALUES (57, 0, '企业管理', '', '', '#', '', '_self', 150, 1, '2019-08-08 17:20:29');
-INSERT INTO `system_menu` VALUES (58, 57, '基础管理', '', '', '#', '', '_self', 0, 1, '2019-08-08 17:20:42');
-INSERT INTO `system_menu` VALUES (59, 58, '企业员工管理', '', 'layui-icon layui-icon-username', 'company/user/index', '', '_self', 0, 1, '2019-08-08 17:20:59');
-INSERT INTO `system_menu` VALUES (60, 58, '仓库权限管理', '', 'layui-icon layui-icon-template-1', 'company/auth/index', '', '_self', 0, 1, '2019-08-08 18:39:37');
-INSERT INTO `system_menu` VALUES (61, 58, '网络打卡管理', '', 'layui-icon layui-icon-engine', 'company/clock/index', '', '_self', 0, 1, '2019-08-09 14:44:23');
+INSERT INTO `system_menu` VALUES ('1', '0', '后台首页', '', '', 'admin/index/main', '', '_self', '500', '1', '2018-09-05 17:59:38');
+INSERT INTO `system_menu` VALUES ('2', '0', '系统管理', '', '', '#', '', '_self', '100', '1', '2018-09-05 18:04:52');
+INSERT INTO `system_menu` VALUES ('3', '4', '系统菜单管理', '', 'layui-icon layui-icon-layouts', 'admin/menu/index', '', '_self', '1', '1', '2018-09-05 18:05:26');
+INSERT INTO `system_menu` VALUES ('4', '2', '系统配置', '', '', '#', '', '_self', '20', '1', '2018-09-05 18:07:17');
+INSERT INTO `system_menu` VALUES ('5', '12', '系统用户管理', '', 'layui-icon layui-icon-username', 'admin/user/index', '', '_self', '1', '1', '2018-09-06 11:10:42');
+INSERT INTO `system_menu` VALUES ('7', '12', '访问权限管理', '', 'layui-icon layui-icon-vercode', 'admin/auth/index', '', '_self', '2', '1', '2018-09-06 15:17:14');
+INSERT INTO `system_menu` VALUES ('11', '4', '系统参数配置', '', 'layui-icon layui-icon-set', 'admin/config/info', '', '_self', '4', '1', '2018-09-06 16:43:47');
+INSERT INTO `system_menu` VALUES ('12', '2', '权限管理', '', '', '#', '', '_self', '10', '1', '2018-09-06 18:01:31');
+INSERT INTO `system_menu` VALUES ('13', '0', '商城管理', '', '', '#', '', '_self', '400', '0', '2018-10-12 13:56:29');
+INSERT INTO `system_menu` VALUES ('14', '48', '商品信息管理', '', 'layui-icon layui-icon-component', 'store/goods/index', '', '_self', '3', '0', '2018-10-12 13:56:48');
+INSERT INTO `system_menu` VALUES ('16', '0', '微信管理', '', '', '#', '', '_self', '300', '0', '2018-10-31 15:15:27');
+INSERT INTO `system_menu` VALUES ('17', '16', '微信管理', '', '', '#', '', '_self', '20', '0', '2018-10-31 15:16:46');
+INSERT INTO `system_menu` VALUES ('18', '17', '微信授权配置', '', 'layui-icon layui-icon-set', 'wechat/config/options', '', '_self', '2', '0', '2018-10-31 15:17:11');
+INSERT INTO `system_menu` VALUES ('19', '17', '微信支付配置', '', 'layui-icon layui-icon-rmb', 'wechat/config/payment', '', '_self', '1', '0', '2018-10-31 18:28:09');
+INSERT INTO `system_menu` VALUES ('20', '16', '微信定制', '', '', '#', '', '_self', '10', '0', '2018-11-13 11:46:27');
+INSERT INTO `system_menu` VALUES ('21', '20', '图文素材管理', '', 'layui-icon layui-icon-template', 'wechat/news/index', '', '_self', '6', '0', '2018-11-13 11:46:55');
+INSERT INTO `system_menu` VALUES ('22', '20', '粉丝信息管理', '', 'layui-icon layui-icon-user', 'wechat/fans/index', '', '_self', '5', '0', '2018-11-15 09:51:13');
+INSERT INTO `system_menu` VALUES ('23', '20', '回复规则管理', '', 'layui-icon layui-icon-engine', 'wechat/keys/index', '', '_self', '4', '0', '2018-11-22 11:29:08');
+INSERT INTO `system_menu` VALUES ('24', '20', '关注回复配置', '', 'layui-icon layui-icon-senior', 'wechat/keys/subscribe', '', '_self', '3', '0', '2018-11-27 11:45:28');
+INSERT INTO `system_menu` VALUES ('25', '20', '默认回复配置', '', 'layui-icon layui-icon-survey', 'wechat/keys/defaults', '', '_self', '2', '0', '2018-11-27 11:45:58');
+INSERT INTO `system_menu` VALUES ('26', '20', '微信菜单管理', '', 'layui-icon layui-icon-cellphone', 'wechat/menu/index', '', '_self', '1', '0', '2018-11-27 17:56:56');
+INSERT INTO `system_menu` VALUES ('27', '4', '系统任务管理', '', 'layui-icon layui-icon-log', 'admin/queue/index', '', '_self', '3', '1', '2018-11-29 11:13:34');
+INSERT INTO `system_menu` VALUES ('37', '0', '开放平台', '', '', '#', '', '_self', '200', '1', '2018-12-28 13:29:25');
+INSERT INTO `system_menu` VALUES ('38', '40', '开放平台配置', '', 'layui-icon layui-icon-set', 'service/config/index', '', '_self', '0', '1', '2018-12-28 13:29:44');
+INSERT INTO `system_menu` VALUES ('39', '40', '公众授权管理', '', 'layui-icon layui-icon-template-1', 'service/index/index', '', '_self', '0', '1', '2018-12-28 13:30:07');
+INSERT INTO `system_menu` VALUES ('40', '37', '平台管理', '', '', '#', '', '_self', '0', '1', '2018-12-28 16:05:46');
+INSERT INTO `system_menu` VALUES ('42', '48', '会员信息管理', '', 'layui-icon layui-icon-user', 'store/member/index', '', '_self', '1', '0', '2019-01-22 14:24:23');
+INSERT INTO `system_menu` VALUES ('43', '48', '订单记录管理', '', 'layui-icon layui-icon-template-1', 'store/order/index', '', '_self', '2', '0', '2019-01-22 14:46:22');
+INSERT INTO `system_menu` VALUES ('44', '48', '商品分类管理', '', 'layui-icon layui-icon-app', 'store/goods_cate/index', '', '_self', '4', '0', '2019-01-23 10:41:06');
+INSERT INTO `system_menu` VALUES ('48', '13', '数据管理', '', '', '#', '', '_self', '10', '0', '2019-01-25 16:48:35');
+INSERT INTO `system_menu` VALUES ('49', '4', '系统日志管理', '', 'layui-icon layui-icon-form', 'admin/oplog/index', '', '_self', '2', '1', '2019-02-18 12:56:56');
+INSERT INTO `system_menu` VALUES ('55', '17', '微信数据统计', '', 'layui-icon layui-icon-chart-screen', 'wechat/index/index', '', '_self', '3', '0', '2019-06-15 15:03:51');
+INSERT INTO `system_menu` VALUES ('56', '40', '微信粉丝管理', '', 'layui-icon layui-icon-username', 'service/fans/index', '', '_self', '0', '1', '2019-07-23 09:57:24');
+INSERT INTO `system_menu` VALUES ('57', '0', '企业管理', '', '', '#', '', '_self', '150', '0', '2019-08-08 17:20:29');
+INSERT INTO `system_menu` VALUES ('58', '57', '基础管理', '', '', '#', '', '_self', '0', '0', '2019-08-08 17:20:42');
+INSERT INTO `system_menu` VALUES ('59', '58', '企业员工管理', '', 'layui-icon layui-icon-username', 'company/user/index', '', '_self', '0', '0', '2019-08-08 17:20:59');
+INSERT INTO `system_menu` VALUES ('60', '58', '仓库权限管理', '', 'layui-icon layui-icon-template-1', 'company/auth/index', '', '_self', '0', '0', '2019-08-08 18:39:37');
+INSERT INTO `system_menu` VALUES ('61', '58', '网络打卡管理', '', 'layui-icon layui-icon-engine', 'company/clock/index', '', '_self', '0', '0', '2019-08-09 14:44:23');
 
 -- ----------------------------
 -- Table structure for system_user
 -- ----------------------------
 DROP TABLE IF EXISTS `system_user`;
-CREATE TABLE `system_user`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户账号',
-  `password` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户密码',
-  `qq` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系QQ',
-  `mail` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系邮箱',
-  `phone` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系手机',
-  `login_at` datetime NULL DEFAULT NULL COMMENT '登录时间',
-  `login_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '登录IP',
-  `login_num` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '登录次数',
-  `authorize` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '权限授权',
-  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户标签',
-  `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注说明',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0禁用,1启用)',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除(1删除,0未删)',
+CREATE TABLE `system_user` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) DEFAULT '' COMMENT '用户账号',
+  `password` varchar(32) DEFAULT '' COMMENT '用户密码',
+  `qq` varchar(16) DEFAULT '' COMMENT '联系QQ',
+  `mail` varchar(32) DEFAULT '' COMMENT '联系邮箱',
+  `phone` varchar(16) DEFAULT '' COMMENT '联系手机',
+  `login_at` datetime DEFAULT NULL COMMENT '登录时间',
+  `login_ip` varchar(255) DEFAULT '' COMMENT '登录IP',
+  `login_num` bigint(20) unsigned DEFAULT '0' COMMENT '登录次数',
+  `authorize` varchar(255) DEFAULT '' COMMENT '权限授权',
+  `tags` varchar(255) DEFAULT '' COMMENT '用户标签',
+  `desc` varchar(255) DEFAULT '' COMMENT '备注说明',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '状态(0禁用,1启用)',
+  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT '删除(1删除,0未删)',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `index_system_user_username`(`username`) USING BTREE,
-  INDEX `index_system_user_status`(`status`) USING BTREE,
-  INDEX `index_system_user_deleted`(`is_deleted`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10001 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-用户';
+  UNIQUE KEY `index_system_user_username` (`username`) USING BTREE,
+  KEY `index_system_user_status` (`status`) USING BTREE,
+  KEY `index_system_user_deleted` (`is_deleted`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8mb4 COMMENT='系统-用户';
 
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
-INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2019-08-09 15:19:41', '10.1.1.10', 655, '', '', '', 1, 0, '2015-11-13 15:14:22');
+INSERT INTO `system_user` VALUES ('10000', 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2019-08-11 09:46:38', '127.0.0.1', '657', '', '', '', '1', '0', '2015-11-13 15:14:22');
+
+-- ----------------------------
+-- Table structure for users_userlevel
+-- ----------------------------
+DROP TABLE IF EXISTS `users_userlevel`;
+CREATE TABLE `users_userlevel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `lowerlimit` int(11) NOT NULL,
+  `upperlimit` int(11) NOT NULL,
+  `feedback` int(11) NOT NULL,
+  `contribution` int(11) NOT NULL,
+  `add_time` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of users_userlevel
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for users_userprofile
+-- ----------------------------
+DROP TABLE IF EXISTS `users_userprofile`;
+CREATE TABLE `users_userprofile` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `first_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(254) COLLATE utf8_unicode_ci NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  `nick_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `birthday` date DEFAULT NULL,
+  `gender` varchar(6) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `mobile` varchar(11) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `contribution` int(11) NOT NULL,
+  `score` int(11) NOT NULL,
+  `level_id` int(11) DEFAULT NULL,
+  `name` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `recommend_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  KEY `users_userprofile_level_id_d0deecb4_fk_users_userlevel_id` (`level_id`),
+  KEY `users_userprofile_recommend_id_d63fb04a_fk_users_userprofile_id` (`recommend_id`),
+  CONSTRAINT `users_userprofile_ibfk_1` FOREIGN KEY (`recommend_id`) REFERENCES `users_userprofile` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of users_userprofile
+-- ----------------------------
+INSERT INTO `users_userprofile` VALUES ('1', 'pbkdf2_sha256$150000$nWdGrXcCR1q2$jZi0LRnaVgvK9dsNOkjgwD8DzIb2QTWIlM8t9wruUuU=', '2019-07-20 13:17:37.062000', '1', 'admin', '', '', '371609974@qq.com', '1', '1', '2019-06-28 17:05:36.699311', '', null, 'female', '', '18695732896', 'image/default.png', '0', '0', '1', null, null);
+INSERT INTO `users_userprofile` VALUES ('2', 'pbkdf2_sha256$150000$nWdGrXcCR1q2$jZi0LRnaVgvK9dsNOkjgwD8DzIb2QTWIlM8t9wruUuU=', null, '0', '18695732895', '', '', '', '0', '1', '2019-07-11 18:31:47.228101', '', null, 'female', '', '18695732895', 'image/default.png', '0', '0', null, null, null);
+INSERT INTO `users_userprofile` VALUES ('3', 'pbkdf2_sha256$150000$tNMlyjIhad2c$fFG4ZLx4HpES+HQDfNpD8OBAPIIAoD4G+6emgK1y3fY=', null, '0', '18695732891', '', '', '', '0', '1', '2019-07-11 18:37:29.020651', '', null, 'female', '', '18695732891', 'image/default.png', '0', '0', null, null, null);
+INSERT INTO `users_userprofile` VALUES ('4', 'pbkdf2_sha256$150000$W8fuPE98CkMk$uR8DFz6tfkWoBXuavTjEtr8b9ALmnaUyO80FF2o7OdQ=', null, '0', '18695732892', '', '', '', '0', '1', '2019-07-23 21:24:38.289400', '', null, 'female', '', '18695732892', 'image/default.png', '0', '0', null, null, null);
+INSERT INTO `users_userprofile` VALUES ('5', 'pbkdf2_sha256$150000$IJLXy1yhl3Yu$c/uGv874vvW/eN5lFSU5/Fj5USJSnOz58p/lYMPlYEA=', null, '0', '18695732897', '', '', '', '0', '1', '2019-08-04 20:25:11.046000', '', null, 'female', '', '18695732897', 'image/default.png', '0', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for wechat_fans
 -- ----------------------------
 DROP TABLE IF EXISTS `wechat_fans`;
-CREATE TABLE `wechat_fans`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `appid` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号APPID',
-  `unionid` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '粉丝unionid',
-  `openid` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '粉丝openid',
-  `tagid_list` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '粉丝标签id',
-  `is_black` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '是否为黑名单状态',
-  `subscribe` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '关注状态(0未关注,1已关注)',
-  `nickname` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户昵称',
-  `sex` tinyint(1) UNSIGNED NULL DEFAULT NULL COMMENT '用户性别(1男性,2女性,0未知)',
-  `country` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户所在国家',
-  `province` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户所在省份',
-  `city` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户所在城市',
-  `language` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户的语言(zh_CN)',
-  `headimgurl` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户头像',
-  `subscribe_time` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '关注时间',
-  `subscribe_at` datetime NULL DEFAULT NULL COMMENT '关注时间',
-  `remark` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
-  `subscribe_scene` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '扫码关注场景',
-  `qr_scene` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '二维码场景值',
-  `qr_scene_str` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '二维码场景内容',
+CREATE TABLE `wechat_fans` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `appid` varchar(50) DEFAULT '' COMMENT '公众号APPID',
+  `unionid` varchar(100) DEFAULT '' COMMENT '粉丝unionid',
+  `openid` varchar(100) DEFAULT '' COMMENT '粉丝openid',
+  `tagid_list` varchar(100) DEFAULT '' COMMENT '粉丝标签id',
+  `is_black` tinyint(1) unsigned DEFAULT '0' COMMENT '是否为黑名单状态',
+  `subscribe` tinyint(1) unsigned DEFAULT '0' COMMENT '关注状态(0未关注,1已关注)',
+  `nickname` varchar(200) DEFAULT '' COMMENT '用户昵称',
+  `sex` tinyint(1) unsigned DEFAULT NULL COMMENT '用户性别(1男性,2女性,0未知)',
+  `country` varchar(50) DEFAULT '' COMMENT '用户所在国家',
+  `province` varchar(50) DEFAULT '' COMMENT '用户所在省份',
+  `city` varchar(50) DEFAULT '' COMMENT '用户所在城市',
+  `language` varchar(50) DEFAULT '' COMMENT '用户的语言(zh_CN)',
+  `headimgurl` varchar(500) DEFAULT '' COMMENT '用户头像',
+  `subscribe_time` bigint(20) unsigned DEFAULT '0' COMMENT '关注时间',
+  `subscribe_at` datetime DEFAULT NULL COMMENT '关注时间',
+  `remark` varchar(50) DEFAULT '' COMMENT '备注',
+  `subscribe_scene` varchar(200) DEFAULT '' COMMENT '扫码关注场景',
+  `qr_scene` varchar(100) DEFAULT '' COMMENT '二维码场景值',
+  `qr_scene_str` varchar(200) DEFAULT '' COMMENT '二维码场景内容',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_wechat_fans_openid`(`openid`) USING BTREE,
-  INDEX `index_wechat_fans_unionid`(`unionid`) USING BTREE,
-  INDEX `index_wechat_fans_is_back`(`is_black`) USING BTREE,
-  INDEX `index_wechat_fans_subscribe`(`subscribe`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-粉丝';
+  KEY `index_wechat_fans_openid` (`openid`) USING BTREE,
+  KEY `index_wechat_fans_unionid` (`unionid`) USING BTREE,
+  KEY `index_wechat_fans_is_back` (`is_black`) USING BTREE,
+  KEY `index_wechat_fans_subscribe` (`subscribe`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='微信-粉丝';
+
+-- ----------------------------
+-- Records of wechat_fans
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for wechat_fans_tags
 -- ----------------------------
 DROP TABLE IF EXISTS `wechat_fans_tags`;
-CREATE TABLE `wechat_fans_tags`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '标签ID',
-  `appid` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号APPID',
-  `name` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标签名称',
-  `count` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '总数',
+CREATE TABLE `wechat_fans_tags` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '标签ID',
+  `appid` varchar(50) DEFAULT '' COMMENT '公众号APPID',
+  `name` varchar(35) DEFAULT NULL COMMENT '标签名称',
+  `count` bigint(20) unsigned DEFAULT '0' COMMENT '总数',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
-  INDEX `index_wechat_fans_tags_id`(`id`) USING BTREE,
-  INDEX `index_wechat_fans_tags_appid`(`appid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-粉丝-标签';
+  KEY `index_wechat_fans_tags_id` (`id`) USING BTREE,
+  KEY `index_wechat_fans_tags_appid` (`appid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='微信-粉丝-标签';
+
+-- ----------------------------
+-- Records of wechat_fans_tags
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for wechat_keys
 -- ----------------------------
 DROP TABLE IF EXISTS `wechat_keys`;
-CREATE TABLE `wechat_keys`  (
+CREATE TABLE `wechat_keys` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `appid` char(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号APPID',
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '类型(text,image,news)',
-  `keys` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '关键字',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '文本内容',
-  `image_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '图片链接',
-  `voice_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '语音链接',
-  `music_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '音乐标题',
-  `music_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '音乐链接',
-  `music_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '缩略图片',
-  `music_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '音乐描述',
-  `video_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '视频标题',
-  `video_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '视频URL',
-  `video_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '视频描述',
-  `news_id` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '图文ID',
-  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序字段',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0禁用,1启用)',
-  `create_by` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '创建人',
+  `appid` char(100) DEFAULT '' COMMENT '公众号APPID',
+  `type` varchar(20) DEFAULT '' COMMENT '类型(text,image,news)',
+  `keys` varchar(100) DEFAULT NULL COMMENT '关键字',
+  `content` text COMMENT '文本内容',
+  `image_url` varchar(255) DEFAULT '' COMMENT '图片链接',
+  `voice_url` varchar(255) DEFAULT '' COMMENT '语音链接',
+  `music_title` varchar(100) DEFAULT '' COMMENT '音乐标题',
+  `music_url` varchar(255) DEFAULT '' COMMENT '音乐链接',
+  `music_image` varchar(255) DEFAULT '' COMMENT '缩略图片',
+  `music_desc` varchar(255) DEFAULT '' COMMENT '音乐描述',
+  `video_title` varchar(100) DEFAULT '' COMMENT '视频标题',
+  `video_url` varchar(255) DEFAULT '' COMMENT '视频URL',
+  `video_desc` varchar(255) DEFAULT '' COMMENT '视频描述',
+  `news_id` bigint(20) unsigned DEFAULT NULL COMMENT '图文ID',
+  `sort` bigint(20) unsigned DEFAULT '0' COMMENT '排序字段',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '状态(0禁用,1启用)',
+  `create_by` bigint(20) unsigned DEFAULT '0' COMMENT '创建人',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_wechat_keys_appid`(`appid`) USING BTREE,
-  INDEX `index_wechat_keys_type`(`type`) USING BTREE,
-  INDEX `index_wechat_keys_keys`(`keys`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-关键字';
+  KEY `index_wechat_keys_appid` (`appid`) USING BTREE,
+  KEY `index_wechat_keys_type` (`type`) USING BTREE,
+  KEY `index_wechat_keys_keys` (`keys`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='微信-关键字';
+
+-- ----------------------------
+-- Records of wechat_keys
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for wechat_media
 -- ----------------------------
 DROP TABLE IF EXISTS `wechat_media`;
-CREATE TABLE `wechat_media`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `appid` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号ID',
-  `md5` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '文件md5',
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '媒体类型',
-  `media_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '永久素材MediaID',
-  `local_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '本地文件链接',
-  `media_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '远程图片链接',
+CREATE TABLE `wechat_media` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `appid` varchar(100) DEFAULT '' COMMENT '公众号ID',
+  `md5` varchar(32) DEFAULT '' COMMENT '文件md5',
+  `type` varchar(20) DEFAULT '' COMMENT '媒体类型',
+  `media_id` varchar(100) DEFAULT '' COMMENT '永久素材MediaID',
+  `local_url` varchar(300) DEFAULT '' COMMENT '本地文件链接',
+  `media_url` varchar(300) DEFAULT '' COMMENT '远程图片链接',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_wechat_media_appid`(`appid`) USING BTREE,
-  INDEX `index_wechat_media_md5`(`md5`) USING BTREE,
-  INDEX `index_wechat_media_type`(`type`) USING BTREE,
-  INDEX `index_wechat_media_media_id`(`media_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-素材';
+  KEY `index_wechat_media_appid` (`appid`) USING BTREE,
+  KEY `index_wechat_media_md5` (`md5`) USING BTREE,
+  KEY `index_wechat_media_type` (`type`) USING BTREE,
+  KEY `index_wechat_media_media_id` (`media_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='微信-素材';
+
+-- ----------------------------
+-- Records of wechat_media
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for wechat_news
 -- ----------------------------
 DROP TABLE IF EXISTS `wechat_news`;
-CREATE TABLE `wechat_news`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `media_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '永久素材MediaID',
-  `local_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '永久素材显示URL',
-  `article_id` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '关联图文ID(用英文逗号做分割)',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '是否删除',
+CREATE TABLE `wechat_news` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `media_id` varchar(100) DEFAULT '' COMMENT '永久素材MediaID',
+  `local_url` varchar(300) DEFAULT '' COMMENT '永久素材显示URL',
+  `article_id` varchar(60) DEFAULT '' COMMENT '关联图文ID(用英文逗号做分割)',
+  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT '是否删除',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `create_by` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+  `create_by` bigint(20) DEFAULT NULL COMMENT '创建人',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_wechat_news_artcle_id`(`article_id`) USING BTREE,
-  INDEX `index_wechat_news_media_id`(`media_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-图文';
+  KEY `index_wechat_news_artcle_id` (`article_id`) USING BTREE,
+  KEY `index_wechat_news_media_id` (`media_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='微信-图文';
+
+-- ----------------------------
+-- Records of wechat_news
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for wechat_news_article
 -- ----------------------------
 DROP TABLE IF EXISTS `wechat_news_article`;
-CREATE TABLE `wechat_news_article`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '素材标题',
-  `local_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '永久素材显示URL',
-  `show_cover_pic` tinyint(4) UNSIGNED NULL DEFAULT 0 COMMENT '显示封面(0不显示,1显示)',
-  `author` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '文章作者',
-  `digest` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '摘要内容',
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '图文内容',
-  `content_source_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '原文地址',
-  `read_num` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '阅读数量',
+CREATE TABLE `wechat_news_article` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) DEFAULT '' COMMENT '素材标题',
+  `local_url` varchar(300) DEFAULT '' COMMENT '永久素材显示URL',
+  `show_cover_pic` tinyint(4) unsigned DEFAULT '0' COMMENT '显示封面(0不显示,1显示)',
+  `author` varchar(20) DEFAULT '' COMMENT '文章作者',
+  `digest` varchar(300) DEFAULT '' COMMENT '摘要内容',
+  `content` longtext COMMENT '图文内容',
+  `content_source_url` varchar(200) DEFAULT '' COMMENT '原文地址',
+  `read_num` bigint(20) unsigned DEFAULT '0' COMMENT '阅读数量',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-图文-文章';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='微信-图文-文章';
+
+-- ----------------------------
+-- Records of wechat_news_article
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for wechat_service_config
 -- ----------------------------
 DROP TABLE IF EXISTS `wechat_service_config`;
-CREATE TABLE `wechat_service_config`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `authorizer_appid` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号APPID',
-  `authorizer_access_token` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号授权Token',
-  `authorizer_refresh_token` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号刷新Token',
-  `func_info` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号集权',
-  `nick_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号昵称',
-  `head_img` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号头像',
-  `expires_in` bigint(20) NULL DEFAULT NULL COMMENT 'Token有效时间',
-  `service_type` tinyint(2) NULL DEFAULT NULL COMMENT '微信类型(0代表订阅号,2代表服务号,3代表小程序)',
-  `service_type_info` tinyint(2) NULL DEFAULT NULL COMMENT '公众号实际类型',
-  `verify_type` tinyint(2) NULL DEFAULT NULL COMMENT '公众号认证类型(-1代表未认证, 0代表微信认证)',
-  `verify_type_info` tinyint(2) NULL DEFAULT NULL COMMENT '公众号实际认证类型',
-  `user_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '众众号原始账号',
-  `alias` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号别名',
-  `qrcode_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公众号二维码',
-  `business_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '',
-  `principal_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公司名称',
-  `miniprograminfo` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '小程序JSON',
-  `idc` tinyint(1) UNSIGNED NULL DEFAULT NULL,
-  `signature` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '小程序的描述',
-  `total` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '统计调用次数',
-  `appkey` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '应用接口KEY',
-  `appuri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '应用接口URI',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(1正常授权,0取消授权)',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态(0未删除,1已删除)',
+CREATE TABLE `wechat_service_config` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `authorizer_appid` varchar(100) DEFAULT '' COMMENT '公众号APPID',
+  `authorizer_access_token` varchar(200) DEFAULT '' COMMENT '公众号授权Token',
+  `authorizer_refresh_token` varchar(200) DEFAULT '' COMMENT '公众号刷新Token',
+  `func_info` varchar(100) DEFAULT '' COMMENT '公众号集权',
+  `nick_name` varchar(50) DEFAULT '' COMMENT '公众号昵称',
+  `head_img` varchar(200) DEFAULT '' COMMENT '公众号头像',
+  `expires_in` bigint(20) DEFAULT NULL COMMENT 'Token有效时间',
+  `service_type` tinyint(2) DEFAULT NULL COMMENT '微信类型(0代表订阅号,2代表服务号,3代表小程序)',
+  `service_type_info` tinyint(2) DEFAULT NULL COMMENT '公众号实际类型',
+  `verify_type` tinyint(2) DEFAULT NULL COMMENT '公众号认证类型(-1代表未认证, 0代表微信认证)',
+  `verify_type_info` tinyint(2) DEFAULT NULL COMMENT '公众号实际认证类型',
+  `user_name` varchar(100) DEFAULT '' COMMENT '众众号原始账号',
+  `alias` varchar(100) DEFAULT '' COMMENT '公众号别名',
+  `qrcode_url` varchar(200) DEFAULT '' COMMENT '公众号二维码',
+  `business_info` varchar(255) DEFAULT '',
+  `principal_name` varchar(255) DEFAULT '' COMMENT '公司名称',
+  `miniprograminfo` varchar(1024) DEFAULT '' COMMENT '小程序JSON',
+  `idc` tinyint(1) unsigned DEFAULT NULL,
+  `signature` text COMMENT '小程序的描述',
+  `total` bigint(20) unsigned DEFAULT '0' COMMENT '统计调用次数',
+  `appkey` varchar(32) DEFAULT '' COMMENT '应用接口KEY',
+  `appuri` varchar(255) DEFAULT '' COMMENT '应用接口URI',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '状态(1正常授权,0取消授权)',
+  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT '删除状态(0未删除,1已删除)',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `index_wechat_service_config_authorizer_appid`(`authorizer_appid`) USING BTREE,
-  INDEX `index_wechat_service_config_status`(`status`) USING BTREE,
-  INDEX `index_wechat_service_config_is_deleted`(`is_deleted`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-授权';
+  UNIQUE KEY `index_wechat_service_config_authorizer_appid` (`authorizer_appid`) USING BTREE,
+  KEY `index_wechat_service_config_status` (`status`) USING BTREE,
+  KEY `index_wechat_service_config_is_deleted` (`is_deleted`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='微信-授权';
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- ----------------------------
+-- Records of wechat_service_config
+-- ----------------------------
