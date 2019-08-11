@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+// +----------------------------------------------------------------------
+// | Tp5swager
+// +----------------------------------------------------------------------
+// | 开源协议 ( https://mit-license.org )
+// +----------------------------------------------------------------------
+// | github 代码仓库：https://github.com/gtck520/tpadmin-swagger
+// +----------------------------------------------------------------------
+
+namespace think;
+
+chdir(__DIR__);
+
+require __DIR__ . '/thinkphp/base.php';
+
+Container::get('app')->path(__DIR__ . '/application/')->initialize();
+
+Console::init();
